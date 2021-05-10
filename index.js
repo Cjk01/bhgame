@@ -1,9 +1,36 @@
 let canvas = document.getElementById('gamecontainer');
 let ctx = canvas.getContext('2d');
-let img = new Image();   // Create new img element
+
+
+function up(e) {
+
+}
+function down(e) {
+
+}
+function left(e) {
+
+}
+function right(e) {
+
+}
+document.addEventListener("keydown" , down);
+document.addEventListener("keyup" , up);
+document.addEventListener("keyleft" , left);
+document.addEventListener("keyright" , right);
+
+
+
+
+let img = new Image();   
 img.src = 'assets/test2.png'; 
 let img2 = new Image();
 img2.src = "assets/test.png";
+
+
+
+
+
 function mainLoop() {
    
     console.log('looping');
