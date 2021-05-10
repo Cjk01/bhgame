@@ -23,9 +23,9 @@ document.addEventListener("keyright" , right);
 
 
 let img = new Image();   
-img.src = 'assets/test2.png'; 
+img.src = 'assets/sprites/testSprites/test2.png'; 
 let img2 = new Image();
-img2.src = "assets/test.png";
+img2.src = "assets/sprites/testSprites/test.png";
 
 
 
