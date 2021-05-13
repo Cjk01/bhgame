@@ -1,5 +1,5 @@
-import w from "wee.js";
 
+//checking for webgl support
 let type = "WebGL"
 if(!PIXI.utils.isWebGLSupported()){
     type = "canvas"
@@ -12,24 +12,29 @@ app.renderer.view.style.left = "30%";
 //Add the canvas that Pixi automatically created for you to the HTML document
 document.body.appendChild(app.view);
 // load the texture we need
-app.loader.add('bunny', 'assets/playerSprites/PlayerShipIdle1.png').load((loader, resources) => {
-    // This creates a texture from a 'bunny.png' image
-    const bunny = new PIXI.Sprite(resources.bunny.texture);
+app.loader.add('player', 'assets/playerSprites/PlayerShipIdle1.png').load((loader, resources) => {
+    // This creates a texture from an img
+    const player = new PIXI.Sprite(resources.player.texture);
 
-    // Setup the position of the bunny
-    bunny.x = app.renderer.width / 2;
-    bunny.y = app.renderer.height / 2;
+    // Setup the position of the player
+    player.x = app.renderer.width / 2;
+    player.y = app.renderer.height / 2;
 
-    // Rotate around the center
-    bunny.anchor.x = 0.5;
-    bunny.anchor.y = 0.5;
-
+  
     // Add the bunny to the scene we are building
-    app.stage.addChild(bunny);
+    app.stage.addChild(player);
+    
+    function mainLoop(){
+        
+        console.log("looping");
+       
 
+        
+    }
     // Listen for frame updates
     app.ticker.add(() => {
-         // each frame we spin the bunny around a bit
-        bunny.rotation += 0.01;
+         
+        mainLoop();
+        
     });
 });
