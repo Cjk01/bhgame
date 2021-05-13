@@ -1,52 +1,35 @@
+import w from "wee.js";
 
-let canvas = document.getElementById('gamecontainer');
-let ctx = canvas.getContext('2d');
-let playerX = 250;
-let playerY = 600;
-let currentPlayerSprite = new Image();
-currentPlayerSprite.src = "assets/playerSprites/PlayerShipIdle1.png";
-function handleKeyDown(e) {
-    switch(e) {
-        //
+let type = "WebGL"
+if(!PIXI.utils.isWebGLSupported()){
+    type = "canvas"
     }
-}
+PIXI.utils.sayHello(type);
+//Create a Pixi Application
+let app = new PIXI.Application({width: 500, height: 700});
+app.renderer.view.style.position = "absolute";
+app.renderer.view.style.left = "30%";
+//Add the canvas that Pixi automatically created for you to the HTML document
+document.body.appendChild(app.view);
+// load the texture we need
+app.loader.add('bunny', 'assets/playerSprites/PlayerShipIdle1.png').load((loader, resources) => {
+    // This creates a texture from a 'bunny.png' image
+    const bunny = new PIXI.Sprite(resources.bunny.texture);
 
-function up(e) {
-    console.log(e + "pressed");
-    playerY--;
-  
-    
-}
-function down(e) {
-    console.log(e + "pressed");
-    playerY++;
-}
-function left(e) {
-    console.log(e + "pressed");
-    playerX--;
-}
-function right(e) {
-    console.log(e + "pressed");
-    playerX++;
-}
-function shoot(e) {
-    console.log(e + "pressed");
-    currentPlayerSprite.src = "../assets/playerSprites/PlayerShipIdle2.png"
-    
-}
-document.addEventListener("onkeydown" ,handleKeyDown);
+    // Setup the position of the bunny
+    bunny.x = app.renderer.width / 2;
+    bunny.y = app.renderer.height / 2;
 
+    // Rotate around the center
+    bunny.anchor.x = 0.5;
+    bunny.anchor.y = 0.5;
 
+    // Add the bunny to the scene we are building
+    app.stage.addChild(bunny);
 
-
-
-
-function mainLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    console.log('looping');
-    ctx.drawImage(currentPlayerSprite , playerX, playerY);
-    console.log("player X : " + playerX + " player Y: " + playerY);
-    
-}
-
-setInterval(mainLoop, 5);
+    // Listen for frame updates
+    app.ticker.add(() => {
+         // each frame we spin the bunny around a bit
+        bunny.rotation += 0.01;
+    });
+});

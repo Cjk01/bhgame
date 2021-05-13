@@ -1,0 +1,24 @@
+{
+  "name": "bhgame",
+  "version": "1.0.0",
+  "description": "canvas game",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/http-server/bin/http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cjk01/bhgame.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Cjk01/bhgame/issues"
+  },
+  "homepage": "https://github.com/Cjk01/bhgame#readme",
+  "dependencies": {
+    "http-server": "^0.12.3",
+    "pixi.js": "^6.0.4"
+  }
+}
