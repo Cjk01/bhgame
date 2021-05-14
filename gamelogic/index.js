@@ -1,10 +1,11 @@
-
+import * as logger from "./expTest.js";
 //checking for webgl support
 let type = "WebGL"
 if(!PIXI.utils.isWebGLSupported()){
     type = "canvas"
     }
 PIXI.utils.sayHello(type);
+logger.log("logger working");
 //Create a Pixi Application
 let app = new PIXI.Application({width: 500, height: 700});
 app.renderer.view.style.position = "absolute";
