@@ -1,9 +1,11 @@
 import * as logger from "./expTest.js";
+import * as movement from "./movement.js";
 //checking for webgl support
 let type = "WebGL"
 if(!PIXI.utils.isWebGLSupported()){
     type = "canvas"
     }
+
 PIXI.utils.sayHello(type);
 logger.log("logger working");
 //Create a Pixi Application
@@ -26,8 +28,10 @@ app.loader.add('player', 'assets/playerSprites/PlayerShipIdle1.png').load((loade
     app.stage.addChild(player);
     
     function mainLoop(){
-        
         console.log("looping");
+        // call movement function and update positions
+        // call collision detection function
+    
        
 
         
