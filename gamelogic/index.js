@@ -1,7 +1,7 @@
 
 import * as logger from "./expTest.js";
 import * as movement from "./movement.js";
-
+import * as collision from "./collisionDetection.js";
 //checking for webgl support
 let type = "WebGL"
 if(!PIXI.utils.isWebGLSupported()){
@@ -90,9 +90,11 @@ function setup(loader){
     function mainLoop(){
         console.log("main loop..");
         // call movement function and update positions
-        movement.updatePlayerPosition(player);
         
-        // call collision detection function
+        movement.updatePlayerPosition(player);
+      
+        
+        
         
     }
     // Listen for frame updates
