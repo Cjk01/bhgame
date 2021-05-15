@@ -1,6 +1,7 @@
 
 // listens for and captures keyboard values
 export function keyboard(value) {
+    console.log("keyboard : " + value);
     let key = {};
     key.value = value;
     key.isDown = false;
@@ -45,4 +46,11 @@ export function keyboard(value) {
     };
     
     return key;
+  }
+
+  export function updatePlayerPosition(player){
+    
+    player.x += player.vx;
+    player.y += player.vy;
+
   }
