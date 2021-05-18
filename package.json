@@ -2,7 +2,7 @@
   "name": "bhgame",
   "version": "1.0.0",
   "description": "canvas game",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node_modules/http-server/bin/http-server",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +19,6 @@
   "homepage": "https://github.com/Cjk01/bhgame#readme",
   "dependencies": {
     "http-server": "^0.12.3",
-    "pixi.js": "^6.0.4"
+    "phaser": "^3.54.0"
   }
 }
