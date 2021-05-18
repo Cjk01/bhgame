@@ -6,52 +6,107 @@
 <body>
 
     <script>
-    var config = {
+    const movementSpeed = 8;
+    let config = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 500,
+        height: 700,
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 200 }
+                gravity: { y: 0 }
             }
         },
         scene: {
             preload: preload,
-            create: create
+            create: create,
+            update: update
         }
     };
 
-    var game = new Phaser.Game(config);
+    let game = new Phaser.Game(config);
 
     function preload ()
     {
-        
-
-        this.load.image('sky', 'assets/Background/BackgroundMoon.png');
-        this.load.image('logo', 'assets/Enemies/DakanIdle.png');
-        this.load.image('red', 'assets/playerSprites/PlayerShipIdle1.png');
+        this.load.image('background' , 'assets/Background/BackgroundMoon.png');
+        this.load.image('player1' , 'assets/playerSprites/PlayerShipIdle1.png');
+        this.load.image('player2' , 'assets/playerSprites/PlayerShipIdle2.png');
+        this.load.image('playerLeft1' , 'assets/playerSprites/PlayerShipLeftTilt1.png');
+        this.load.image('playerLeft2' , 'assets/playerSprites/PlayerShipLeftTilt2.png');
+        this.load.image('playerRight1' , 'assets/playerSprites/PlayerShipRightTilt1.png');
+        this.load.image('playerRight2', 'assets/playerSprites/PlayerShipRightTilt2.png');
+        this.load.image('playerBullet' , 'assets/playerSprites/PlayerBullet.png');
+        this.load.image('enemyBullet' , 'assets/Bullet/EnemyBullet.png');
+        this.load.image('enemy' , 'assets/Enemies/DakanIdle.png');
     }
 
     function create ()
     {
-        this.add.image(400, 300, 'sky');
-
-        var particles = this.add.particles('red');
-
-        var emitter = particles.createEmitter({
-            speed: 50,
-            scale: { start: 5, end: 0 },
-            blendMode: 'ADD'
+        this.add.image(250, 350, 'background');
+        player = this.physics.add.sprite(250, 600, 'player1');
+        player.setCollideWorldBounds(true);
+        enemy = this.physics.add.sprite(500, 500, 'enemy');
+        enemy.setCollideWorldBounds(true);
+        this.anims.create({
+        key: 'left',
+        frames: [
+            { key: 'playerLeft1', frame: null },
+            { key: 'playerLeft2', frame: null },
+            
+        ],
+        frameRate: 8,
+        repeat: -1
+        });
+        
+        this.anims.create({
+        key: 'right',
+        frames: [
+            { key: 'playerRight1', frame: null },
+            { key: 'playerRight2', frame: null },
+            
+        ],
+        frameRate: 8,
+        repeat: -1
         });
 
-        var logo = this.physics.add.image(400, 100, 'logo');
 
-        logo.setVelocity(100, 200);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
 
-        emitter.startFollow(logo);
+    }
+    function update () 
+    {
+        cursors = this.input.keyboard.createCursorKeys();
+        if (cursors.left.isDown)
+        {
+      
+           player.anims.play('left', true);
+           player.x -= movementSpeed;
+           
+        }
+        else if (cursors.right.isDown)
+        {
+            player.anims.play('right', true);
+            player.x += movementSpeed;
+        }
+        else
+        {
+             player.anims.stop();
+            
+        }
+        if (cursors.up.isDown)
+        {
+       
+        player.y -= movementSpeed;
+        }
+        else if(cursors.down.isDown){
+            player.y += movementSpeed;
+        }
+        else
+        {
+             player.anims.stop();
+            
+        }
+
+       
     }
     </script>
 
