@@ -36,6 +36,9 @@
         this.load.image('playerRight1' , 'assets/playerSprites/PlayerShipRightTilt1.png');
         this.load.image('playerRight2', 'assets/playerSprites/PlayerShipRightTilt2.png');
         this.load.image('playerBullet' , 'assets/playerSprites/PlayerBullet.png');
+        this.load.image('playerExplosion1', 'assets/playerSprites/PlayerShipExplosion2.png');
+        this.load.image('playerExplosion2', 'assets/playerSprites/PlayerShipExplosion3.png');
+        this.load.image('playerExplosion3', 'assets/playerSprites/PlayerShipExplosion4.png');
         this.load.image('enemyBullet' , 'assets/Bullet/EnemyBullet.png');
         this.load.image('enemy' , 'assets/Enemies/DakanIdle.png');
     }
@@ -47,6 +50,14 @@
         player.setCollideWorldBounds(true);
         enemy = this.physics.add.sprite(500, 500, 'enemy');
         enemy.setCollideWorldBounds(true);
+        bullets = this.physics.add.group();
+        function playerHit() {
+            player.anims.play('explode', true);
+            console.log("player dead");
+            
+        }
+        this.physics.add.collider(player, bullets , playerHit);
+
         this.anims.create({
         key: 'left',
         frames: [
@@ -68,7 +79,18 @@
         frameRate: 8,
         repeat: -1
         });
-
+        this.anims.create({
+            key: 'explode',
+        frames: [
+            { key: 'playerExplosion1'},
+            { key: 'playerExplosion2'},
+            { key: 'plaerExplosion3'}
+            
+        ],
+        frameRate: 10,
+        repeat: 1
+        });
+        
 
 
     }
@@ -105,8 +127,25 @@
              player.anims.stop();
             
         }
-
-       
+        let randX = Math.floor(Math.random() * 50); 
+        let randY = Math.floor(Math.random() * 50); 
+        let Xpos = Math.floor(Math.random() * 2); 
+        let Ypos = Math.floor(Math.random() * 2); 
+        if(Xpos >= 1){
+            enemy.x += randX;
+        }
+        else {
+            enemy.x -= randX;
+        }
+        if(Ypos >= 1){
+            enemy.y += randY;
+        }
+        else {
+            enemy.y -= randY;
+        }
+       let bullet = bullets.create(enemy.x, enemy.y, 'enemyBullet');
+       bullet.setVelocityX( Math.floor(Math.random() * 300));
+       bullet.setVelocityY( Math.floor(Math.random() * 300));
     }
     </script>
 
