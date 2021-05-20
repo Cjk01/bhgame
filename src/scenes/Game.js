@@ -38,7 +38,7 @@ create()
     this.physics.add.overlap(this.player , this.bullets);
     function playerHit() {
        // this.player.anims.play('explode', true);
-        console.log("player dead");
+        //console.log("player dead");
         
     }
     this.physics.add.collider(this.player, this.bullets , playerHit);
@@ -80,16 +80,17 @@ update()
 {
     const movementSpeed = 8;
     let cursors = this.input.keyboard.createCursorKeys();
+    
     if (cursors.left.isDown)
     {
   
-       this.player.anims.play('left', true);
+       
        this.player.x -= movementSpeed;
        
     }
     else if (cursors.right.isDown)
     {
-        this.player.anims.play('right', true);
+        
         this.player.x += movementSpeed;
     }
     else
@@ -107,7 +108,7 @@ update()
     }
     else
     {
-        this.player.anims.stop();
+        
         
     }
     let randX = Math.floor(Math.random() * 50); 
@@ -129,12 +130,12 @@ update()
         this.enemy.y -= randY;
     }
    let bullets = [];
-   for(let i = 0 ; i < 50; i++){
+   for(let i = 0 ; i < 3; i++){
     let bullet = this.bullets.create(this.enemy.x + i, this.enemy.y + 30 - i, 'enemyBullet');
     bullet.setImmovable(true);
     bullets.push(bullet);
    }
-   for(let i = 0 ; i < 50; i++){
+   for(let i = 0 ; i < 3; i++){
     let bullet = this.bullets.create(this.enemy.x - i, this.enemy.y + 30 + i, 'enemyBullet');
     bullet.setImmovable(true);
     bullets.push(bullet);
