@@ -29,9 +29,13 @@ create()
     this.add.image(250, 350, 'background');
     this.player = this.physics.add.sprite(250, 600, 'player1');
     this.player.setCollideWorldBounds(true);
+    this.player.setImmovable(true);
     this.enemy = this.physics.add.sprite(500, 500, 'enemy');
     this.enemy.setCollideWorldBounds(true);
+    this.enemy.setImmovable(true);
     this.bullets = this.physics.add.group();
+   
+    this.physics.add.overlap(this.player , this.bullets);
     function playerHit() {
        // this.player.anims.play('explode', true);
         console.log("player dead");
@@ -110,6 +114,8 @@ update()
     let randY = Math.floor(Math.random() * 50); 
     let Xpos = Math.floor(Math.random() * 2); 
     let Ypos = Math.floor(Math.random() * 2); 
+
+    
     if(Xpos >= 1){
        this.enemy.x += randX;
     }
@@ -122,8 +128,34 @@ update()
     else {
         this.enemy.y -= randY;
     }
-   let bullet = this.bullets.create(this.enemy.x, this.enemy.y, 'enemyBullet');
-   bullet.setVelocityX( Math.floor(Math.random() * 300));
-   bullet.setVelocityY( Math.floor(Math.random() * 300));
+   let bullets = [];
+   for(let i = 0 ; i < 50; i++){
+    let bullet = this.bullets.create(this.enemy.x + i, this.enemy.y + 30 - i, 'enemyBullet');
+    bullet.setImmovable(true);
+    bullets.push(bullet);
+   }
+   for(let i = 0 ; i < 50; i++){
+    let bullet = this.bullets.create(this.enemy.x - i, this.enemy.y + 30 + i, 'enemyBullet');
+    bullet.setImmovable(true);
+    bullets.push(bullet);
+   }
+   function killBullet(b) {
+    
+    
+}
+   bullets.forEach(bullet => {
+    bullet.setCollideWorldBounds(true);
+    bullet.body.onWorldBounds = true;
+    bullet.body.world.on('worldbounds', function(body) {
+        
+        // Checks if it's the sprite that you'listening for
+        if (body.gameObject === this) {
+          // Make the enemy sprite unactived & make it disappear
+          this.destroy();
+        }
+      }, bullet);
+    bullet.setVelocityX( Math.floor(Math.random() * 300));
+    bullet.setVelocityY( Math.floor(Math.random() * 300));
+   });
 }
 }
