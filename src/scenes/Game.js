@@ -1,4 +1,7 @@
-import Phaser from '../lib/phaser.js'
+import Phaser from '../lib/phaser.js';
+import Player from "../classes/Player.js"; 
+import Enemy from "../classes/Enemy.js";
+import Bullet from "../classes/Bullet.js";
 
 export default class Game extends Phaser.Scene
 {
@@ -26,10 +29,12 @@ preload()
 create()
 {
     
+   
     this.add.image(250, 350, 'background');
     this.player = this.physics.add.sprite(250, 600, 'player1');
     this.player.setCollideWorldBounds(true);
     this.player.setImmovable(true);
+    let obj1 = new Player(this.player);
     this.enemy = this.physics.add.sprite(500, 500, 'enemy');
     this.enemy.setCollideWorldBounds(true);
     this.enemy.setImmovable(true);
