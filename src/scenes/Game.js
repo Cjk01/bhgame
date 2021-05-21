@@ -38,6 +38,8 @@ create()
     this.enemy = this.physics.add.sprite(500, 500, 'enemy');
     this.enemy.setCollideWorldBounds(true);
     this.enemy.setImmovable(true);
+    let obj2 = new Enemy(this.enemy);
+
     this.bullets = this.physics.add.group();
    
     this.physics.add.overlap(this.player , this.bullets);
