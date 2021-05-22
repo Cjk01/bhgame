@@ -1,27 +1,18 @@
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene , x ,y , texture) {
-        super(scene, x, y , texture);
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
-        this.setCollideWorldBounds(true);
-        this.setImmovable(true);
-        this.value;
-        
-        console.log("enemy object created");
+	constructor(scene, x, y, texture) {
+		super(scene, x, y, texture);
+		scene.add.existing(this);
+		scene.physics.add.existing(this);
+		this.setCollideWorldBounds(true);
+		this.setImmovable(true);
+		this.value;
 
-    }
-    move() {
-       
-
-    }
-    shoot() {
-
-    }
-    //score value should be readonly
-    getValue() {
-        return this.value;
-    }
-    
-   
-
+		console.log("enemy object created");
+	}
+	move() {}
+	shoot() {}
+	//score value should be readonly
+	getValue() {
+		return this.value;
+	}
 }
