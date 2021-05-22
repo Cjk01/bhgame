@@ -3,7 +3,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 		super(scene, x, y, texture);
 		scene.add.existing(this);
 		scene.physics.add.existing(this);
-		this.setCollideWorldBounds(true);
+
 		this.setImmovable(true);
 		this.lives = 3;
 		this.score = 0;

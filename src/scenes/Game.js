@@ -60,20 +60,25 @@ export default class Game extends Phaser.Scene {
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
 		this.movementSpeed = 7;
-		this.enemies = this.physics.add.group();
-		this.enemies.add(new Enemy(this, 300, 200, "enemy"));
 
+		this.enemy = new Enemy(this, 300, 200, "enemy");
+		this.enemies = this.physics.add.group();
+		this.enemies.defaults = {};
+		this.enemies.add(this.enemy);
+
+		this.bullet = new Bullet(this, 400, 400, "enemyBullet");
 		this.bullets = this.physics.add.group();
-		this.bullets.add(new Bullet(this, 400, 400, "enemyBullet"));
+		this.bullets.defaults = {};
+		this.bullets.add(this.bullet);
 
 		this.physics.add.collider(this.player, this.bullets, () => {
-			console.log("collision occured");
+			console.log("player : bullet > collision");
 		});
 		this.physics.add.collider(this.player, this.enemies, () => {
-			console.log("collision occured");
+			console.log("player : enemy > collision");
 		});
 		this.physics.add.collider(this.bullets, this.enemies, () => {
-			console.log("enemy hit");
+			console.log("bullet : enemy > collision");
 		});
 
 		this.anims.create({
@@ -118,10 +123,8 @@ export default class Game extends Phaser.Scene {
 				this.player.y - 32,
 				"playerLaser"
 			);
-			playerShot.setImmovable(true);
-
+			playerShot.setVelocityY(-300);
 			this.bullets.add(playerShot);
-			this.bullets.setVelocityY(-400);
 		}
 
 		if (cursors.left.isDown) {
