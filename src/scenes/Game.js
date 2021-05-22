@@ -56,8 +56,18 @@ export default class Game extends Phaser.Scene {
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
 		this.movementSpeed = 7;
-		this.enemy = new Enemy(this, 300, 200, "enemy");
-		this.bullet = new Bullet(this, 600, 600, "enemyBullet");
+		this.enemies = this.physics.add.group();
+		this.enemies.add(new Enemy(this, 300, 200, "enemy"));
+
+		this.bullets = this.physics.add.group();
+		this.bullets.add(new Bullet(this, 400, 400, "enemyBullet"));
+
+		this.physics.add.collider(this.player, this.bullets, () => {
+			console.log("collision occured");
+		});
+		this.physics.add.collider(this.player, this.enemies, () => {
+			console.log("collision occured");
+		});
 
 		this.anims.create({
 			key: "left",
