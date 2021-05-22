@@ -1,8 +1,15 @@
-export default class Player {
-    constructor (sprite) {
-        this.sprite = sprite;
+
+
+export default class Player extends Phaser.Physics.Arcade.Sprite {
+    constructor ( scene , x , y , texture) {
+        super(scene , x , y , texture);
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
+        this.setCollideWorldBounds(true);
+        this.setImmovable(true);
         this.lives = 3;
         this.score = 0;
+        this.bombs = 2;
         console.log("player object created");
         
         
@@ -19,12 +26,12 @@ export default class Player {
     setScore(score) {
         this.score = score;
     }
-    setSprite(sprite){
-        this.sprite = sprite;
+    
+    getBombs() {
+        return this.bombs;
     }
-    getSprite() {
-        return this.sprite;
+    setBombs(bombs) {
+        this.bombs = bombs;
     }
-
 
 }

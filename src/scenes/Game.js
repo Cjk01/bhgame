@@ -31,25 +31,11 @@ create()
     
    
     this.add.image(250, 350, 'background');
-    this.player = this.physics.add.sprite(250, 600, 'player1');
-    this.player.setCollideWorldBounds(true);
-    this.player.setImmovable(true);
-    let obj1 = new Player(this.player);
-    this.enemy = this.physics.add.sprite(500, 500, 'enemy');
-    this.enemy.setCollideWorldBounds(true);
-    this.enemy.setImmovable(true);
-    let obj2 = new Enemy(this.enemy);
-
-    this.bullets = this.physics.add.group();
-   
-    this.physics.add.overlap(this.player , this.bullets);
-    function playerHit() {
-       // this.player.anims.play('explode', true);
-        //console.log("player dead");
-        
-    }
-    this.physics.add.collider(this.player, this.bullets , playerHit);
-
+    this.player = new Player(this, 250, 600 ,'player1');
+    this.movementSpeed = 7;
+    this.enemy  = new Enemy(this , 300, 200 ,'enemy' );
+    this.bullet = new Bullet(this , 600 ,  600 , 'enemyBullet');
+    
     this.anims.create({
     key: 'left',
     frames: [
@@ -82,88 +68,42 @@ create()
     frameRate: 10,
     repeat: 1
     });
+
 }
 update()
 {
-    const movementSpeed = 8;
-    let cursors = this.input.keyboard.createCursorKeys();
     
+     // refill enemy q
+
+     
+    let cursors = this.input.keyboard.createCursorKeys();
+    if (cursors.space.isDown){
+        // fire bullet from the player;
+    }
     if (cursors.left.isDown)
-    {
-  
-       
-       this.player.x -= movementSpeed;
+    {  
+       this.player.x -= this.movementSpeed;
        
     }
     else if (cursors.right.isDown)
     {
         
-        this.player.x += movementSpeed;
+        this.player.x += this.movementSpeed;
     }
     else
     {
-        this.player.anims.stop();
+        
         
     }
     if (cursors.up.isDown)
     {
    
-        this.player.y -= movementSpeed;
+        this.player.y -= this.movementSpeed;
     }
     else if(cursors.down.isDown){
-        this.player.y += movementSpeed;
+        this.player.y += this.movementSpeed;
     }
-    else
-    {
-        
-        
-    }
-    let randX = Math.floor(Math.random() * 50); 
-    let randY = Math.floor(Math.random() * 50); 
-    let Xpos = Math.floor(Math.random() * 2); 
-    let Ypos = Math.floor(Math.random() * 2); 
-
     
-    if(Xpos >= 1){
-       this.enemy.x += randX;
-    }
-    else {
-        this.enemy.x -= randX;
-    }
-    if(Ypos >= 1){
-        this.enemy.y += randY;
-    }
-    else {
-        this.enemy.y -= randY;
-    }
-   let bullets = [];
-   for(let i = 0 ; i < 3; i++){
-    let bullet = this.bullets.create(this.enemy.x + i, this.enemy.y + 30 - i, 'enemyBullet');
-    bullet.setImmovable(true);
-    bullets.push(bullet);
-   }
-   for(let i = 0 ; i < 3; i++){
-    let bullet = this.bullets.create(this.enemy.x - i, this.enemy.y + 30 + i, 'enemyBullet');
-    bullet.setImmovable(true);
-    bullets.push(bullet);
-   }
-   function killBullet(b) {
-    
-    
-}
-   bullets.forEach(bullet => {
-    bullet.setCollideWorldBounds(true);
-    bullet.body.onWorldBounds = true;
-    bullet.body.world.on('worldbounds', function(body) {
-        
-        // Checks if it's the sprite that you'listening for
-        if (body.gameObject === this) {
-          // Make the enemy sprite unactived & make it disappear
-          this.destroy();
-        }
-      }, bullet);
-    bullet.setVelocityX( Math.floor(Math.random() * 300));
-    bullet.setVelocityY( Math.floor(Math.random() * 300));
-   });
+   
 }
 }
