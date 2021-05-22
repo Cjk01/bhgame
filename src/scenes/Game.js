@@ -49,6 +49,10 @@ export default class Game extends Phaser.Scene {
 			"playerExplosion3",
 			"../../assets/playerSprites/PlayerShipExplosion4.png"
 		);
+		this.load.image(
+			"playerLaser",
+			"../../assets/playerSprites/PlayerShipLaser.png"
+		);
 		this.load.image("enemyBullet", "../../assets/Bullet/EnemyBullet.png");
 		this.load.image("enemy", "../../assets/Enemies/DakanIdle.png");
 	}
@@ -67,6 +71,9 @@ export default class Game extends Phaser.Scene {
 		});
 		this.physics.add.collider(this.player, this.enemies, () => {
 			console.log("collision occured");
+		});
+		this.physics.add.collider(this.bullets, this.enemies, () => {
+			console.log("enemy hit");
 		});
 
 		this.anims.create({
@@ -105,6 +112,16 @@ export default class Game extends Phaser.Scene {
 		let cursors = this.input.keyboard.createCursorKeys();
 		if (cursors.space.isDown) {
 			// fire bullet from the player;
+			let playerShot = new Bullet(
+				this,
+				this.player.x,
+				this.player.y - 32,
+				"playerLaser"
+			);
+			playerShot.setImmovable(true);
+
+			this.bullets.add(playerShot);
+			this.bullets.setVelocityY(-400);
 		}
 
 		if (cursors.left.isDown) {
