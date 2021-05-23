@@ -10,6 +10,9 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 		console.log("enemy object created");
 	}
+	gotHit() {
+		console.log("I got hit");
+	}
 	move() {}
 	shoot() {}
 	//score value should be readonly

@@ -10,4 +10,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.bombs = 2;
 		console.log("Bullet object created");
 	}
+	testFun() {
+		console.log("test successful");
+	}
 }

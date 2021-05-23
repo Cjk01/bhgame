@@ -10,6 +10,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.bombs = 2;
 		console.log("player object created");
 	}
+	gotHit() {
+		console.log("i got hit!!");
+	}
 	getLives() {
 		return this.lives;
 	}

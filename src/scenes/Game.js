@@ -60,7 +60,8 @@ export default class Game extends Phaser.Scene {
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
 		this.movementSpeed = 7;
-
+		this.playerBullets = this.physics.add.group();
+		this.playerBullets.defaults = {};
 		this.enemy = new Enemy(this, 300, 200, "enemy");
 		this.enemies = this.physics.add.group();
 		this.enemies.defaults = {};
@@ -71,15 +72,28 @@ export default class Game extends Phaser.Scene {
 		this.bullets.defaults = {};
 		this.bullets.add(this.bullet);
 
-		this.physics.add.collider(this.player, this.bullets, () => {
-			console.log("player : bullet > collision");
-		});
-		this.physics.add.collider(this.player, this.enemies, () => {
-			console.log("player : enemy > collision");
-		});
-		this.physics.add.collider(this.bullets, this.enemies, () => {
-			console.log("bullet : enemy > collision");
-		});
+		this.physics.add.collider(
+			this.player,
+			this.bullets,
+			(player, bullet) => {
+				console.log("player : bullet > collision");
+				player.gotHit();
+				bullet.destroy();
+			},
+			null,
+			this
+		);
+
+		this.physics.add.collider(
+			this.playerBullets,
+			this.enemies,
+			(bullet, enemy) => {
+				bullet.destroy();
+				enemy.gotHit();
+			},
+			null,
+			this
+		);
 
 		this.anims.create({
 			key: "left",
@@ -115,6 +129,7 @@ export default class Game extends Phaser.Scene {
 		// refill enemy q
 
 		let cursors = this.input.keyboard.createCursorKeys();
+
 		if (cursors.space.isDown) {
 			// fire bullet from the player;
 			let playerShot = new Bullet(
@@ -124,7 +139,7 @@ export default class Game extends Phaser.Scene {
 				"playerLaser"
 			);
 			playerShot.setVelocityY(-300);
-			this.bullets.add(playerShot);
+			this.playerBullets.add(playerShot);
 		}
 
 		if (cursors.left.isDown) {
