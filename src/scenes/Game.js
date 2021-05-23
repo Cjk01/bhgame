@@ -72,14 +72,26 @@ export default class Game extends Phaser.Scene {
 		this.bullets.defaults = {};
 		this.bullets.add(this.bullet);
 
+		function handleEnemyHit(bullet, enemy) {
+			bullet.destroy();
+			enemy.gotHit();
+			if (enemy.getHp() <= 0) {
+				this.player.setScore(this.player.getScore() + enemy.getValue());
+				enemy.destroy();
+			}
+			console.log("player score: " + this.player.getScore());
+		}
+		function handlePlayerHit(player, bullet) {
+			player.gotHit();
+			if (player.getLives() <= 0) {
+				console.log("game over");
+			}
+			bullet.destroy();
+		}
 		this.physics.add.collider(
 			this.player,
 			this.bullets,
-			(player, bullet) => {
-				console.log("player : bullet > collision");
-				player.gotHit();
-				bullet.destroy();
-			},
+			handlePlayerHit,
 			null,
 			this
 		);
@@ -87,10 +99,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(
 			this.playerBullets,
 			this.enemies,
-			(bullet, enemy) => {
-				bullet.destroy();
-				enemy.gotHit();
-			},
+			handleEnemyHit,
 			null,
 			this
 		);

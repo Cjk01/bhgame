@@ -5,7 +5,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		scene.physics.add.existing(this);
 		this.setCollideWorldBounds(true);
 		this.setImmovable(true);
-		this.hp = 1;
+		this.hp = 4;
 		this.value = 1;
 
 		console.log("enemy object created");
@@ -13,6 +13,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	gotHit() {
 		console.log("I got hit");
 		this.setHp(this.getHp() - 1);
+		console.log("enemy now has " + this.getHp() + " hp");
 	}
 	move() {}
 	shoot() {}
