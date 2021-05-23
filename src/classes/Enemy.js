@@ -5,18 +5,28 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		scene.physics.add.existing(this);
 		this.setCollideWorldBounds(true);
 		this.setImmovable(true);
-
-		this.value;
+		this.hp = 1;
+		this.value = 1;
 
 		console.log("enemy object created");
 	}
 	gotHit() {
 		console.log("I got hit");
+		this.setHp(this.getHp() - 1);
 	}
 	move() {}
 	shoot() {}
-	//score value should be readonly
+
 	getValue() {
 		return this.value;
+	}
+	setValue(value) {
+		this.value = value;
+	}
+	getHp() {
+		return this.hp;
+	}
+	setHp(hp) {
+		this.hp = hp;
 	}
 }
