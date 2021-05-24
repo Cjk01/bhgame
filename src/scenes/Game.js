@@ -76,8 +76,8 @@ export default class Game extends Phaser.Scene {
 			bullet.destroy();
 			enemy.gotHit();
 			if (enemy.getHp() <= 0) {
-				this.player.setScore(this.player.getScore() + enemy.getValue());
 				enemy.destroy();
+				this.player.setScore(this.player.getScore() + enemy.getValue());
 			}
 			console.log("player score: " + this.player.getScore());
 		}
@@ -139,18 +139,6 @@ export default class Game extends Phaser.Scene {
 
 		let cursors = this.input.keyboard.createCursorKeys();
 
-		if (cursors.space.isDown) {
-			// fire bullet from the player;
-			let playerShot = new Bullet(
-				this,
-				this.player.x,
-				this.player.y - 32,
-				"playerLaser"
-			);
-			playerShot.setVelocityY(-300);
-			this.playerBullets.add(playerShot);
-		}
-
 		if (cursors.left.isDown) {
 			this.player.x -= this.movementSpeed;
 		} else if (cursors.right.isDown) {
@@ -161,6 +149,18 @@ export default class Game extends Phaser.Scene {
 			this.player.y -= this.movementSpeed;
 		} else if (cursors.down.isDown) {
 			this.player.y += this.movementSpeed;
+		}
+
+		if (cursors.space.isDown) {
+			// fire bullet from the player;
+			let playerShot = new Bullet(
+				this,
+				this.player.x,
+				this.player.y - 32,
+				"playerLaser"
+			);
+			playerShot.setVelocityY(-600);
+			this.playerBullets.add(playerShot);
 		}
 	}
 }
