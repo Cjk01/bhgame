@@ -62,6 +62,7 @@ export default class Game extends Phaser.Scene {
 		this.movementSpeed = 7;
 		this.playerBullets = this.physics.add.group();
 		this.playerBullets.defaults = {};
+
 		this.enemy = new Enemy(this, 300, 200, "enemy");
 		this.enemies = this.physics.add.group();
 		this.enemies.defaults = {};
@@ -136,8 +137,30 @@ export default class Game extends Phaser.Scene {
 	}
 	update() {
 		// refill enemy q
-
+		function getRandomInt(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+		}
 		let cursors = this.input.keyboard.createCursorKeys();
+		if (this.enemies.getLength() <= 3) {
+			let randX = getRandomInt(0, 500);
+			let randY = getRandomInt(0, 200);
+			let enemy = new Enemy(this, randX, randY, "enemy");
+			this.enemies.add(enemy);
+		}
+		for (let i = 0; i < this.enemies.getLength(); i++) {
+			let bullet = new Bullet(
+				this,
+				this.enemies.getChildren()[i].x,
+				this.enemies.getChildren()[i].y + 20,
+				"enemyBullet"
+			);
+			bullet.setVelocityX(getRandomInt(0, 500));
+			bullet.setVelocityY(getRandomInt(50, 300));
+
+			this.bullets.add(bullet);
+		}
 
 		if (cursors.left.isDown) {
 			this.player.x -= this.movementSpeed;
