@@ -141,7 +141,13 @@ export default class Game extends Phaser.Scene {
 			return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 		}
 
-		let cursors = this.input.keyboard.createCursorKeys();
+		let cursors = this.input.keyboard.addKeys({
+			up: Phaser.Input.Keyboard.KeyCodes.W,
+			down: Phaser.Input.Keyboard.KeyCodes.S,
+			left: Phaser.Input.Keyboard.KeyCodes.A,
+			right: Phaser.Input.Keyboard.KeyCodes.D,
+			space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+		});
 		if (this.enemies.getLength() <= 3) {
 			let randX = getRandomInt(0, 500);
 			let randY = getRandomInt(0, 200);
@@ -168,17 +174,24 @@ export default class Game extends Phaser.Scene {
 
 		if (cursors.left.isDown) {
 			this.player.x -= this.movementSpeed;
-		} else if (cursors.right.isDown) {
+			console.log("moving left");
+		}
+		if (cursors.right.isDown && !cursors.left.isDown) {
 			this.player.x += this.movementSpeed;
+			console.log("moving right");
 		}
 		if (cursors.up.isDown) {
 			this.player.y -= this.movementSpeed;
-		} else if (cursors.down.isDown) {
+			console.log("moving up");
+		}
+		if (cursors.down.isDown && !cursors.up.isDown) {
 			this.player.y += this.movementSpeed;
+			console.log("moving down");
 		}
 
 		if (cursors.space.isDown && this.framesSinceLastPlayerBullet >= 15) {
 			// fire bullet from the player;
+			console.log("firing bullet");
 			let playerShotLeft = new Bullet(
 				this,
 				this.player.x + 8,
