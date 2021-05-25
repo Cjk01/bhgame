@@ -68,7 +68,8 @@ export default class Game extends Phaser.Scene {
 
 		this.bullets = this.physics.add.group();
 		this.bullets.defaults = {};
-		this.framesSinceLastBullet = 0;
+		this.framesSinceLastBullet = 20;
+		this.framesSinceLastPlayerBullet = 15;
 		function handleEnemyHit(bullet, enemy) {
 			bullet.destroy();
 			enemy.gotHit();
@@ -147,7 +148,7 @@ export default class Game extends Phaser.Scene {
 			let enemy = new Enemy(this, randX, randY, "enemy");
 			this.enemies.add(enemy);
 		}
-		if (this.framesSinceLastBullet >= 5) {
+		if (this.framesSinceLastBullet >= 20) {
 			for (let i = 0; i < this.enemies.getLength(); i++) {
 				let bullet = new Bullet(
 					this,
@@ -176,18 +177,30 @@ export default class Game extends Phaser.Scene {
 			this.player.y += this.movementSpeed;
 		}
 
-		if (cursors.space.isDown) {
+		if (cursors.space.isDown && this.framesSinceLastPlayerBullet >= 15) {
 			// fire bullet from the player;
-			let playerShot = new Bullet(
+			let playerShotLeft = new Bullet(
 				this,
-				this.player.x,
+				this.player.x + 8,
+				this.player.y - 32,
+				"playerLaser",
+				0,
+				-600
+			);
+			let playerShotRight = new Bullet(
+				this,
+				this.player.x - 8,
 				this.player.y - 32,
 				"playerLaser",
 				0,
 				-600
 			);
 
-			this.playerBullets.add(playerShot);
+			this.playerBullets.add(playerShotLeft);
+			this.playerBullets.add(playerShotRight);
+			this.framesSinceLastPlayerBullet = 0;
+		} else {
+			this.framesSinceLastPlayerBullet++;
 		}
 	}
 }
