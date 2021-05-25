@@ -15,8 +15,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.setHp(this.getHp() - 1);
 		console.log("enemy now has " + this.getHp() + " hp");
 	}
-	move() {}
-	shoot() {}
+	move() {
+		// to be overriden by the extending class
+	}
+	shoot() {
+		// to be overriden by the extending class
+	}
 
 	getValue() {
 		return this.value;

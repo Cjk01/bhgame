@@ -63,16 +63,12 @@ export default class Game extends Phaser.Scene {
 		this.playerBullets = this.physics.add.group();
 		this.playerBullets.defaults = {};
 
-		this.enemy = new Enemy(this, 300, 200, "enemy");
 		this.enemies = this.physics.add.group();
 		this.enemies.defaults = {};
-		this.enemies.add(this.enemy);
 
-		this.bullet = new Bullet(this, 400, 400, "enemyBullet");
 		this.bullets = this.physics.add.group();
 		this.bullets.defaults = {};
-		this.bullets.add(this.bullet);
-
+		this.framesSinceLastBullet = 0;
 		function handleEnemyHit(bullet, enemy) {
 			bullet.destroy();
 			enemy.gotHit();
@@ -87,7 +83,7 @@ export default class Game extends Phaser.Scene {
 			if (player.getLives() <= 0) {
 				console.log("game over");
 			}
-			bullet.kill();
+			bullet.destroy();
 		}
 		this.physics.add.collider(
 			this.player,
@@ -136,12 +132,14 @@ export default class Game extends Phaser.Scene {
 		});
 	}
 	update() {
+		this.player.shoot();
 		// refill enemy q
 		function getRandomInt(min, max) {
 			min = Math.ceil(min);
 			max = Math.floor(max);
 			return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 		}
+
 		let cursors = this.input.keyboard.createCursorKeys();
 		if (this.enemies.getLength() <= 3) {
 			let randX = getRandomInt(0, 500);
@@ -149,17 +147,22 @@ export default class Game extends Phaser.Scene {
 			let enemy = new Enemy(this, randX, randY, "enemy");
 			this.enemies.add(enemy);
 		}
-		for (let i = 0; i < this.enemies.getLength(); i++) {
-			let bullet = new Bullet(
-				this,
-				this.enemies.getChildren()[i].x,
-				this.enemies.getChildren()[i].y + 20,
-				"enemyBullet"
-			);
-			bullet.setVelocityX(getRandomInt(-500, 500));
-			bullet.setVelocityY(getRandomInt(50, 200));
+		if (this.framesSinceLastBullet >= 5) {
+			for (let i = 0; i < this.enemies.getLength(); i++) {
+				let bullet = new Bullet(
+					this,
+					this.enemies.getChildren()[i].x,
+					this.enemies.getChildren()[i].y + 20,
+					"enemyBullet",
+					getRandomInt(-500, 500),
+					getRandomInt(50, 200)
+				);
 
-			this.bullets.add(bullet);
+				this.bullets.add(bullet);
+			}
+			this.framesSinceLastBullet = 0;
+		} else {
+			this.framesSinceLastBullet++;
 		}
 
 		if (cursors.left.isDown) {
@@ -179,9 +182,11 @@ export default class Game extends Phaser.Scene {
 				this,
 				this.player.x,
 				this.player.y - 32,
-				"playerLaser"
+				"playerLaser",
+				0,
+				-600
 			);
-			playerShot.setVelocityY(-600);
+
 			this.playerBullets.add(playerShot);
 		}
 	}

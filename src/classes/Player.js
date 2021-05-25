@@ -15,6 +15,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.setLives(this.getLives() - 1);
 		console.log("player now has " + this.getLives() + " lives");
 	}
+	shoot() {
+		console.log(this.scene.enemies);
+	}
 	getLives() {
 		return this.lives;
 	}
