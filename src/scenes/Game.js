@@ -87,7 +87,7 @@ export default class Game extends Phaser.Scene {
 			if (player.getLives() <= 0) {
 				console.log("game over");
 			}
-			bullet.destroy();
+			bullet.kill();
 		}
 		this.physics.add.collider(
 			this.player,
@@ -156,8 +156,8 @@ export default class Game extends Phaser.Scene {
 				this.enemies.getChildren()[i].y + 20,
 				"enemyBullet"
 			);
-			bullet.setVelocityX(getRandomInt(0, 500));
-			bullet.setVelocityY(getRandomInt(50, 300));
+			bullet.setVelocityX(getRandomInt(-500, 500));
+			bullet.setVelocityY(getRandomInt(50, 200));
 
 			this.bullets.add(bullet);
 		}
@@ -166,7 +166,6 @@ export default class Game extends Phaser.Scene {
 			this.player.x -= this.movementSpeed;
 		} else if (cursors.right.isDown) {
 			this.player.x += this.movementSpeed;
-		} else {
 		}
 		if (cursors.up.isDown) {
 			this.player.y -= this.movementSpeed;
