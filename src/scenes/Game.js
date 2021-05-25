@@ -101,36 +101,6 @@ export default class Game extends Phaser.Scene {
 			null,
 			this
 		);
-
-		this.anims.create({
-			key: "left",
-			frames: [
-				{ key: "playerLeft1", frame: null },
-				{ key: "playerLeft2", frame: null },
-			],
-			frameRate: 8,
-			repeat: -1,
-		});
-
-		this.anims.create({
-			key: "right",
-			frames: [
-				{ key: "playerRight1", frame: null },
-				{ key: "playerRight2", frame: null },
-			],
-			frameRate: 8,
-			repeat: -1,
-		});
-		this.anims.create({
-			key: "explode",
-			frames: [
-				{ key: "playerExplosion1", frame: null },
-				{ key: "playerExplosion2", frame: null },
-				{ key: "plaerExplosion3", frame: null },
-			],
-			frameRate: 10,
-			repeat: 1,
-		});
 	}
 	update() {
 		this.player.shoot();
@@ -174,19 +144,15 @@ export default class Game extends Phaser.Scene {
 
 		if (cursors.left.isDown) {
 			this.player.x -= this.movementSpeed;
-			console.log("moving left");
 		}
 		if (cursors.right.isDown && !cursors.left.isDown) {
 			this.player.x += this.movementSpeed;
-			console.log("moving right");
 		}
 		if (cursors.up.isDown) {
 			this.player.y -= this.movementSpeed;
-			console.log("moving up");
 		}
 		if (cursors.down.isDown && !cursors.up.isDown) {
 			this.player.y += this.movementSpeed;
-			console.log("moving down");
 		}
 
 		if (cursors.space.isDown && this.framesSinceLastPlayerBullet >= 15) {
