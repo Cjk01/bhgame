@@ -5,6 +5,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		scene.physics.add.existing(this);
 		this.setCollideWorldBounds(true);
 		this.setImmovable(true);
+		this.movementSpeed = 3;
 		this.hp = 4;
 		this.value = 1;
 

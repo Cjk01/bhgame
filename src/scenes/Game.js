@@ -109,9 +109,6 @@ export default class Game extends Phaser.Scene {
 			null,
 			this
 		);
-		this.enemyRotation = 0;
-
-		// idle1 , idle2, left1 , left2 , left3 , right1 , right2, right3
 	}
 	update() {
 		// refill enemy q
@@ -142,9 +139,19 @@ export default class Game extends Phaser.Scene {
 					this.enemies.getChildren()[i].x,
 					this.enemies.getChildren()[i].y + 20,
 					"enemyBullet",
-					getRandomInt(-50, 50),
-					getRandomInt(50, 200)
+					getRandomInt(-360, 360),
+					getRandomInt(-200, 200)
 				);
+				if (this.enemies.getChildren()[i].x >= this.player.x) {
+					this.enemies.getChildren()[i].x -= getRandomInt(10, 31);
+				} else {
+					this.enemies.getChildren()[i].x += getRandomInt(10, 31);
+				}
+				if (this.player.y - this.enemies.getChildren()[i].y >= 200) {
+					this.enemies.getChildren()[i].y += getRandomInt(20, 41);
+				} else {
+					this.enemies.getChildren()[i].y -= getRandomInt(20, 41);
+				}
 
 				this.bullets.add(bullet);
 			}
