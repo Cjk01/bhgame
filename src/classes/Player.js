@@ -1,3 +1,4 @@
+import Bullet from "./Bullet.js";
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
@@ -6,18 +7,41 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.setCollideWorldBounds(true);
 		this.setImmovable(true);
 		this.setSize(1, 1);
+		this.scene = scene;
 		this.lives = 3;
 		this.movementSpeed = 5;
+		this.framesSinceLastShot = 15;
 		this.score = 0;
 		this.bombs = 2;
 		console.log("player object created");
 	}
 	gotHit() {
-		console.log("i got hit!!");
 		this.setLives(this.getLives() - 1);
-		console.log("player now has " + this.getLives() + " lives");
+		if (player.getLives() <= 0) {
+			console.log("game over");
+		}
 	}
-	shoot() {}
+	shoot() {
+		let playerShotLeft = new Bullet(
+			this.scene,
+			this.x + 8,
+			this.y - 32,
+			"playerLaser",
+			0,
+			-600
+		);
+		let playerShotRight = new Bullet(
+			this.scene,
+			this.x - 8,
+			this.y - 32,
+			"playerLaser",
+			0,
+			-600
+		);
+		this.scene.playerBullets.add(playerShotLeft);
+		this.scene.playerBullets.add(playerShotRight);
+		this.setFramesSinceLastShot(0);
+	}
 	getLives() {
 		return this.lives;
 	}
@@ -42,5 +66,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	}
 	setMovementSpeed(speed) {
 		this.movementSpeed = speed;
+	}
+	getFramesSinceLastShot() {
+		return this.framesSinceLastShot;
+	}
+	setFramesSinceLastShot(frames) {
+		this.framesSinceLastShot = frames;
 	}
 }

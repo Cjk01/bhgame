@@ -63,6 +63,7 @@ export default class Game extends Phaser.Scene {
 		);
 	}
 	create() {
+		this.rotation = 0;
 		this.anims.createFromAseprite("playerSprites");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
@@ -76,23 +77,22 @@ export default class Game extends Phaser.Scene {
 		this.bullets = this.physics.add.group();
 		this.bullets.defaults = {};
 		this.framesSinceLastBullet = 20;
-		this.framesSinceLastPlayerBullet = 15;
+
+		this.getRandomInt = (min, max) => {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+		};
 
 		function handleEnemyHit(bullet, enemy) {
 			bullet.destroy();
 			enemy.gotHit();
-			if (enemy.getHp() <= 0) {
-				enemy.destroy();
-				this.player.setScore(this.player.getScore() + enemy.getValue());
-			}
 			console.log("player score: " + this.player.getScore());
 		}
 		function handlePlayerHit(player, bullet) {
-			player.gotHit();
-			if (player.getLives() <= 0) {
-				console.log("game over");
-			}
 			bullet.destroy();
+			player.gotHit();
+			console.log("player now has " + this.player.getLives() + " lives");
 		}
 		this.physics.add.collider(
 			this.player,
@@ -111,13 +111,6 @@ export default class Game extends Phaser.Scene {
 		);
 	}
 	update() {
-		// refill enemy q
-		function getRandomInt(min, max) {
-			min = Math.ceil(min);
-			max = Math.floor(max);
-			return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-		}
-
 		let cursors = this.input.keyboard.addKeys({
 			up: Phaser.Input.Keyboard.KeyCodes.W,
 			down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -126,8 +119,8 @@ export default class Game extends Phaser.Scene {
 			space: Phaser.Input.Keyboard.KeyCodes.SPACE,
 		});
 		if (this.enemies.getLength() <= 3) {
-			let randX = getRandomInt(0, 500);
-			let randY = getRandomInt(0, 200);
+			let randX = this.getRandomInt(0, 500);
+			let randY = this.getRandomInt(0, 200);
 			let enemy = new Enemy(this, randX, randY, "enemy");
 
 			this.enemies.add(enemy);
@@ -139,18 +132,18 @@ export default class Game extends Phaser.Scene {
 					this.enemies.getChildren()[i].x,
 					this.enemies.getChildren()[i].y + 20,
 					"enemyBullet",
-					getRandomInt(-360, 360),
-					getRandomInt(-200, 200)
+					this.getRandomInt(-360, 360),
+					this.getRandomInt(-200, 200)
 				);
 				if (this.enemies.getChildren()[i].x >= this.player.x) {
-					this.enemies.getChildren()[i].x -= getRandomInt(10, 31);
+					this.enemies.getChildren()[i].x -= this.getRandomInt(10, 31);
 				} else {
-					this.enemies.getChildren()[i].x += getRandomInt(10, 31);
+					this.enemies.getChildren()[i].x += this.getRandomInt(10, 31);
 				}
 				if (this.player.y - this.enemies.getChildren()[i].y >= 200) {
-					this.enemies.getChildren()[i].y += getRandomInt(20, 41);
+					this.enemies.getChildren()[i].y += this.getRandomInt(20, 41);
 				} else {
-					this.enemies.getChildren()[i].y -= getRandomInt(20, 41);
+					this.enemies.getChildren()[i].y -= this.getRandomInt(20, 41);
 				}
 
 				this.bullets.add(bullet);
@@ -197,31 +190,13 @@ export default class Game extends Phaser.Scene {
 			this.player.play("ShipIdle", true);
 		}
 
-		if (cursors.space.isDown && this.framesSinceLastPlayerBullet >= 15) {
-			// fire bullet from the player;
+		if (cursors.space.isDown && this.player.getFramesSinceLastShot() >= 15) {
 			console.log("firing bullet");
-			let playerShotLeft = new Bullet(
-				this,
-				this.player.x + 8,
-				this.player.y - 32,
-				"playerLaser",
-				0,
-				-600
-			);
-			let playerShotRight = new Bullet(
-				this,
-				this.player.x - 8,
-				this.player.y - 32,
-				"playerLaser",
-				0,
-				-600
-			);
-			this.enemyRotation += 10;
-			this.playerBullets.add(playerShotLeft);
-			this.playerBullets.add(playerShotRight);
-			this.framesSinceLastPlayerBullet = 0;
+			this.player.shoot();
 		} else {
-			this.framesSinceLastPlayerBullet++;
+			this.player.setFramesSinceLastShot(
+				this.player.getFramesSinceLastShot() + 1
+			);
 		}
 	}
 }
