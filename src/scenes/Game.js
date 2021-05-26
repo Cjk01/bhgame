@@ -55,6 +55,12 @@ export default class Game extends Phaser.Scene {
 		);
 		this.load.image("enemyBullet", "../../assets/Bullet/EnemyBullet.png");
 		this.load.image("enemy", "../../assets/Enemies/DakanIdle.png");
+		this.load.path = "../../assets/SpriteSheets/";
+		this.load.aseprite(
+			"playerSprites",
+			"PlayerShipSpriteSheet.png",
+			"PlayerShipSheet.json"
+		);
 	}
 	create() {
 		this.add.image(250, 350, "background");
@@ -101,9 +107,11 @@ export default class Game extends Phaser.Scene {
 			null,
 			this
 		);
+		this.anims.createFromAseprite("playerSprites");
+		// idle1 , idle2, left1 , left2 , left3 , right1 , right2, right3
 	}
 	update() {
-		this.player.shoot();
+		this.player.play("0");
 		// refill enemy q
 		function getRandomInt(min, max) {
 			min = Math.ceil(min);
