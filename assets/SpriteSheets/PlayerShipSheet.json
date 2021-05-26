@@ -112,7 +112,7 @@
   "size": { "w": 415, "h": 35 },
   "scale": "1",
   "frameTags": [
-   { "name": "ShipIdle", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "ShipIdle", "from": 0, "to": 1, "direction": "forward"},
    { "name": "ShipLeftTilt", "from": 2, "to": 4, "direction": "forward" },
    { "name": "ShipRightTilt", "from": 5, "to": 7, "direction": "forward" },
    { "name": "ShipExplosion", "from": 8, "to": 12, "direction": "forward" }

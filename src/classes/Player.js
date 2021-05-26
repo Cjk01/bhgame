@@ -7,6 +7,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.setImmovable(true);
 		this.setSize(1, 1);
 		this.lives = 3;
+		this.movementSpeed = 5;
 		this.score = 0;
 		this.bombs = 2;
 		console.log("player object created");
@@ -35,5 +36,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	}
 	setBombs(bombs) {
 		this.bombs = bombs;
+	}
+	getMovementSpeed() {
+		return this.movementSpeed;
+	}
+	setMovementSpeed(speed) {
+		this.movementSpeed = speed;
 	}
 }

@@ -54,7 +54,7 @@ export default class Game extends Phaser.Scene {
 			"../../assets/playerSprites/PlayerShipLaser.png"
 		);
 		this.load.image("enemyBullet", "../../assets/Bullet/EnemyBullet.png");
-		this.load.image("enemy", "../../assets/Enemies/DakanIdle.png");
+		this.load.image("enemy", "../../assets/Enemies/DroneSpreadIdle1.png");
 		this.load.path = "../../assets/SpriteSheets/";
 		this.load.aseprite(
 			"playerSprites",
@@ -63,9 +63,10 @@ export default class Game extends Phaser.Scene {
 		);
 	}
 	create() {
+		this.anims.createFromAseprite("playerSprites");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
-		this.movementSpeed = 7;
+
 		this.playerBullets = this.physics.add.group();
 		this.playerBullets.defaults = {};
 
@@ -76,6 +77,7 @@ export default class Game extends Phaser.Scene {
 		this.bullets.defaults = {};
 		this.framesSinceLastBullet = 20;
 		this.framesSinceLastPlayerBullet = 15;
+
 		function handleEnemyHit(bullet, enemy) {
 			bullet.destroy();
 			enemy.gotHit();
@@ -107,7 +109,7 @@ export default class Game extends Phaser.Scene {
 			null,
 			this
 		);
-		this.anims.createFromAseprite("playerSprites");
+		this.enemyRotation = 0;
 
 		// idle1 , idle2, left1 , left2 , left3 , right1 , right2, right3
 	}
@@ -130,6 +132,7 @@ export default class Game extends Phaser.Scene {
 			let randX = getRandomInt(0, 500);
 			let randY = getRandomInt(0, 200);
 			let enemy = new Enemy(this, randX, randY, "enemy");
+
 			this.enemies.add(enemy);
 		}
 		if (this.framesSinceLastBullet >= 20) {
@@ -139,39 +142,52 @@ export default class Game extends Phaser.Scene {
 					this.enemies.getChildren()[i].x,
 					this.enemies.getChildren()[i].y + 20,
 					"enemyBullet",
-					getRandomInt(-500, 500),
+					getRandomInt(-50, 50),
 					getRandomInt(50, 200)
 				);
 
 				this.bullets.add(bullet);
 			}
+
 			this.framesSinceLastBullet = 0;
 		} else {
 			this.framesSinceLastBullet++;
 		}
-
+		let moving = false;
 		if (cursors.left.isDown) {
-			this.player.play("ShipLeftTilt");
-
-			this.player.x -= this.movementSpeed;
+			if (this.player.anims.isPlaying) {
+				this.player.play("ShipLeftTilt", true);
+			}
+			console.log(this.player.anims.currentFrame.isLast);
+			if (this.player.anims.currentFrame.isLast) {
+				this.player.anims.pause();
+			}
+			this.player.x -= this.player.getMovementSpeed();
+			moving = true;
 		}
 		if (cursors.right.isDown && !cursors.left.isDown) {
-			this.player.play("ShipRightTilt");
-
-			this.player.x += this.movementSpeed;
+			if (this.player.anims.isPlaying) {
+				this.player.play("ShipRightTilt", true);
+			}
+			console.log(this.player.anims.currentFrame.isLast);
+			if (this.player.anims.currentFrame.isLast) {
+				this.player.anims.pause();
+			}
+			this.player.x += this.player.getMovementSpeed();
+			moving = true;
 		}
 		if (cursors.up.isDown) {
-			this.player.play("ShipIdle");
-
-			this.player.y -= this.movementSpeed;
+			this.player.play("ShipIdle", true);
+			this.player.y -= this.player.getMovementSpeed();
+			moving = true;
 		}
 		if (cursors.down.isDown && !cursors.up.isDown) {
-			this.player.play("ShipIdle");
-
-			this.player.y += this.movementSpeed;
+			this.player.play("ShipIdle", true);
+			this.player.y += this.player.getMovementSpeed();
+			moving = true;
 		}
-		{
-			this.player.play("ShipIdle");
+		if (!moving) {
+			this.player.play("ShipIdle", true);
 		}
 
 		if (cursors.space.isDown && this.framesSinceLastPlayerBullet >= 15) {
@@ -193,7 +209,7 @@ export default class Game extends Phaser.Scene {
 				0,
 				-600
 			);
-
+			this.enemyRotation += 10;
 			this.playerBullets.add(playerShotLeft);
 			this.playerBullets.add(playerShotRight);
 			this.framesSinceLastPlayerBullet = 0;

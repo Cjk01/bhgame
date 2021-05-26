@@ -10,6 +10,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 		console.log("enemy object created");
 	}
+
 	gotHit() {
 		console.log("I got hit");
 		this.setHp(this.getHp() - 1);
