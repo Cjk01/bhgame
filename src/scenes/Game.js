@@ -58,7 +58,7 @@ export default class Game extends Phaser.Scene {
 		this.load.path = "../../assets/SpriteSheets/";
 		this.load.aseprite(
 			"playerSprites",
-			"PlayerShipSpriteSheet.png",
+			"PlayerShipSheet.png",
 			"PlayerShipSheet.json"
 		);
 	}
@@ -108,10 +108,10 @@ export default class Game extends Phaser.Scene {
 			this
 		);
 		this.anims.createFromAseprite("playerSprites");
+
 		// idle1 , idle2, left1 , left2 , left3 , right1 , right2, right3
 	}
 	update() {
-		this.player.play("0");
 		// refill enemy q
 		function getRandomInt(min, max) {
 			min = Math.ceil(min);
@@ -151,16 +151,27 @@ export default class Game extends Phaser.Scene {
 		}
 
 		if (cursors.left.isDown) {
+			this.player.play("ShipLeftTilt");
+
 			this.player.x -= this.movementSpeed;
 		}
 		if (cursors.right.isDown && !cursors.left.isDown) {
+			this.player.play("ShipRightTilt");
+
 			this.player.x += this.movementSpeed;
 		}
 		if (cursors.up.isDown) {
+			this.player.play("ShipIdle");
+
 			this.player.y -= this.movementSpeed;
 		}
 		if (cursors.down.isDown && !cursors.up.isDown) {
+			this.player.play("ShipIdle");
+
 			this.player.y += this.movementSpeed;
+		}
+		{
+			this.player.play("ShipIdle");
 		}
 
 		if (cursors.space.isDown && this.framesSinceLastPlayerBullet >= 15) {
