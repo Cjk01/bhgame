@@ -3,7 +3,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		super(scene, x, y, texture);
 		scene.add.existing(this);
 		scene.physics.add.existing(this);
-
 		this.setCollideWorldBounds(true);
 		this.setImmovable(true);
 		this.movementSpeed = 3;
@@ -14,7 +13,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	gotHit() {
-		console.log("I got hit");
+		console.log("enemy: " + this + "was hit");
 		this.setHp(this.getHp() - 1);
 		if (this.getHp() <= 0) {
 			this.scene.player.setScore(
