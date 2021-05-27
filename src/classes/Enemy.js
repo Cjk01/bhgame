@@ -5,9 +5,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		scene.physics.add.existing(this);
 		this.setCollideWorldBounds(true);
 		this.setImmovable(true);
-		this.movementSpeed = 3;
-		this.hp = 4;
+		this.movementSpeed = 1;
+		this.hp = 1;
 		this.value = 1;
+		this.frameCounter = 0;
 
 		console.log("enemy object created");
 	}
@@ -40,5 +41,20 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 	setHp(hp) {
 		this.hp = hp;
+	}
+	getMovementSpeed() {
+		return this.movementSpeed;
+	}
+	setMovementSpeed(speed) {
+		this.movementSpeed = speed;
+	}
+	getFrameCounter() {
+		return this.frameCounter;
+	}
+	setFrameCounter(frames) {
+		this.frameCounter = frames;
+	}
+	incrementFrames() {
+		this.frameCounter = this.frameCounter + 1;
 	}
 }
