@@ -56,6 +56,7 @@ export default class Game extends Phaser.Scene {
 		);
 		this.load.image("enemyBullet", "../../assets/Bullet/EnemyBullet.png");
 		this.load.image("Dakannon", "../../assets/Enemies/DakanIdle.png");
+		this.load.image("DroneSpread", "../../assets/Enemies/DroneSpreadIdle1.png");
 		this.load.path = "../../assets/SpriteSheets/";
 		this.load.aseprite(
 			"playerSprites",
@@ -64,7 +65,6 @@ export default class Game extends Phaser.Scene {
 		);
 	}
 	create() {
-		this.rotation = 0;
 		this.anims.createFromAseprite("playerSprites");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
@@ -118,7 +118,7 @@ export default class Game extends Phaser.Scene {
 			right: Phaser.Input.Keyboard.KeyCodes.D,
 			space: Phaser.Input.Keyboard.KeyCodes.SPACE,
 		});
-		if (this.enemies.getLength() <= 3) {
+		if (this.enemies.getLength() <= 1) {
 			let randX = this.getRandomInt(0, 500);
 			let randY = this.getRandomInt(0, 200);
 			let enemy = new Dakannon(this, randX, randY, "Dakannon");

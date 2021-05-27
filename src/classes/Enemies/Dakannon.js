@@ -4,7 +4,7 @@ export default class Dakannon extends Enemy {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
 		console.log("Dakannon created");
-		this.setHp(8);
+		this.setHp(6);
 		this.setValue(20);
 		this.setFrameCounter(50);
 	}
