@@ -3,6 +3,7 @@ import Player from "../classes/Player.js";
 import Enemy from "../classes/Enemy.js";
 import Bullet from "../classes/Bullet.js";
 import Dakannon from "../classes/Enemies/Dakannon.js";
+import DroneSpread from "../classes/Enemies/DroneSpread.js";
 
 export default class Game extends Phaser.Scene {
 	constructor() {
@@ -68,7 +69,7 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("playerSprites");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
-
+		this.enemyBucket = ["Dakannon", "DroneSpread"];
 		this.playerBullets = this.physics.add.group();
 		this.playerBullets.defaults = {};
 
@@ -118,12 +119,20 @@ export default class Game extends Phaser.Scene {
 			right: Phaser.Input.Keyboard.KeyCodes.D,
 			space: Phaser.Input.Keyboard.KeyCodes.SPACE,
 		});
-		if (this.enemies.getLength() <= 1) {
-			let randX = this.getRandomInt(0, 500);
-			let randY = this.getRandomInt(0, 200);
-			let enemy = new Dakannon(this, randX, randY, "Dakannon");
+		if (this.enemies.getLength() <= 2) {
+			let bucketInt = this.getRandomInt(0, 2);
+			let enemyToGrab = this.enemyBucket[bucketInt];
+			let randX = this.getRandomInt(0, 501);
+			let randY = this.getRandomInt(0, 201);
+			if (enemyToGrab == "Dakannon") {
+				let enemy = new Dakannon(this, randX, randY, "Dakannon");
 
-			this.enemies.add(enemy);
+				this.enemies.add(enemy);
+			} else {
+				let enemy = new DroneSpread(this, randX, randY, "DroneSpread");
+
+				this.enemies.add(enemy);
+			}
 		}
 
 		let moving = false;
