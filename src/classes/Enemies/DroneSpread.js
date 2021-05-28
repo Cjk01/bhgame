@@ -26,17 +26,17 @@ export default class DroneSpread extends Enemy {
 		let xCount = 0;
 		let yCount = 200;
 		for (let i = 0; i < 6; i++) {
+			let vec2 = this.scene.physics.velocityFromAngle(xCount, yCount);
 			let bullet = new Bullet(
 				this.scene,
 				this.x,
 				this.y,
 				"enemyBullet",
-				xCount,
-				yCount
+				vec2.x,
+				vec2.y
 			);
 			this.scene.bullets.add(bullet);
 			xCount += 45;
-			yCount -= 90;
 		}
 	}
 }
