@@ -25,7 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		let playerShotLeft = new Bullet(
 			this.scene,
 			this.x + 8,
-			this.y - 32,
+			this.y,
 			"playerLaser",
 			0,
 			-600
@@ -33,7 +33,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		let playerShotRight = new Bullet(
 			this.scene,
 			this.x - 8,
-			this.y - 32,
+			this.y,
 			"playerLaser",
 			0,
 			-600
