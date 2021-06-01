@@ -69,6 +69,7 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("playerSprites");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
+
 		this.enemyBucket = ["Dakannon", "DroneSpread"];
 		this.playerBullets = this.physics.add.group();
 		this.playerBullets.defaults = {};
