@@ -20,6 +20,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 			this.scene.player.setScore(
 				this.scene.player.getScore() + this.getValue()
 			);
+			this.scene.score.setText("Score: " + this.scene.player.getScore());
 
 			this.destroy();
 		}

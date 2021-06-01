@@ -9,11 +9,10 @@ export default class DroneSpread extends Enemy {
 		this.setFrameCounter(120);
 		this.setMovementSpeed(3);
 		this.down = true;
-		this.scene.physics.accelerateTo(this, this.x, 680, 50, 40, 300);
+		this.scene.physics.accelerateTo(this, this.x, 680, 250, 40, 400);
 	}
 	move() {
 		if (this.getFrameCounter() >= 120) {
-			// movement logic here :
 			if (this.y >= 680 && this.down) {
 				this.scene.physics.accelerateTo(this, this.x - 100, 20, 50, 40, 300);
 				this.down = false;

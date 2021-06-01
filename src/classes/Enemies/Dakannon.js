@@ -12,6 +12,7 @@ export default class Dakannon extends Enemy {
 		// teleporting to an x position within 20 of the player
 		if (this.getFrameCounter() >= 100) {
 			this.x = this.scene.player.x + this.scene.getRandomInt(-70, 71);
+
 			if (this.scene.player.y - this.y > 100) {
 				this.y += 50;
 			} else {
