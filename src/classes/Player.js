@@ -38,6 +38,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			0,
 			-600
 		);
+
 		this.scene.playerBullets.add(playerShotLeft);
 		this.scene.playerBullets.add(playerShotRight);
 		this.setFramesSinceLastShot(0);

@@ -64,9 +64,11 @@ export default class Game extends Phaser.Scene {
 			"PlayerShipSheet.png",
 			"PlayerShipSheet.json"
 		);
+		this.load.aseprite("AllBullets", "AllBullets.png", "AllBullets.json");
 	}
 	create() {
 		this.anims.createFromAseprite("playerSprites");
+		this.anims.createFromAseprite("AllBullets");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
 

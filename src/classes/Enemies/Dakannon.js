@@ -6,11 +6,11 @@ export default class Dakannon extends Enemy {
 		console.log("Dakannon created");
 		this.setHp(6);
 		this.setValue(20);
-		this.setFrameCounter(50);
+		this.setFrameCounter(100);
 	}
 	move() {
 		// teleporting to an x position within 20 of the player
-		if (this.getFrameCounter() >= 50) {
+		if (this.getFrameCounter() >= 100) {
 			this.x = this.scene.player.x + this.scene.getRandomInt(-70, 71);
 			if (this.scene.player.y - this.y > 100) {
 				this.y += 50;
@@ -31,7 +31,7 @@ export default class Dakannon extends Enemy {
 			"enemyBullet",
 			0,
 			300
-		);
+		).play({ key: "PinkSwirl", repeat: -1 });
 		let b2 = new Bullet(
 			this.scene,
 			this.x - this.width / 2,
@@ -39,7 +39,7 @@ export default class Dakannon extends Enemy {
 			"enemyBullet",
 			-200,
 			300
-		);
+		).play({ key: "PinkSwirl", repeat: -1 });
 		let b3 = new Bullet(
 			this.scene,
 			this.x + this.width / 2,
@@ -47,7 +47,7 @@ export default class Dakannon extends Enemy {
 			"enemyBullet",
 			200,
 			300
-		);
+		).play({ key: "PinkSwirl", repeat: -1 });
 		this.scene.bullets.add(b1);
 		this.scene.bullets.add(b2);
 		this.scene.bullets.add(b3);

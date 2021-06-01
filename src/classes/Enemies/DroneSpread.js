@@ -6,13 +6,13 @@ export default class DroneSpread extends Enemy {
 		console.log("Dakannon created");
 		this.setHp(5);
 		this.setValue(30);
-		this.setFrameCounter(40);
+		this.setFrameCounter(120);
 		this.setMovementSpeed(3);
 		this.down = true;
 		this.scene.physics.accelerateTo(this, this.x, 680, 50, 40, 300);
 	}
 	move() {
-		if (this.getFrameCounter() >= 40) {
+		if (this.getFrameCounter() >= 120) {
 			// movement logic here :
 			if (this.y >= 680 && this.down) {
 				this.scene.physics.accelerateTo(this, this.x - 100, 20, 50, 40, 300);
@@ -37,7 +37,7 @@ export default class DroneSpread extends Enemy {
 				"enemyBullet",
 				vec2.x,
 				vec2.y
-			);
+			).play({ key: "GreenCircle", repeat: -1 });
 			this.scene.bullets.add(bullet);
 			xCount += 45;
 		}
