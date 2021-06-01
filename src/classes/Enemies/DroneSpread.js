@@ -14,10 +14,10 @@ export default class DroneSpread extends Enemy {
 	move() {
 		if (this.getFrameCounter() >= 120) {
 			if (this.y >= 680 && this.down) {
-				this.scene.physics.accelerateTo(this, this.x - 100, 20, 50, 40, 300);
+				this.scene.physics.accelerateTo(this, this.x - 100, 100, 50, 40, 300);
 				this.down = false;
 			} else if (this.down === false && this.y <= 30) {
-				this.scene.physics.accelerateTo(this, this.x + 100, 680, 50, 40, 300);
+				this.scene.physics.accelerateTo(this, this.x + 100, 600, 50, 40, 300);
 				this.down = true;
 			}
 			this.shoot();
@@ -36,7 +36,7 @@ export default class DroneSpread extends Enemy {
 				"enemyBullet",
 				vec2.x,
 				vec2.y
-			).play({ key: "GreenCircle", repeat: -1 });
+			).play({ key: "BlueSpin", repeat: -1 });
 			this.scene.bullets.add(bullet);
 			xCount += 45;
 		}

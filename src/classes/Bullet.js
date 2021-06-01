@@ -8,4 +8,5 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.setVelocityY(velY);
 		//console.log("Bullet object created");
 	}
+	update() {}
 }

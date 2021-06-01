@@ -71,7 +71,8 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("AllBullets");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
-		this.score = this.add.text(0, 0, "Score: 0", { font: '"Press Start 2P"' });
+		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
+
 		this.enemyBucket = ["Dakannon", "DroneSpread"];
 		this.playerBullets = this.physics.add.group();
 		this.playerBullets.defaults = {};
@@ -186,6 +187,9 @@ export default class Game extends Phaser.Scene {
 		for (let i = 0; i < this.enemies.getLength(); i++) {
 			this.enemies.getChildren()[i].move();
 			this.enemies.getChildren()[i].incrementFrames();
+		}
+		for (let i = 0; i < this.bullets.getLength(); i++) {
+			this.bullets.getChildren()[i].update();
 		}
 	}
 }
