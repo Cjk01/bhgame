@@ -34,7 +34,7 @@ export default class TrackingBullet extends Bullet {
 			);
 		} else {
 			this.setTracking(false);
-			// make sure velX and velY arent 0 fix bug
+
 			if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
 				this.setTracking(true);
 			}
