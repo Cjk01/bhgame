@@ -15,6 +15,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 	gotHit() {
 		console.log("enemy: " + this + "was hit");
+		// to be replaced with a tween
+		this.tint = 0xff0000;
 		this.setHp(this.getHp() - 1);
 		if (this.getHp() <= 0) {
 			this.scene.player.setScore(

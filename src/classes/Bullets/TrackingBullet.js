@@ -12,12 +12,11 @@ export default class TrackingBullet extends Bullet {
 			this.target.x,
 			this.target.y
 		);
-
-		/*
-        In milliseconds , how long the tracking bullet should 
-        take to reach the target. Default is 5000 ms === 5 seconds
-        */
-		this.maxTime = 1000;
+		this.maxTime = 2000;
+		this.setAngle(
+			this.scene.physics.moveToObject(this, this.target, null, this.maxTime) *
+				(180 / Math.PI)
+		);
 	}
 	update() {
 		if (
@@ -35,6 +34,10 @@ export default class TrackingBullet extends Bullet {
 			);
 		} else {
 			this.setTracking(false);
+			// make sure velX and velY arent 0 fix bug
+			if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
+				this.setTracking(true);
+			}
 		}
 	}
 	getMaxTime() {

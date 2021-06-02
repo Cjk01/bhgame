@@ -26,13 +26,25 @@ export default class Dakannon extends Enemy {
 		}
 	}
 	shoot() {
-		let b1 = new TrackingBullet(
-			this.scene,
-			this.x,
-			this.y + 30,
-			"enemyBullet",
-			this.scene.player
-		).play({ key: "PinkSwirl", repeat: -1 });
-		this.scene.bullets.add(b1);
+		let xIncrement = 20;
+		let xPos = 0;
+		let negFlag = 1;
+		for (let i = 0; i < 7; i++) {
+			let b1 = new TrackingBullet(
+				this.scene,
+				this.x + xPos * negFlag,
+				this.y + 20,
+				"",
+				this.scene.player
+			).play({ key: "PinkSwirl", repeat: -1 });
+
+			this.scene.bullets.add(b1);
+			xPos += xIncrement;
+			if (negFlag) {
+				negFlag = -1;
+			} else {
+				negFlag = 1;
+			}
+		}
 	}
 }

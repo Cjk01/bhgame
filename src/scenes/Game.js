@@ -190,6 +190,7 @@ export default class Game extends Phaser.Scene {
 		}
 		for (let i = 0; i < this.bullets.getLength(); i++) {
 			this.bullets.getChildren()[i].update();
+			this.bullets.getChildren()[i].destroyIfOutOfBounds();
 		}
 	}
 }

@@ -5,8 +5,12 @@ console.log("app.js loaded");
 
 export default new Phaser.Game({
 	type: Phaser.AUTO,
-	width: 500,
-	height: 700,
+	scale: {
+		mode: Phaser.Scale.FIT,
+		autoCenter: Phaser.Scale.CENTER_BOTH,
+		width: 500,
+		height: 700,
+	},
 	parent: "container",
 	autoCenter: Phaser.Scale.CENTER_BOTH,
 	physics: {
