@@ -1,0 +1,103 @@
+{ "frames": {
+   "0": {
+    "frame": { "x": 1, "y": 1, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "1": {
+    "frame": { "x": 18, "y": 1, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "2": {
+    "frame": { "x": 35, "y": 1, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "3": {
+    "frame": { "x": 52, "y": 1, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "4": {
+    "frame": { "x": 1, "y": 35, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "5": {
+    "frame": { "x": 18, "y": 35, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "6": {
+    "frame": { "x": 35, "y": 35, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "7": {
+    "frame": { "x": 52, "y": 35, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "8": {
+    "frame": { "x": 1, "y": 69, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   },
+   "9": {
+    "frame": { "x": 18, "y": 69, "w": 16, "h": 33 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 14, "h": 31 },
+    "sourceSize": { "w": 14, "h": 31 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27",
+  "image": "BlastBullet-M.png",
+  "format": "RGBA8888",
+  "size": { "w": 68, "h": 102 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "BlueBlast-M", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "GreenBlast-M", "from": 2, "to": 3, "direction": "forward" },
+   { "name": "PinkBlast-M", "from": 4, "to": 5, "direction": "forward" },
+   { "name": "PurpleBlast-M", "from": 6, "to": 7, "direction": "forward" },
+   { "name": "RedBlast-M", "from": 8, "to": 9, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
