@@ -139,41 +139,17 @@ export default class Game extends Phaser.Scene {
 			}
 		}
 
-		let moving = false;
 		if (cursors.left.isDown) {
-			if (this.player.anims.isPlaying) {
-				this.player.play("ShipLeftTilt", true);
-			}
-
-			if (this.player.anims.currentFrame.isLast) {
-				this.player.anims.pause();
-			}
 			this.player.x -= this.player.getMovementSpeed();
-			moving = true;
 		}
 		if (cursors.right.isDown && !cursors.left.isDown) {
-			if (this.player.anims.isPlaying) {
-				this.player.play("ShipRightTilt", true);
-			}
-
-			if (this.player.anims.currentFrame.isLast) {
-				this.player.anims.pause();
-			}
 			this.player.x += this.player.getMovementSpeed();
-			moving = true;
 		}
 		if (cursors.up.isDown) {
-			this.player.play("ShipIdle", true);
 			this.player.y -= this.player.getMovementSpeed();
-			moving = true;
 		}
 		if (cursors.down.isDown && !cursors.up.isDown) {
-			this.player.play("ShipIdle", true);
 			this.player.y += this.player.getMovementSpeed();
-			moving = true;
-		}
-		if (!moving) {
-			this.player.play("ShipIdle", true);
 		}
 
 		if (cursors.space.isDown && this.player.getFramesSinceLastShot() >= 15) {
@@ -191,6 +167,9 @@ export default class Game extends Phaser.Scene {
 		for (let i = 0; i < this.bullets.getLength(); i++) {
 			this.bullets.getChildren()[i].update();
 			this.bullets.getChildren()[i].destroyIfOutOfBounds();
+		}
+		if (!this.player.anims.isPlaying) {
+			this.player.play("ShipIdle");
 		}
 	}
 }

@@ -16,6 +16,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		console.log("player object created");
 	}
 	gotHit() {
+		this.play({ key: "ShipExplosion" });
 		this.setLives(this.getLives() - 1);
 		if (this.getLives() <= 0) {
 			console.log("game over");
