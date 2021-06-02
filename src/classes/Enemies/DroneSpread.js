@@ -37,6 +37,7 @@ export default class DroneSpread extends Enemy {
 				vec2.x,
 				vec2.y
 			).play({ key: "BlueSpin", repeat: -1 });
+
 			this.scene.bullets.add(bullet);
 			xCount += 45;
 		}
