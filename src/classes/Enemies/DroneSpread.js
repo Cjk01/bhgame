@@ -10,12 +10,21 @@ export default class DroneSpread extends Enemy {
 		this.setMovementSpeed(3);
 	}
 	move() {
+		// pattern: move towards the player's position and shoot
 		if (this.getStepCounter() >= this.getStepLimit()) {
+			this.scene.physics.moveTo(
+				this,
+				this.scene.player.x,
+				this.scene.player.y,
+				120,
+				3000
+			);
 			this.shoot();
 			this.setStepCounter(0);
 		}
 	}
 	shoot() {
+		// shoots a circular pattern of bullets around the sprite that move away from it
 		let xCount = 0;
 		let yCount = 200;
 		for (let i = 0; i < 9; i++) {
