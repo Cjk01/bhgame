@@ -64,11 +64,28 @@ export default class Game extends Phaser.Scene {
 			"PlayerShipSheet.png",
 			"PlayerShipSheet.json"
 		);
-		this.load.aseprite("AllBullets", "AllBullets.png", "AllBullets.json");
+		this.load.aseprite("BallBullets", "BallBullet-S.png", "BallBullet-S.json");
+		this.load.aseprite(
+			"BlastBullets",
+			"BlastBullet-M.png",
+			"BlastBullet-M.json "
+		);
+		this.load.aseprite(
+			"SpiralBullets",
+			"SpiralBullet-L.png",
+			"SpiralBullet-L.json "
+		);
+		this.load.aseprite(
+			"SwirlBullets",
+			"SwirlBullet-L.png",
+			"SwirlBullet-L.json "
+		);
 	}
 	create() {
 		this.anims.createFromAseprite("playerSprites");
-		this.anims.createFromAseprite("AllBullets");
+		this.anims.createFromAseprite("BlastBullets");
+		this.anims.createFromAseprite("SpiralBullets");
+		this.anims.createFromAseprite("SwirlBullets");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
