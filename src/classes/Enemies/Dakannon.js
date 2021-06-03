@@ -4,14 +4,15 @@ import TrackingBullet from "../Bullets/TrackingBullet.js";
 export default class Dakannon extends Enemy {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
-		console.log("Dakannon created");
+
 		this.setHp(6);
 		this.setValue(20);
-		this.setFrameCounter(100);
+		this.setStepCounter(100);
+		this.setStepLimit(100);
 	}
 	move() {
 		// teleporting to an x position within 20 of the player
-		if (this.getFrameCounter() >= 100) {
+		if (this.getStepCounter() >= this.getStepLimit()) {
 			this.x = this.scene.player.x + this.scene.getRandomInt(-70, 71);
 
 			if (this.scene.player.y - this.y > 100) {
@@ -22,11 +23,11 @@ export default class Dakannon extends Enemy {
 
 			this.shoot();
 
-			this.setFrameCounter(0);
+			this.setStepCounter(0);
 		}
 	}
 	shoot() {
-		let xIncrement = 20;
+		let xIncrement = 50;
 		let xPos = 0;
 		let negFlag = 1;
 		for (let i = 0; i < 7; i++) {

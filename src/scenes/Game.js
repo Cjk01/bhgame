@@ -80,12 +80,14 @@ export default class Game extends Phaser.Scene {
 			"SwirlBullet-L.png",
 			"SwirlBullet-L.json "
 		);
+		this.load.aseprite("BallBullets", "BallBullet-S.png", "BallBullet-S.json ");
 	}
 	create() {
 		this.anims.createFromAseprite("playerSprites");
 		this.anims.createFromAseprite("BlastBullets");
 		this.anims.createFromAseprite("SpiralBullets");
 		this.anims.createFromAseprite("SwirlBullets");
+		this.anims.createFromAseprite("BallBullets");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
@@ -169,17 +171,17 @@ export default class Game extends Phaser.Scene {
 			this.player.y += this.player.getMovementSpeed();
 		}
 
-		if (cursors.space.isDown && this.player.getFramesSinceLastShot() >= 15) {
+		if (cursors.space.isDown && this.player.getStepsSinceLastShot() >= 15) {
 			console.log("firing bullet");
 			this.player.shoot();
 		} else {
-			this.player.setFramesSinceLastShot(
-				this.player.getFramesSinceLastShot() + 1
+			this.player.setStepsSinceLastShot(
+				this.player.getStepsSinceLastShot() + 1
 			);
 		}
 		for (let i = 0; i < this.enemies.getLength(); i++) {
 			this.enemies.getChildren()[i].move();
-			this.enemies.getChildren()[i].incrementFrames();
+			this.enemies.getChildren()[i].incrementSteps();
 		}
 		for (let i = 0; i < this.bullets.getLength(); i++) {
 			this.bullets.getChildren()[i].update();

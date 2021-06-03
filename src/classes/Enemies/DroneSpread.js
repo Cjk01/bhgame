@@ -3,33 +3,16 @@ import Bullet from "../Bullet.js";
 export default class DroneSpread extends Enemy {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
-		console.log("Dakannon created");
-
 		this.setHp(5);
 		this.setValue(30);
-		this.setFrameCounter(120);
+		this.setStepCounter(240);
+		this.setStepLimit(240);
 		this.setMovementSpeed(3);
-
-		this.scene.physics.accelerateTo(
-			this,
-			this.x + 100,
-			this.y + 50,
-			250,
-			250,
-			300
-		);
 	}
 	move() {
-		if (this.getFrameCounter() >= 120) {
-			if (this.y >= 680 && this.down) {
-				this.scene.physics.accelerateTo(this, 100, 100, this.y - 50, 70, 400);
-				this.down = false;
-			} else if (this.down === false && this.y <= 30) {
-				this.scene.physics.accelerateTo(this, 600, this.y + 50, 50, 70, 400);
-				this.down = true;
-			}
+		if (this.getStepCounter() >= this.getStepLimit()) {
 			this.shoot();
-			this.setFrameCounter(0);
+			this.setStepCounter(0);
 		}
 	}
 	shoot() {
@@ -44,8 +27,8 @@ export default class DroneSpread extends Enemy {
 				"",
 				vec2.x,
 				vec2.y
-			).play({ key: "BlueBall-S", repeat: -1 });
-
+			).play({ key: "BlueSwirl-L", repeat: -1 });
+			bullet.setCircle(bullet.width / 2);
 			this.scene.bullets.add(bullet);
 			xCount += 45;
 		}

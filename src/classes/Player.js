@@ -10,7 +10,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.scene = scene;
 		this.lives = 3;
 		this.movementSpeed = 5;
-		this.framesSinceLastShot = 15;
+		this.stepsSinceLastShot = 15;
 		this.score = 0;
 		this.bombs = 2;
 		console.log("player object created");
@@ -42,7 +42,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 		this.scene.playerBullets.add(playerShotLeft);
 		this.scene.playerBullets.add(playerShotRight);
-		this.setFramesSinceLastShot(0);
+		this.setStepsSinceLastShot(0);
 	}
 	getLives() {
 		return this.lives;
@@ -69,10 +69,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	setMovementSpeed(speed) {
 		this.movementSpeed = speed;
 	}
-	getFramesSinceLastShot() {
-		return this.framesSinceLastShot;
+	getStepsSinceLastShot() {
+		return this.stepsSinceLastShot;
 	}
-	setFramesSinceLastShot(frames) {
-		this.framesSinceLastShot = frames;
+	setStepsSinceLastShot(steps) {
+		this.stepsSinceLastShot = steps;
 	}
 }

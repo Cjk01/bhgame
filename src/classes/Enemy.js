@@ -8,7 +8,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.movementSpeed = 1;
 		this.hp = 1;
 		this.value = 1;
-		this.frameCounter = 0;
+		this.stepCounter = 0;
+		this.stepLimit = 0;
 
 		console.log("enemy object created");
 	}
@@ -52,13 +53,19 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	setMovementSpeed(speed) {
 		this.movementSpeed = speed;
 	}
-	getFrameCounter() {
-		return this.frameCounter;
+	getStepCounter() {
+		return this.stepCounter;
 	}
-	setFrameCounter(frames) {
-		this.frameCounter = frames;
+	setStepCounter(steps) {
+		this.stepCounter = steps;
 	}
-	incrementFrames() {
-		this.frameCounter = this.frameCounter + 1;
+	incrementSteps() {
+		this.stepCounter = this.stepCounter + 1;
+	}
+	getStepLimit() {
+		return this.stepLimit;
+	}
+	setStepLimit(limit) {
+		this.stepLimit = limit;
 	}
 }
