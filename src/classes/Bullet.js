@@ -6,9 +6,10 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.setImmovable(true);
 		this.setVelocityX(velX);
 		this.setVelocityY(velY);
-
-		//console.log("Bullet object created");
+		this.stepCounter = 0;
+		this.stepLimit = 0;
 	}
+
 	update() {}
 	destroyIfOutOfBounds() {
 		if (
@@ -20,5 +21,20 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 			console.log("Destroying bullet at : " + " x: " + this.x + "y: " + this.y);
 			this.destroy();
 		}
+	}
+	getStepCount() {
+		return this.stepCounter;
+	}
+	getStepLimit() {
+		return this.stepLimit;
+	}
+	setStepCount(steps) {
+		this.stepCounter = steps;
+	}
+	setStepLimit(steps) {
+		this.stepLimit = steps;
+	}
+	incrementStepCount() {
+		this.setStepCount(this.getStepCount() + 1);
 	}
 }

@@ -7,18 +7,16 @@ export default class Dakannon extends Enemy {
 
 		this.setHp(6);
 		this.setValue(20);
-		this.setStepCounter(0);
-		this.setStepLimit(360);
-		this.setVelocityY(100);
+		this.setStepCounter(180);
+		this.setStepLimit(180);
 	}
 	move() {
 		// the enemy moves forward in a sinewave pattern
 		if (this.getStepCounter() >= this.getStepLimit()) {
 			this.shoot();
-			this.setVelocityY(-100);
+			this.x = this.scene.getRandomInt(0, this.scene.game.canvas.width);
 			this.setStepCounter(0);
 		}
-		this.x += Math.sin(this.getStepCounter() * (Math.PI / 180));
 	}
 	shoot() {
 		let xIncrement = 50;

@@ -1,5 +1,6 @@
 import Enemy from "../Enemy.js";
 import Bullet from "../Bullet.js";
+import SinewaveBullet from "../Bullets/SinewaveBullet.js";
 export default class DroneSpread extends Enemy {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
@@ -24,8 +25,15 @@ export default class DroneSpread extends Enemy {
 		}
 	}
 	shoot() {
+		let bullet = new SinewaveBullet(this.scene, this.x, this.y, "").play({
+			key: "BlueSwirl-L",
+			repeat: -1,
+		});
+		bullet.setVelocityY(50);
+		this.scene.bullets.add(bullet);
+
 		// shoots a circular pattern of bullets around the sprite that move away from it
-		let xCount = 0;
+		/* 	let xCount = 0;
 		let yCount = 200;
 		for (let i = 0; i < 9; i++) {
 			let vec2 = this.scene.physics.velocityFromAngle(xCount, yCount);
@@ -39,7 +47,6 @@ export default class DroneSpread extends Enemy {
 			).play({ key: "BlueSwirl-L", repeat: -1 });
 			bullet.setCircle(bullet.width / 2);
 			this.scene.bullets.add(bullet);
-			xCount += 45;
-		}
+			xCount += 45; */
 	}
 }
