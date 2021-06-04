@@ -56,7 +56,7 @@ export default class Game extends Phaser.Scene {
 			"../../assets/playerSprites/PlayerShipLaser.png"
 		);
 		this.load.image("enemyBullet", "../../assets/Bullet/EnemyBullet.png");
-		this.load.image("Dakannon", "../../assets/Enemies/DakanIdle.png");
+
 		this.load.image("DroneSpread", "../../assets/Enemies/DroneSpreadIdle1.png");
 		this.load.path = "../../assets/SpriteSheets/";
 		this.load.aseprite(
@@ -81,6 +81,11 @@ export default class Game extends Phaser.Scene {
 			"SwirlBullet-L.json "
 		);
 		this.load.aseprite("BallBullets", "BallBullet-S.png", "BallBullet-S.json ");
+		this.load.aseprite(
+			"Dakannon",
+			"EnemiesSpriteSheet/Dakannon.png",
+			"EnemiesSpriteSheet/Dakannon.json"
+		);
 	}
 	create() {
 		this.anims.createFromAseprite("playerSprites");
@@ -88,6 +93,7 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("SpiralBullets");
 		this.anims.createFromAseprite("SwirlBullets");
 		this.anims.createFromAseprite("BallBullets");
+		this.anims.createFromAseprite("Dakannon");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "player1");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
@@ -148,7 +154,7 @@ export default class Game extends Phaser.Scene {
 			let randX = this.getRandomInt(0, 501);
 			let randY = this.getRandomInt(0, 201);
 			if (enemyToGrab == "Dakannon") {
-				let enemy = new Dakannon(this, randX, randY, "Dakannon");
+				let enemy = new Dakannon(this, randX, randY, "DakanIdle");
 
 				this.enemies.add(enemy);
 			} else {

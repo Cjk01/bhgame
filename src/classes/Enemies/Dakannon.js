@@ -15,6 +15,7 @@ export default class Dakannon extends Enemy {
 		if (this.getStepCounter() >= this.getStepLimit()) {
 			this.shoot();
 			this.x = this.scene.getRandomInt(0, this.scene.game.canvas.width);
+			this.play({ key: "DakanTeleport" });
 			this.setStepCounter(0);
 		}
 	}
@@ -32,6 +33,7 @@ export default class Dakannon extends Enemy {
 			).play({ key: "RedSpiral-L", repeat: -1 });
 			b1.setCircle(b1.width / 2);
 			this.scene.bullets.add(b1);
+			this.play({ key: "DakanShoot" });
 			xPos += xIncrement;
 			if (negFlag) {
 				negFlag = -1;
