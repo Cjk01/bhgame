@@ -25,28 +25,18 @@ export default class DroneSpread extends Enemy {
 		}
 	}
 	shoot() {
-		let bullet = new SinewaveBullet(this.scene, this.x, this.y, "").play({
-			key: "BlueSwirl-L",
-			repeat: -1,
-		});
-		bullet.setVelocityY(50);
-		this.scene.bullets.add(bullet);
-
 		// shoots a circular pattern of bullets around the sprite that move away from it
-		/* 	let xCount = 0;
-		let yCount = 200;
+
 		for (let i = 0; i < 9; i++) {
-			let vec2 = this.scene.physics.velocityFromAngle(xCount, yCount);
-			let bullet = new Bullet(
+			let bullet = new SinewaveBullet(
 				this.scene,
-				this.x,
+				this.x + 40 * i + 1,
 				this.y,
-				"",
-				vec2.x,
-				vec2.y
+				""
 			).play({ key: "BlueSwirl-L", repeat: -1 });
 			bullet.setCircle(bullet.width / 2);
+			bullet.setVelocityY(100);
 			this.scene.bullets.add(bullet);
-			xCount += 45; */
+		}
 	}
 }

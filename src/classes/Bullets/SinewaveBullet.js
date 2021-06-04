@@ -13,14 +13,14 @@ export default class SinewaveBullet extends Bullet {
 		let A = this.getAmplitude();
 		let B = this.getPeriod();
 		let C = this.getPhaseShift();
-		let D = thi.getVerticalShift();
-		return A * Math.sin(B * (this.getStepCount() + C)) + D;
+		let D = this.getVerticalShift();
+		return A * Math.sin((B * (this.getStepCount() + C) * Math.PI) / 180) + D;
 	}
 	update() {
 		if (this.getStepCount() >= this.getStepLimit()) {
 			this.setStepCount(0);
 		}
-		this.x += 2 * Math.sin(this.getStepCount() * (Math.PI / 180));
+		this.x += this.currentSinValue();
 	}
 	getAmplitude() {
 		return this.amplitude;
