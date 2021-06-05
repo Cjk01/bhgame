@@ -13,11 +13,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.stepsSinceLastShot = 15;
 		this.score = 0;
 		this.bombs = 2;
+		this.on("animationcomplete", () => {
+			this.play({ key: "PlayerShipIdle", repeat: -1 });
+		});
 		console.log("player object created");
 	}
 	gotHit() {
 		this.play({ key: "PlayerShipExplosion" });
+
 		this.setLives(this.getLives() - 1);
+
 		if (this.getLives() <= 0) {
 			console.log("game over");
 		}

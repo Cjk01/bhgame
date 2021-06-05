@@ -1,3 +1,4 @@
+import Bullet from "./Bullet.js";
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
@@ -33,6 +34,26 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 	shoot() {
 		// to be overriden by the extending class
+	}
+	shootAtAngle(angle, amount, increment, textureName, speed, shiftX, shiftY) {
+		let ang = angle;
+		let amt = amount | 1;
+		let inc = increment | 0;
+		let sX = shiftX | 0;
+		let sY = shiftY | 0;
+		for (let i = 0; i < amt; i++) {
+			let vec = this.scene.physics.velocityFromAngle(ang, speed);
+			let bullet = new Bullet(
+				this.scene,
+				this.x + sX,
+				this.y + sY,
+				"",
+				vec.x,
+				vec.y
+			).play({ key: textureName, repeat: -1 });
+			this.scene.bullets.add(bullet);
+			ang += inc;
+		}
 	}
 
 	getValue() {

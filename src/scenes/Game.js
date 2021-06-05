@@ -95,7 +95,10 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("BallBullets");
 		this.anims.createFromAseprite("Dakannon");
 		this.add.image(250, 350, "background");
-		this.player = new Player(this, 250, 600, "player1");
+		this.player = new Player(this, 250, 600, "").play({
+			key: "PlayerShipIdle",
+			repeat: -1,
+		});
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
 
 		this.enemyBucket = ["Dakannon", "DroneSpread"];
@@ -154,7 +157,10 @@ export default class Game extends Phaser.Scene {
 			let randX = this.getRandomInt(0, 501);
 			let randY = this.getRandomInt(0, 201);
 			if (enemyToGrab == "Dakannon") {
-				let enemy = new Dakannon(this, randX, randY, "DakanIdle");
+				let enemy = new Dakannon(this, randX, randY, "").play({
+					key: "DakanIdle",
+					repeat: -1,
+				});
 
 				this.enemies.add(enemy);
 			} else {
@@ -193,9 +199,6 @@ export default class Game extends Phaser.Scene {
 			this.bullets.getChildren()[i].update();
 			this.bullets.getChildren()[i].incrementStepCount();
 			this.bullets.getChildren()[i].destroyIfOutOfBounds();
-		}
-		if (!this.player.anims.isPlaying) {
-			this.player.play("PlayerShipIdle");
 		}
 	}
 }

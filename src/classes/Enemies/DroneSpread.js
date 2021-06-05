@@ -38,7 +38,6 @@ export default class DroneSpread extends Enemy {
 				0,
 				0
 			).play({ key: "BlueSwirl-L", repeat: -1 });
-			bullet.setCircle(bullet.width / 2);
 			bullet.setVelocityY(100);
 			this.scene.bullets.add(bullet);
 		}
