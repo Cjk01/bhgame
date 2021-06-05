@@ -4,14 +4,15 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 		scene.add.existing(this);
 		scene.physics.add.existing(this);
 		this.setImmovable(true);
-		this.setCircle(this.displayWidth / 2);
 		this.setVelocityX(velX);
 		this.setVelocityY(velY);
 		this.stepCounter = 0;
 		this.stepLimit = 0;
 	}
 
-	update() {}
+	update() {
+		this.setCircle(this.displayWidth / 2);
+	}
 	destroyIfOutOfBounds() {
 		if (
 			this.x > this.scene.game.canvas.width ||

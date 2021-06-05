@@ -27,7 +27,7 @@ export default class Dakannon extends Enemy {
 			this.scene.getRandomInt(0, 81),
 			5,
 			20,
-			"BlueSwirl-L",
+			"BlueBall",
 			150,
 			0,
 			20
