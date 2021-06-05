@@ -64,7 +64,7 @@ export default class Game extends Phaser.Scene {
 			"PlayerShipSheet.png",
 			"PlayerShipSheet.json"
 		);
-		this.load.aseprite("BallBullets", "BallBullet-S.png", "BallBullet-S.json");
+
 		this.load.aseprite(
 			"BlastBullets",
 			"BlastBullet-M.png",

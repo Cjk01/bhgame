@@ -51,6 +51,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 				vec.x,
 				vec.y
 			).play({ key: textureName, repeat: -1 });
+
 			this.scene.bullets.add(bullet);
 			ang += inc;
 		}
