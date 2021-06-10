@@ -37,10 +37,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		// to be overriden by the extending class
 	}
 
-	/* 
-	returns a new instance of the object with an optional x and y position parameters
-		otherwise defaults to the instantiating object's current x and y values
-	*/
+	/**
+	 * returns a new instance of the method caller's class with an optional x and y position parameters
+	 * otherwise defaults to the instantiating object's current x and y values
+	 */
 	clone(x, y) {
 		return new this.constructor(
 			this.scene,

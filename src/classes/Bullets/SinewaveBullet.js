@@ -1,4 +1,8 @@
 import Bullet from "../Bullet.js";
+/**
+ * Customizable bullet that follows a generalized sinewave pattern.
+ * The Amplitude, Period, Phase Shift, and Vertical Shift can be modified.
+ */
 export default class SinewaveBullet extends Bullet {
 	constructor(scene, x, y, texture, A, B, C, D) {
 		super(scene, x, y, texture, 0, 0);
@@ -9,6 +13,7 @@ export default class SinewaveBullet extends Bullet {
 		this.setStepLimit(0);
 		this.setStepLimit(360);
 	}
+
 	currentSinValue() {
 		let A = this.getAmplitude();
 		let B = this.getPeriod();
