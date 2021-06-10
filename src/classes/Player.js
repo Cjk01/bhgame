@@ -16,6 +16,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.on("animationcomplete", () => {
 			this.play({ key: "PlayerShipIdle", repeat: -1 });
 		});
+		this.play({ key: "PlayerShipIdle", repeat: -1 });
 		console.log("player object created");
 	}
 	gotHit() {

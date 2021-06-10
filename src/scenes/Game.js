@@ -101,13 +101,33 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("Dakannon");
 		this.anims.createFromAseprite("Eyeball");
 		this.add.image(250, 350, "background");
-		this.player = new Player(this, 250, 600, "").play({
-			key: "PlayerShipIdle",
-			repeat: -1,
-		});
+		this.player = new Player(this, 250, 600, "");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
 
-		this.enemyBucket = ["Dakannon", "DroneSpread"];
+		this.enemyList = {
+			Dakannon: new Dakannon(this, -300, -300, "")
+				.setActive(false)
+				.setVisible(false),
+			DroneSpread: new DroneSpread(this, -300, -300, "DroneSpread")
+				.setActive(false)
+				.setVisible(false),
+		};
+		this.getRandomInt = (min, max) => {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min) + min);
+		};
+		/**
+		 * returns a non active randomly selected enemy
+		 */
+		this.generateRandomEnemy = (list) => {
+			let names = Object.keys(list);
+			let index = this.getRandomInt(0, names.length);
+			let enemyName = names[index];
+			let enemyObj = list[enemyName];
+			let newEnemy = enemyObj.clone();
+			return newEnemy;
+		};
 		this.playerBullets = this.physics.add.group();
 		this.playerBullets.defaults = {};
 
@@ -116,12 +136,6 @@ export default class Game extends Phaser.Scene {
 
 		this.bullets = this.physics.add.group();
 		this.bullets.defaults = {};
-
-		this.getRandomInt = (min, max) => {
-			min = Math.ceil(min);
-			max = Math.floor(max);
-			return Math.floor(Math.random() * (max - min) + min);
-		};
 
 		function handleEnemyHit(bullet, enemy) {
 			bullet.destroy();
@@ -157,26 +171,14 @@ export default class Game extends Phaser.Scene {
 			right: Phaser.Input.Keyboard.KeyCodes.D,
 			space: Phaser.Input.Keyboard.KeyCodes.SPACE,
 		});
-		if (this.enemies.getLength() <= 3) {
-			let bucketInt = this.getRandomInt(0, 3);
-			let enemyToGrab = this.enemyBucket[bucketInt];
-			let randX = this.getRandomInt(0, 501);
-			let randY = this.getRandomInt(0, 201);
-			if (enemyToGrab == "Dakannon") {
-				let enemy = new Dakannon(this, randX, randY, "").play({
-					key: "DakanIdle",
-					repeat: -1,
-				});
-
-				this.enemies.add(enemy);
-			} else {
-				let enemy = new DroneSpread(this, randX, randY, "DroneSpread");
-				let enemy2 = enemy.clone();
-				console.log(enemy2.getHp());
-
-				this.enemies.add(enemy);
-				this.enemies.add(enemy2);
-			}
+		while (this.enemies.getLength() <= 3) {
+			let enemy = this.generateRandomEnemy(this.enemyList);
+			let xpos = this.getRandomInt(20, this.sys.canvas.width - 20 + 1);
+			let ypos = this.getRandomInt(20, this.sys.canvas.height - 300);
+			enemy.x = xpos;
+			enemy.y = ypos;
+			enemy.setActive(true);
+			this.enemies.add(enemy);
 		}
 
 		if (cursors.left.isDown) {

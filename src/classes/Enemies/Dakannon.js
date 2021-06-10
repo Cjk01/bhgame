@@ -10,9 +10,14 @@ export default class Dakannon extends Enemy {
 		this.setValue(20);
 		this.setStepCounter(180);
 		this.setStepLimit(180);
+
 		this.on("animationcomplete", () => {
 			this.play({ key: "DakanIdle", repeat: -1 });
 			this.shoot();
+		});
+		this.play({
+			key: "DakanIdle",
+			repeat: -1,
 		});
 	}
 	move() {
