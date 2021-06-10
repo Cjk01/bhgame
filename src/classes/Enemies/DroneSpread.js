@@ -25,6 +25,6 @@ export default class DroneSpread extends Enemy {
 		}
 	}
 	shoot() {
-		this.shootAtAngle(0, 40, 9, "RedBall", 50, 0, 0);
+		this.shootAtAngle(0, 20, 5, "RedBall", 50, 0, 0);
 	}
 }

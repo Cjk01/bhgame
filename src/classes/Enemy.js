@@ -1,4 +1,5 @@
 import Bullet from "./Bullet.js";
+
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
@@ -34,6 +35,19 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 	shoot() {
 		// to be overriden by the extending class
+	}
+
+	/* 
+	returns a new instance of the object with an optional x and y position parameters
+		otherwise defaults to the instantiating object's current x and y values
+	*/
+	clone(x, y) {
+		return new this.constructor(
+			this.scene,
+			x || this.x,
+			y || this.y,
+			this.texture
+		);
 	}
 	shootAtAngle(angle, amount, increment, textureName, speed, shiftX, shiftY) {
 		let ang = angle;

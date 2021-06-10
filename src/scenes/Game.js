@@ -86,6 +86,11 @@ export default class Game extends Phaser.Scene {
 			"EnemiesSpriteSheet/Dakannon.png",
 			"EnemiesSpriteSheet/Dakannon.json"
 		);
+		this.load.aseprite(
+			"Eyeball",
+			"EnemiesSpriteSheet/Eyeball.png",
+			"EnemiesSpriteSheet/Eyeball.json"
+		);
 	}
 	create() {
 		this.anims.createFromAseprite("playerSprites");
@@ -94,6 +99,7 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("SwirlBullets");
 		this.anims.createFromAseprite("BallBullets");
 		this.anims.createFromAseprite("Dakannon");
+		this.anims.createFromAseprite("Eyeball");
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "").play({
 			key: "PlayerShipIdle",
@@ -151,8 +157,8 @@ export default class Game extends Phaser.Scene {
 			right: Phaser.Input.Keyboard.KeyCodes.D,
 			space: Phaser.Input.Keyboard.KeyCodes.SPACE,
 		});
-		if (this.enemies.getLength() <= 2) {
-			let bucketInt = this.getRandomInt(0, 2);
+		if (this.enemies.getLength() <= 3) {
+			let bucketInt = this.getRandomInt(0, 3);
 			let enemyToGrab = this.enemyBucket[bucketInt];
 			let randX = this.getRandomInt(0, 501);
 			let randY = this.getRandomInt(0, 201);
@@ -165,8 +171,11 @@ export default class Game extends Phaser.Scene {
 				this.enemies.add(enemy);
 			} else {
 				let enemy = new DroneSpread(this, randX, randY, "DroneSpread");
+				let enemy2 = enemy.clone();
+				console.log(enemy2.getHp());
 
 				this.enemies.add(enemy);
+				this.enemies.add(enemy2);
 			}
 		}
 
