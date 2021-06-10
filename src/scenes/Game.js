@@ -11,51 +11,6 @@ export default class Game extends Phaser.Scene {
 	}
 	preload() {
 		this.load.image("background", "../../assets/Background/BackgroundMoon.png");
-		this.load.image(
-			"player1",
-			"../../assets/playerSprites/PlayerShipIdle1.png"
-		);
-		this.load.image(
-			"player2",
-			"../../assets/playerSprites/PlayerShipIdle2.png"
-		);
-		this.load.image(
-			"playerLeft1",
-			"../../assets/playerSprites/PlayerShipLeftTilt1.png"
-		);
-		this.load.image(
-			"playerLeft2",
-			"../../assets/playerSprites/PlayerShipLeftTilt2.png"
-		);
-		this.load.image(
-			"playerRight1",
-			"../../assets/playerSprites/PlayerShipRightTilt1.png"
-		);
-		this.load.image(
-			"playerRight2",
-			"../../assets/playerSprites/PlayerShipRightTilt2.png"
-		);
-		this.load.image(
-			"playerBullet",
-			"../../assets/playerSprites/PlayerBullet.png"
-		);
-		this.load.image(
-			"playerExplosion1",
-			"../../assets/playerSprites/PlayerShipExplosion2.png"
-		);
-		this.load.image(
-			"playerExplosion2",
-			"../../assets/playerSprites/PlayerShipExplosion3.png"
-		);
-		this.load.image(
-			"playerExplosion3",
-			"../../assets/playerSprites/PlayerShipExplosion4.png"
-		);
-		this.load.image(
-			"playerLaser",
-			"../../assets/playerSprites/PlayerShipLaser.png"
-		);
-		this.load.image("enemyBullet", "../../assets/Bullet/EnemyBullet.png");
 
 		this.load.image("DroneSpread", "../../assets/Enemies/DroneSpreadIdle1.png");
 		this.load.path = "../../assets/SpriteSheets/";
@@ -83,14 +38,17 @@ export default class Game extends Phaser.Scene {
 		this.load.aseprite("BallBullets", "BallBullet-S.png", "BallBullet-S.json ");
 		this.load.aseprite(
 			"Dakannon",
-			"EnemiesSpriteSheet/Dakannon.png",
-			"EnemiesSpriteSheet/Dakannon.json"
+			"EnemiesSpriteSheet/Dakan.png",
+			"EnemiesSpriteSheet/Dakan.json"
 		);
 		this.load.aseprite(
 			"Eyeball",
 			"EnemiesSpriteSheet/Eyeball.png",
 			"EnemiesSpriteSheet/Eyeball.json"
 		);
+		this.load.aseprite("DroneSpread", "DroneSpread.png", "DroneSpread.json");
+		this.load.aseprite("Turtle", "turtle.png", "turtle.json");
+		this.load.aseprite("Charger", "Charger.png", "Charger.json");
 	}
 	create() {
 		this.anims.createFromAseprite("playerSprites");
@@ -100,6 +58,10 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("BallBullets");
 		this.anims.createFromAseprite("Dakannon");
 		this.anims.createFromAseprite("Eyeball");
+		this.anims.createFromAseprite("DroneSpread");
+		this.anims.createFromAseprite("Turtle");
+		this.anims.createFromAsperite("Charger");
+
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
@@ -108,7 +70,7 @@ export default class Game extends Phaser.Scene {
 			Dakannon: new Dakannon(this, -300, -300, "")
 				.setActive(false)
 				.setVisible(false),
-			DroneSpread: new DroneSpread(this, -300, -300, "DroneSpread")
+			DroneSpread: new DroneSpread(this, -300, -300, "")
 				.setActive(false)
 				.setVisible(false),
 		};

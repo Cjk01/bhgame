@@ -9,6 +9,7 @@ export default class DroneSpread extends Enemy {
 		this.setStepCounter(240);
 		this.setStepLimit(240);
 		this.setMovementSpeed(3);
+		// play anim
 	}
 	move() {
 		// pattern: move towards the player's position and shoot
