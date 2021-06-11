@@ -1,3 +1,4 @@
 # bhgame
-bullet hell game made with phaser <img src="assets/playerSprites/PlayerShipIdle1.png">
-<img src="assets/Bullet/EnemyBullet.png">
+
+bullet hell game made with phaser 3
+<img src="assets/Bullet/SpiralBullet-L.png">
