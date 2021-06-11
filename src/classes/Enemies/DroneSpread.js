@@ -9,7 +9,10 @@ export default class DroneSpread extends Enemy {
 		this.setStepCounter(240);
 		this.setStepLimit(240);
 		this.setMovementSpeed(3);
-		// play anim
+		this.play({ key: "DroneSpeadIdle", repeat: -1 });
+		this.on("animationcomplete", () => {
+			this.play({ key: "DroneSpeadIdle", repeat: -1 });
+		});
 	}
 	move() {
 		// pattern: move towards the player's position and shoot
@@ -27,5 +30,6 @@ export default class DroneSpread extends Enemy {
 	}
 	shoot() {
 		this.shootAtAngle(0, 20, 5, "RedBall", 50, 0, 0);
+		this.play({ key: "DroneSpreadShoot", repeat: 5 });
 	}
 }

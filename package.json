@@ -4,7 +4,7 @@
   "description": "canvas game",
   "main": "app.js",
   "scripts": {
-    "start": "node_modules/http-server/bin/http-server",
+    "start": "node_modules/http-server/bin/http-server -c-1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

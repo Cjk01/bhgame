@@ -12,7 +12,6 @@ export default class Game extends Phaser.Scene {
 	preload() {
 		this.load.image("background", "../../assets/Background/BackgroundMoon.png");
 
-		this.load.image("DroneSpread", "../../assets/Enemies/DroneSpreadIdle1.png");
 		this.load.path = "../../assets/SpriteSheets/";
 		this.load.aseprite(
 			"playerSprites",
@@ -46,9 +45,22 @@ export default class Game extends Phaser.Scene {
 			"EnemiesSpriteSheet/Eyeball.png",
 			"EnemiesSpriteSheet/Eyeball.json"
 		);
-		this.load.aseprite("DroneSpread", "DroneSpread.png", "DroneSpread.json");
-		this.load.aseprite("Turtle", "turtle.png", "turtle.json");
-		this.load.aseprite("Charger", "Charger.png", "Charger.json");
+		this.load.aseprite(
+			"DroneSpread",
+			"EnemiesSpriteSheet/DroneSpread.png",
+			"EnemiesSpriteSheet/DroneSpread.json"
+		);
+		this.load.aseprite(
+			"Turtle",
+			"EnemiesSpriteSheet/turtle.png",
+			"EnemiesSpriteSheet/turtle.json"
+		);
+		this.load.aseprite(
+			"Charger",
+			"EnemiesSpriteSheet/Charger.png",
+			"EnemiesSpriteSheet/Charger.json"
+		);
+		this.load.aseprite("PlayerLaser", "PlayerLaser.png", "PlayerLaser.json");
 	}
 	create() {
 		this.anims.createFromAseprite("playerSprites");
@@ -60,7 +72,8 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("Eyeball");
 		this.anims.createFromAseprite("DroneSpread");
 		this.anims.createFromAseprite("Turtle");
-		this.anims.createFromAsperite("Charger");
+		this.anims.createFromAseprite("Charger");
+		this.anims.createFromAseprite("PlayerLaser");
 
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "");
