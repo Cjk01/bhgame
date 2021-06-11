@@ -4,6 +4,7 @@ import Enemy from "../classes/Enemy.js";
 import Bullet from "../classes/Bullet.js";
 import Dakannon from "../classes/Enemies/Dakannon.js";
 import DroneSpread from "../classes/Enemies/DroneSpread.js";
+import Charger from "../classes/Enemies/Charger.js";
 
 export default class Game extends Phaser.Scene {
 	constructor() {
@@ -84,6 +85,9 @@ export default class Game extends Phaser.Scene {
 				.setActive(false)
 				.setVisible(false),
 			DroneSpread: new DroneSpread(this, -300, -300, "")
+				.setActive(false)
+				.setVisible(false),
+			Charger: new Charger(this, -300, -300, "")
 				.setActive(false)
 				.setVisible(false),
 		};

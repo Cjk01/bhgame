@@ -36,7 +36,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			"",
 			0,
 			-600
-		).play({ key: "PlayerLaser", repeat: -1 });
+		).play({ key: "PlayerShoot", repeat: -1 });
 		let playerShotRight = new Bullet(
 			this.scene,
 			this.x - 8,
@@ -44,7 +44,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			"",
 			0,
 			-600
-		).play({ key: "PlayerLaser", repeat: -1 });
+		).play({ key: "PlayerShoot", repeat: -1 });
 
 		this.scene.playerBullets.add(playerShotLeft);
 		this.scene.playerBullets.add(playerShotRight);
