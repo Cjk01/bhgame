@@ -5,6 +5,7 @@ import Bullet from "../classes/Bullet.js";
 import Dakannon from "../classes/Enemies/Dakannon.js";
 import DroneSpread from "../classes/Enemies/DroneSpread.js";
 import Charger from "../classes/Enemies/Charger.js";
+import LinkedList from "../lib/LinkedList.js";
 
 export default class Game extends Phaser.Scene {
 	constructor() {
