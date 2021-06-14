@@ -19,6 +19,7 @@ export default class TrackingBullet extends Bullet {
 		);
 	}
 	update() {
+		this.setCircle(this.displayWidth / 2);
 		if (
 			Phaser.Math.Distance.Between(
 				this.x,
