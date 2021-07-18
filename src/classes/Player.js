@@ -12,7 +12,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.movementSpeed = 5;
 		this.stepsSinceLastShot = 15;
 		this.score = 0;
-		this.bombs = 2;
+		this.bombs = 10;
 		this.on("animationcomplete", () => {
 			this.play({ key: "PlayerShipIdle", repeat: -1 });
 		});
@@ -68,6 +68,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	}
 	setBombs(bombs) {
 		this.bombs = bombs;
+	}
+	useBomb() {
+		//clears all enemies on the screen and depletes the available bombs by 1
+		if (this.getBombs() > 0) {
+			console.log("bomb trigger");
+			this.scene.enemies.clear(true, true);
+			this.scene.bullets.clear(true, true);
+			this.setBombs(this.getBombs() - 1);
+		}
+
+		console.log(this.getBombs());
 	}
 	getMovementSpeed() {
 		return this.movementSpeed;

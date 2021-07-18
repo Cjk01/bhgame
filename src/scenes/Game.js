@@ -154,6 +154,7 @@ export default class Game extends Phaser.Scene {
 			left: Phaser.Input.Keyboard.KeyCodes.A,
 			right: Phaser.Input.Keyboard.KeyCodes.D,
 			space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+			bomb: Phaser.Input.Keyboard.KeyCodes.B,
 		});
 		while (this.enemies.getLength() <= 3) {
 			let enemy = this.generateRandomEnemy(this.enemyList);
@@ -176,6 +177,9 @@ export default class Game extends Phaser.Scene {
 		}
 		if (cursors.down.isDown && !cursors.up.isDown) {
 			this.player.y += this.player.getMovementSpeed();
+		}
+		if (Phaser.Input.Keyboard.JustDown(cursors.bomb)) {
+			this.player.useBomb();
 		}
 
 		if (cursors.space.isDown && this.player.getStepsSinceLastShot() >= 15) {
