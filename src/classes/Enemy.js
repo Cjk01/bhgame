@@ -12,6 +12,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.value = 1;
 		this.stepCounter = 0;
 		this.stepLimit = 0;
+		this.currentDestination = [this.x, this.y];
 
 		console.log("enemy object created");
 	}
@@ -31,7 +32,26 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		}
 	}
 	move() {
-		// to be overriden by the extending class
+		if (
+			Phaser.Math.Distance.Between(
+				this.x,
+				this.y,
+				this.getCurrentDestination()[0],
+				this.getCurrentDestination()[1]
+			) <= this.displayWidth
+		) {
+			this.shoot();
+			let xDest = this.scene.getRandomInt(
+				this.displayWidth,
+				this.scene.game.canvas.width - this.displayWidth
+			);
+			let yDest = this.scene.getRandomInt(
+				this.displayHeight,
+				this.scene.game.canvas.height - this.displayHeight
+			);
+			this.scene.physics.moveTo(this, xDest, yDest, 120);
+			this.setCurrentDestination(xDest, yDest);
+		}
 	}
 	shoot() {
 		// to be overriden by the extending class
@@ -49,6 +69,14 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 			this.texture
 		);
 	}
+	/**
+	 * fires a specified bullet at an angle relative to the right hand side being 0 degrees.
+	 * speed: changes the speed of the fired bullet(s) in pixels / second
+	 * shiftX and shiftY: change the starting position of the bullet
+	 * increment: is how many degrees the given angle value is incremented per shot fired
+	 * amount: how many bullets are fired.
+	 *
+	 */
 	shootAtAngle(angle, amount, increment, textureName, speed, shiftX, shiftY) {
 		let ang = angle;
 		let amt = amount | 1;
@@ -103,5 +131,11 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 	setStepLimit(limit) {
 		this.stepLimit = limit;
+	}
+	getCurrentDestination() {
+		return this.currentDestination;
+	}
+	setCurrentDestination(x, y) {
+		this.currentDestination = [x, y];
 	}
 }

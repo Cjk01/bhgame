@@ -14,19 +14,7 @@ export default class DroneSpread extends Enemy {
 			this.play({ key: "DroneSpeadIdle", repeat: -1 });
 		});
 	}
-	move() {
-		// pattern: move towards the player's position and shoot
-		if (this.getStepCounter() >= this.getStepLimit()) {
-			this.scene.physics.moveTo(
-				this,
-				this.scene.player.x,
-				this.scene.player.y,
-				120,
-				3000
-			);
-			this.shoot();
-		}
-	}
+
 	shoot() {
 		if (this.getStepCounter() >= 0) {
 			this.shootAtAngle(this.getStepCounter(), 3, 30, "RedBall", 50, 0, 0);

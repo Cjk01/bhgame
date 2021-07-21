@@ -162,7 +162,9 @@ export default class Game extends Phaser.Scene {
 			let ypos = this.getRandomInt(20, this.sys.canvas.height - 300);
 			enemy.x = xpos;
 			enemy.y = ypos;
+			enemy.setCurrentDestination(xpos, ypos);
 			enemy.setActive(true);
+
 			this.enemies.add(enemy);
 		}
 

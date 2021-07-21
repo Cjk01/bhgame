@@ -15,13 +15,7 @@ export default class Charger extends Enemy {
 			repeat: -1,
 		});
 	}
-	move() {
-		if (this.getStepCounter() >= this.getStepLimit()) {
-			this.x = this.scene.getRandomInt(0, this.scene.game.canvas.width);
-			this.shoot();
-			this.setStepCounter(0);
-		}
-	}
+
 	shoot() {
 		this.scene.bullets.add(
 			new TrackingBullet(
