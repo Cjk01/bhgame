@@ -7,7 +7,7 @@ export default class Eyeball extends Enemy {
 		this.setValue(40);
 		this.setStepCounter(200);
 		this.setStepLimit(200);
-		this.setMovementSpeed(2);
+		this.setMovementSpeed(120);
 
 		this.on("animationcomplete", () => {
 			this.play({ key: "EyeBallIdle", repeat: -1 });

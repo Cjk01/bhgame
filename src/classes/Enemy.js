@@ -7,7 +7,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		scene.physics.add.existing(this);
 		this.setCollideWorldBounds(true);
 		this.setImmovable(true);
-		this.movementSpeed = 1;
+		this.movementSpeed = 60;
 		this.hp = 1;
 		this.value = 1;
 		this.stepCounter = 0;
@@ -49,7 +49,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 				this.displayHeight,
 				this.scene.game.canvas.height - this.displayHeight
 			);
-			this.scene.physics.moveTo(this, xDest, yDest, 120);
+			this.scene.physics.moveTo(this, xDest, yDest, this.getMovementSpeed());
 			this.setCurrentDestination(xDest, yDest);
 		}
 	}
@@ -78,7 +78,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	 *
 	 */
 	shootAtAngle(angle, amount, increment, textureName, speed, shiftX, shiftY) {
-		let ang = angle;
+		let ang = angle | 0;
 		let amt = amount | 1;
 		let inc = increment | 0;
 		let sX = shiftX | 0;
