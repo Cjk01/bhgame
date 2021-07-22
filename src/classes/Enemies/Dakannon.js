@@ -28,15 +28,4 @@ export default class Dakannon extends Enemy {
 			this.setStepCounter(0);
 		}
 	}
-	shoot() {
-		this.shootAtAngle(
-			this.scene.getRandomInt(0, 81),
-			5,
-			20,
-			"RedSpiral-L",
-			150,
-			0,
-			20
-		);
-	}
 }

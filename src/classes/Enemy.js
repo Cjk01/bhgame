@@ -6,14 +6,14 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		scene.add.existing(this);
 		scene.physics.add.existing(this);
 		this.setImmovable(true);
+		this.setCollideWorldBounds(false);
 		this.movementSpeed = 1;
 		this.hp = 1;
 		this.value = 1;
 		this.stepCounter = 0;
 		this.stepLimit = 0;
 		this.currentDestination = [this.x, this.y];
-		this.setCollideWorldBounds(false);
-
+		this.bulletPatterns = [[20, 5, 10, "RedSpiral-L", 150, 0, 20]];
 		console.log("enemy object created");
 	}
 
@@ -56,7 +56,11 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	shoot() {
-		// to be overriden by the extending class
+		let patternIndex = this.scene.getRandomInt(
+			0,
+			this.getBulletPatterns().length
+		);
+		this.shootAtAngle.apply(this, this.getBulletPatterns()[patternIndex]);
 	}
 
 	/**
@@ -139,5 +143,14 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 	setCurrentDestination(x, y) {
 		this.currentDestination = [x, y];
+	}
+	setBulletPatterns(patterns) {
+		this.bulletPatterns = patterns;
+	}
+	getBulletPatterns() {
+		return this.bulletPatterns;
+	}
+	addBulletPattern(pattern) {
+		this.getBulletPatterns().push(pattern);
 	}
 }

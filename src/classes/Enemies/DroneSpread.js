@@ -14,12 +14,4 @@ export default class DroneSpread extends Enemy {
 			this.play({ key: "DroneSpeadIdle", repeat: -1 });
 		});
 	}
-
-	shoot() {
-		if (this.getStepCounter() >= 0) {
-			this.shootAtAngle(this.getStepCounter(), 3, 30, "RedBall", 50, 0, 0);
-			this.play({ key: "DroneSpreadShoot", repeat: 5 });
-			this.setStepCounter(this.getStepCounter() - 20);
-		}
-	}
 }
