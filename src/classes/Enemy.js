@@ -7,7 +7,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		scene.physics.add.existing(this);
 		this.setCollideWorldBounds(true);
 		this.setImmovable(true);
-		this.movementSpeed = 60;
+		this.movementSpeed = 1;
 		this.hp = 1;
 		this.value = 1;
 		this.stepCounter = 0;
@@ -40,6 +40,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		}
 	}
 	move() {
+<<<<<<< HEAD
 		if (this.isFollowing() == true) {
 			if (
 				Phaser.Math.Distance.Between(
@@ -77,6 +78,27 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 				this.scene.physics.moveTo(this, xDest, yDest, this.getMovementSpeed());
 				this.setCurrentDestination(xDest, yDest);
 			}
+=======
+		if (
+			Phaser.Math.Distance.Between(
+				this.x,
+				this.y,
+				this.getCurrentDestination()[0],
+				this.getCurrentDestination()[1]
+			) <= this.displayWidth
+		) {
+			this.shoot();
+			let xDest = this.scene.getRandomInt(
+				this.displayWidth,
+				this.scene.game.canvas.width - this.displayWidth
+			);
+			let yDest = this.scene.getRandomInt(
+				this.displayHeight,
+				this.scene.game.canvas.height - this.displayHeight
+			);
+			this.scene.physics.moveTo(this, xDest, yDest, 120);
+			this.setCurrentDestination(xDest, yDest);
+>>>>>>> parent of f227bff... movement speed adjustments
 		}
 	}
 
@@ -105,7 +127,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	 *
 	 */
 	shootAtAngle(angle, amount, increment, textureName, speed, shiftX, shiftY) {
-		let ang = angle | 0;
+		let ang = angle;
 		let amt = amount | 1;
 		let inc = increment | 0;
 		let sX = shiftX | 0;
