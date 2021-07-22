@@ -163,6 +163,12 @@ export default class Game extends Phaser.Scene {
 			enemy.x = xpos;
 			enemy.y = ypos;
 			enemy.setCurrentDestination(xpos, ypos);
+			if (this.enemies.getLength() > 1) {
+				enemy.setFollowing(true);
+				enemy.setFollowTarget(this.enemies.getChildren()[0]);
+				enemy.x = enemy.getFollowTarget().x;
+				enemy.y = enemy.getFollowTarget().y - 40;
+			}
 			enemy.setActive(true);
 
 			this.enemies.add(enemy);

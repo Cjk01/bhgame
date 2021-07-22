@@ -13,6 +13,9 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.stepCounter = 0;
 		this.stepLimit = 0;
 		this.currentDestination = [this.x, this.y];
+		this.isFollowing1 = false;
+		this.followTarget = null;
+		this.followers = [];
 
 		console.log("enemy object created");
 	}
@@ -28,31 +31,55 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 			);
 			this.scene.score.setText("Score: " + this.scene.player.getScore());
 
+			// this is to prevent a followee from having nothing to follow once the group leader is destroyed
+			for (let i = 0; i < this.getFollowers().length; i++) {
+				this.getFollowers()[i].setFollowing(false);
+				this.getFollowers()[i].setFollowTarget(null);
+			}
 			this.destroy();
 		}
 	}
 	move() {
-		if (
-			Phaser.Math.Distance.Between(
-				this.x,
-				this.y,
-				this.getCurrentDestination()[0],
-				this.getCurrentDestination()[1]
-			) <= this.displayWidth
-		) {
-			this.shoot();
-			let xDest = this.scene.getRandomInt(
-				this.displayWidth,
-				this.scene.game.canvas.width - this.displayWidth
-			);
-			let yDest = this.scene.getRandomInt(
-				this.displayHeight,
-				this.scene.game.canvas.height - this.displayHeight
-			);
-			this.scene.physics.moveTo(this, xDest, yDest, this.getMovementSpeed());
-			this.setCurrentDestination(xDest, yDest);
+		if (this.isFollowing() == true) {
+			if (
+				Phaser.Math.Distance.Between(
+					this.x,
+					this.y,
+					this.getFollowTarget.x,
+					this.getFollowTarget.y
+				) <= this.displayHeight
+			) {
+				this.scene.physics.moveTo(
+					this,
+					this.getFollowTarget().x,
+					this.getFollowTarget().y - this.getFollowTarget().displayHeight,
+					this.getFollowTarget().getMovementSpeed()
+				);
+			}
+		} else {
+			if (
+				Phaser.Math.Distance.Between(
+					this.x,
+					this.y,
+					this.getCurrentDestination()[0],
+					this.getCurrentDestination()[1]
+				) <= this.displayWidth
+			) {
+				this.shoot();
+				let xDest = this.scene.getRandomInt(
+					this.displayWidth,
+					this.scene.game.canvas.width - this.displayWidth
+				);
+				let yDest = this.scene.getRandomInt(
+					this.displayHeight,
+					this.scene.game.canvas.height - this.displayHeight
+				);
+				this.scene.physics.moveTo(this, xDest, yDest, this.getMovementSpeed());
+				this.setCurrentDestination(xDest, yDest);
+			}
 		}
 	}
+
 	shoot() {
 		// to be overriden by the extending class
 	}
@@ -137,5 +164,30 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 	setCurrentDestination(x, y) {
 		this.currentDestination = [x, y];
+	}
+	isFollowing() {
+		return this.isFollowing1;
+	}
+	setFollowing(bool) {
+		this.isFollowing1 = bool;
+	}
+	getFollowTarget() {
+		return this.followTarget;
+	}
+	setFollowTarget(target) {
+		this.followTarget = target;
+		if (target != null) {
+			this.getFollowTarget().addFollower(this);
+			this.setFollowing(true);
+		}
+	}
+	getFollowers() {
+		return this.followers;
+	}
+	addFollower(follower) {
+		this.getFollowers().push(follower);
+	}
+	setFollowers(followers) {
+		this.followers = followers;
 	}
 }
