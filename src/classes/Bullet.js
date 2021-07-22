@@ -20,7 +20,6 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 			this.y > this.scene.game.canvas.height ||
 			this.y < 0
 		) {
-			console.log("Destroying bullet at : " + " x: " + this.x + "y: " + this.y);
 			this.destroy();
 		}
 	}

@@ -155,20 +155,15 @@ export default class Game extends Phaser.Scene {
 			right: Phaser.Input.Keyboard.KeyCodes.D,
 			space: Phaser.Input.Keyboard.KeyCodes.SPACE,
 			bomb: Phaser.Input.Keyboard.KeyCodes.B,
+			pause: Phaser.Input.Keyboard.KeyCodes.P,
 		});
 		while (this.enemies.getLength() <= 3) {
 			let enemy = this.generateRandomEnemy(this.enemyList);
-			let xpos = this.getRandomInt(20, this.sys.canvas.width - 20 + 1);
-			let ypos = this.getRandomInt(20, this.sys.canvas.height - 300);
+			let xpos = this.getRandomInt(-200, this.sys.canvas.width + 200);
+			let ypos = this.getRandomInt(-200, -100);
 			enemy.x = xpos;
 			enemy.y = ypos;
 			enemy.setCurrentDestination(xpos, ypos);
-			if (this.enemies.getLength() > 1) {
-				enemy.setFollowing(true);
-				enemy.setFollowTarget(this.enemies.getChildren()[0]);
-				enemy.x = enemy.getFollowTarget().x;
-				enemy.y = enemy.getFollowTarget().y - 40;
-			}
 			enemy.setActive(true);
 
 			this.enemies.add(enemy);
@@ -207,5 +202,7 @@ export default class Game extends Phaser.Scene {
 			this.bullets.getChildren()[i].incrementStepCount();
 			this.bullets.getChildren()[i].destroyIfOutOfBounds();
 		}
+		console.log("active enemies : " + this.enemies.getLength());
+		console.log(this.enemies.getChildren());
 	}
 }

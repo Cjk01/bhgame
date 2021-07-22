@@ -24,6 +24,7 @@ export default class Dakannon extends Enemy {
 		if (this.getStepCounter() >= this.getStepLimit()) {
 			this.play({ key: "DakanTeleportStart", repeat: 0 });
 			this.x = this.scene.getRandomInt(0, this.scene.game.canvas.width);
+			this.y = this.scene.getRandomInt(0, this.scene.game.canvas.height / 2);
 			this.setStepCounter(0);
 		}
 	}
