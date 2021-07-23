@@ -5,18 +5,15 @@ export default class Eyeball extends Enemy {
 		super(scene, x, y, texture);
 		this.setHp(6);
 		this.setValue(40);
-		this.setStepCounter(200);
-		this.setStepLimit(200);
-		this.setMovementSpeed(2);
+		this.setStepCounter(100);
+		this.setStepLimit(100);
+		this.setMovementSpeed(300);
 
 		this.on("animationcomplete", () => {
 			this.play({ key: "EyeBallIdle", repeat: -1 });
 			this.shoot();
 		});
 		this.play({ key: "EyeBallIdle", repeat: -1 });
-	}
-
-	shoot() {
-		this.shootAtAngle(-180, 12, 30, "RedBall", 50, 0, 0);
+		this.setBulletPatterns([[-180, 12, 30, "RedBall", 50, 0, 0]]);
 	}
 }

@@ -7,8 +7,9 @@ export default class Charger extends Enemy {
 		super(scene, x, y, texture);
 		this.setHp(8);
 		this.setValue(30);
-		this.setStepCounter(180);
-		this.setStepLimit(180);
+		this.setStepCounter(200);
+		this.setStepLimit(200);
+		this.setMovementSpeed(120);
 
 		this.play({
 			key: "ChargerIdle",
@@ -17,14 +18,17 @@ export default class Charger extends Enemy {
 	}
 
 	shoot() {
-		this.scene.bullets.add(
-			new TrackingBullet(
-				this.scene,
-				this.x,
-				this.y + this.displayHeight / 2,
-				"",
-				this.scene.player
-			).play({ key: "GreenSpiral-L", repeat: -1 })
-		);
+		for (let i = 0; i < 3; i++) {
+			this.scene.bullets.add(
+				new TrackingBullet(
+					this.scene,
+					this.x + 90 * Math.pow(-1, i + 1),
+					this.y + this.displayHeight / 2,
+					"",
+					this.scene.player
+				).play({ key: "BlueSpiral-L", repeat: -1 })
+			);
+		}
+		this.setStepCounter(0);
 	}
 }

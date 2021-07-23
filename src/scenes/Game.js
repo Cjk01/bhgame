@@ -96,6 +96,7 @@ export default class Game extends Phaser.Scene {
 				.setActive(false)
 				.setVisible(false),
 		};
+		this.enemyGenerationAmount = 4;
 		this.getRandomInt = (min, max) => {
 			min = Math.ceil(min);
 			max = Math.floor(max);
@@ -111,6 +112,9 @@ export default class Game extends Phaser.Scene {
 			let enemyObj = list[enemyName];
 			let newEnemy = enemyObj.clone();
 			return newEnemy;
+		};
+		this.generateEnemyByName = (enemyName) => {
+			return this.enemyList[enemyName].clone();
 		};
 		this.playerBullets = this.physics.add.group();
 		this.playerBullets.defaults = {};
@@ -157,16 +161,38 @@ export default class Game extends Phaser.Scene {
 			bomb: Phaser.Input.Keyboard.KeyCodes.B,
 			pause: Phaser.Input.Keyboard.KeyCodes.P,
 		});
-		while (this.enemies.getLength() <= 3) {
+		if (this.enemies.getLength() == 0) {
 			let enemy = this.generateRandomEnemy(this.enemyList);
-			let xpos = this.getRandomInt(-200, this.sys.canvas.width + 200);
-			let ypos = this.getRandomInt(-200, -100);
-			enemy.x = xpos;
-			enemy.y = ypos;
-			enemy.setCurrentDestination(xpos, ypos);
+			let enemyType = enemy.constructor.name;
+			let xi = this.getRandomInt(-200, this.sys.canvas.width + 200);
+			let yi = this.getRandomInt(-200, -100);
+			let xf = this.getRandomInt(20, this.sys.canvas.width);
+			let yf = this.getRandomInt(20, this.sys.canvas.height);
+			enemy.x = xi;
+			enemy.y = yi;
+			enemy.setCurrentDestination(xf, yf);
 			enemy.setActive(true);
-
 			this.enemies.add(enemy);
+			this.physics.moveTo(enemy, xf, yf, enemy.getMovementSpeed());
+
+			for (let i = 0; i < this.enemyGenerationAmount; i++) {
+				let enemyCopy = this.generateEnemyByName(enemyType);
+
+				enemyCopy.x = xi - enemy.displayWidth * i + 1;
+				enemyCopy.y = yi - enemy.displayWidth * i + 1;
+				enemyCopy.setCurrentDestination(
+					xf - enemy.displayWidth * i + 1,
+					yf - enemy.displayWidth * i + 1
+				);
+				enemyCopy.setActive(true);
+				this.enemies.add(enemyCopy);
+				this.physics.moveTo(
+					enemyCopy,
+					xf - enemy.displayWidth * i + 1,
+					yf - enemy.displayWidth * i + 1,
+					enemy.getMovementSpeed()
+				);
+			}
 		}
 
 		if (cursors.left.isDown) {

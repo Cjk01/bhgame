@@ -11,9 +11,9 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.hp = 1;
 		this.value = 1;
 		this.stepCounter = 0;
-		this.stepLimit = 0;
-		this.currentDestination = [this.x, this.y];
-		this.bulletPatterns = [[20, 5, 10, "RedSpiral-L", 150, 0, 20]];
+		this.stepLimit = 1000;
+		this.curentDestination = [this.x, this.y];
+		this.bulletPatterns = [[0, 6, 50, "RedSwirl-L", 150, 0, 20]];
 		console.log("enemy object created");
 	}
 
@@ -31,7 +31,13 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		}
 	}
 	move() {
-		console.log("initial position : " + this.x + " " + this.y);
+		console.log("at x: " + this.x + "y: " + this.y);
+		console.log(
+			"moving to: " +
+				this.getCurrentDestination()[0] +
+				" " +
+				this.getCurrentDestination()[1]
+		);
 		if (
 			Phaser.Math.Distance.Between(
 				this.x,
@@ -40,27 +46,24 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 				this.getCurrentDestination()[1]
 			) <= this.displayWidth
 		) {
+			this.setVelocity(0, 0);
+			this.setAcceleration(0, 0);
+		}
+		if (this.getStepCounter() >= this.getStepLimit()) {
 			this.shoot();
-			let xDest = this.scene.getRandomInt(
-				this.displayWidth,
-				this.scene.game.canvas.width - this.displayWidth
-			);
-			let yDest = this.scene.getRandomInt(
-				this.displayHeight,
-				this.scene.game.canvas.height - this.displayHeight
-			);
-			console.log("moving to : " + xDest + " " + yDest);
-			this.scene.physics.moveTo(this, xDest, yDest, 120);
-			this.setCurrentDestination(xDest, yDest);
 		}
 	}
-
+	/**
+	 * generates arguments for the shootAtAngle function by reading from an enemy's bullet patterns,
+	 * and executes the function for those arguments.
+	 */
 	shoot() {
 		let patternIndex = this.scene.getRandomInt(
 			0,
 			this.getBulletPatterns().length
 		);
 		this.shootAtAngle.apply(this, this.getBulletPatterns()[patternIndex]);
+		this.setStepCounter(0);
 	}
 
 	/**
