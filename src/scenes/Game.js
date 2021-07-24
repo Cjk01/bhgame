@@ -174,11 +174,11 @@ export default class Game extends Phaser.Scene {
 				let xi = this.getRandomInt(-200, this.sys.canvas.width + 200);
 				let yi = this.getRandomInt(-200, -100);
 				let xf = this.getRandomInt(
-					20 * this.enemyGroupSize,
+					40 * this.enemyGroupSize,
 					this.sys.canvas.width
 				);
 				let yf = this.getRandomInt(
-					20 * this.enemyGroupSize,
+					40 * this.enemyGroupSize,
 					this.sys.canvas.height / 2
 				);
 				enemy.x = xi;
@@ -210,16 +210,28 @@ export default class Game extends Phaser.Scene {
 		}
 		if (this.input.gamepad.gamepads.length > 0) {
 			console.log(this.input.gamepad.pad1.leftStick);
-			if (this.input.gamepad.pad1.left) {
+			if (
+				this.input.gamepad.pad1.left ||
+				this.input.gamepad.pad1.leftStick.x <= -0.1
+			) {
 				this.player.x -= this.player.getMovementSpeed();
 			}
-			if (this.input.gamepad.pad1.right) {
+			if (
+				this.input.gamepad.pad1.right ||
+				this.input.gamepad.pad1.leftStick.x >= 0.1
+			) {
 				this.player.x += this.player.getMovementSpeed();
 			}
-			if (this.input.gamepad.pad1.up) {
+			if (
+				this.input.gamepad.pad1.up ||
+				this.input.gamepad.pad1.leftStick.y <= -0.1
+			) {
 				this.player.y -= this.player.getMovementSpeed();
 			}
-			if (this.input.gamepad.pad1.down) {
+			if (
+				this.input.gamepad.pad1.down ||
+				this.input.gamepad.pad1.leftStick.y >= 0.1
+			) {
 				this.player.y += this.player.getMovementSpeed();
 			}
 			if (this.input.gamepad.pad1.L2) {
