@@ -14,6 +14,10 @@ export default class Eyeball extends Enemy {
 			this.shoot();
 		});
 		this.play({ key: "EyeBallIdle", repeat: -1 });
-		this.setBulletPatterns([[-180, 12, 30, "RedBall", 50, 0, 0]]);
+		this.setBulletPatterns([
+			[-180, 12, 30, "RedBall", 50, 0, 0],
+			[-140, 12, 30, "RedBall", 50, 0, 0],
+			[0, 12, 30, "RedBall", 50, 0, 0],
+		]);
 	}
 }

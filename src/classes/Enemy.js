@@ -31,13 +31,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		}
 	}
 	move() {
-		console.log("at x: " + this.x + "y: " + this.y);
-		console.log(
-			"moving to: " +
-				this.getCurrentDestination()[0] +
-				" " +
-				this.getCurrentDestination()[1]
-		);
 		if (
 			Phaser.Math.Distance.Between(
 				this.x,

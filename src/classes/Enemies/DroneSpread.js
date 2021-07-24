@@ -13,6 +13,10 @@ export default class DroneSpread extends Enemy {
 		this.on("animationcomplete", () => {
 			this.play({ key: "DroneSpeadIdle", repeat: -1 });
 		});
-		this.setBulletPatterns([[20, 10, 10, "PurpleBall"]]);
+		this.setBulletPatterns([
+			[20, 10, 10, "PurpleBall"],
+			[50, 10, 10, "PurpleBall"],
+			[80, 10, 10, "PurpleBall"],
+		]);
 	}
 }

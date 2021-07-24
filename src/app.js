@@ -13,12 +13,16 @@ export default new Phaser.Game({
 	},
 	parent: "container",
 	autoCenter: Phaser.Scale.CENTER_BOTH,
+
 	physics: {
 		default: "arcade",
 		arcade: {
 			gravity: { y: 0 },
 			debug: true,
 		},
+	},
+	input: {
+		gamepad: true,
 	},
 	scene: Game,
 });

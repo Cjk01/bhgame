@@ -96,7 +96,15 @@ export default class Game extends Phaser.Scene {
 				.setActive(false)
 				.setVisible(false),
 		};
-		this.enemyGenerationAmount = 4;
+
+		this.enemyGroupSize = 3;
+		this.enemyGroupAmount = 2;
+
+		this.input.gamepad.once("connected", function (pad) {
+			//   'pad' is a reference to the gamepad that was just connected
+			console.log("Gamepad connected");
+		});
+
 		this.getRandomInt = (min, max) => {
 			min = Math.ceil(min);
 			max = Math.floor(max);
@@ -128,12 +136,10 @@ export default class Game extends Phaser.Scene {
 		function handleEnemyHit(bullet, enemy) {
 			bullet.destroy();
 			enemy.gotHit();
-			console.log("player score: " + this.player.getScore());
 		}
 		function handlePlayerHit(player, bullet) {
 			bullet.destroy();
 			player.gotHit();
-			console.log("player now has " + this.player.getLives() + " lives");
 		}
 		this.physics.add.collider(
 			this.player,
@@ -162,39 +168,75 @@ export default class Game extends Phaser.Scene {
 			pause: Phaser.Input.Keyboard.KeyCodes.P,
 		});
 		if (this.enemies.getLength() == 0) {
-			let enemy = this.generateRandomEnemy(this.enemyList);
-			let enemyType = enemy.constructor.name;
-			let xi = this.getRandomInt(-200, this.sys.canvas.width + 200);
-			let yi = this.getRandomInt(-200, -100);
-			let xf = this.getRandomInt(20, this.sys.canvas.width);
-			let yf = this.getRandomInt(20, this.sys.canvas.height);
-			enemy.x = xi;
-			enemy.y = yi;
-			enemy.setCurrentDestination(xf, yf);
-			enemy.setActive(true);
-			this.enemies.add(enemy);
-			this.physics.moveTo(enemy, xf, yf, enemy.getMovementSpeed());
-
-			for (let i = 0; i < this.enemyGenerationAmount; i++) {
-				let enemyCopy = this.generateEnemyByName(enemyType);
-
-				enemyCopy.x = xi - enemy.displayWidth * i + 1;
-				enemyCopy.y = yi - enemy.displayWidth * i + 1;
-				enemyCopy.setCurrentDestination(
-					xf - enemy.displayWidth * i + 1,
-					yf - enemy.displayWidth * i + 1
+			for (let i = 0; i < this.enemyGroupAmount; i++) {
+				let enemy = this.generateRandomEnemy(this.enemyList);
+				let enemyType = enemy.constructor.name;
+				let xi = this.getRandomInt(-200, this.sys.canvas.width + 200);
+				let yi = this.getRandomInt(-200, -100);
+				let xf = this.getRandomInt(
+					20 * this.enemyGroupSize,
+					this.sys.canvas.width
 				);
-				enemyCopy.setActive(true);
-				this.enemies.add(enemyCopy);
-				this.physics.moveTo(
-					enemyCopy,
-					xf - enemy.displayWidth * i + 1,
-					yf - enemy.displayWidth * i + 1,
-					enemy.getMovementSpeed()
+				let yf = this.getRandomInt(
+					20 * this.enemyGroupSize,
+					this.sys.canvas.height / 2
+				);
+				enemy.x = xi;
+				enemy.y = yi;
+				enemy.setCurrentDestination(xf, yf);
+				enemy.setActive(true);
+				this.enemies.add(enemy);
+				this.physics.moveTo(enemy, xf, yf, enemy.getMovementSpeed());
+
+				for (let i = 0; i < this.enemyGroupSize; i++) {
+					let enemyCopy = this.generateEnemyByName(enemyType);
+
+					enemyCopy.x = xi - enemy.displayWidth * i + 1;
+					enemyCopy.y = yi - enemy.displayWidth * i + 1;
+					enemyCopy.setCurrentDestination(
+						xf - enemy.displayWidth * i + 1,
+						yf - enemy.displayWidth * i + 1
+					);
+					enemyCopy.setActive(true);
+					this.enemies.add(enemyCopy);
+					this.physics.moveTo(
+						enemyCopy,
+						xf - enemy.displayWidth * i + 1,
+						yf - enemy.displayWidth * i + 1,
+						enemy.getMovementSpeed()
+					);
+				}
+			}
+		}
+		if (this.input.gamepad.gamepads.length > 0) {
+			console.log(this.input.gamepad.pad1.leftStick);
+			if (this.input.gamepad.pad1.left) {
+				this.player.x -= this.player.getMovementSpeed();
+			}
+			if (this.input.gamepad.pad1.right) {
+				this.player.x += this.player.getMovementSpeed();
+			}
+			if (this.input.gamepad.pad1.up) {
+				this.player.y -= this.player.getMovementSpeed();
+			}
+			if (this.input.gamepad.pad1.down) {
+				this.player.y += this.player.getMovementSpeed();
+			}
+			if (this.input.gamepad.pad1.L2) {
+				this.player.useBomb();
+			}
+
+			if (
+				this.input.gamepad.pad1.A &&
+				this.player.getStepsSinceLastShot() >= 15
+			) {
+				this.player.shoot();
+			} else {
+				this.player.setStepsSinceLastShot(
+					this.player.getStepsSinceLastShot() + 1
 				);
 			}
 		}
-
 		if (cursors.left.isDown) {
 			this.player.x -= this.player.getMovementSpeed();
 		}
@@ -212,13 +254,13 @@ export default class Game extends Phaser.Scene {
 		}
 
 		if (cursors.space.isDown && this.player.getStepsSinceLastShot() >= 15) {
-			console.log("firing bullet");
 			this.player.shoot();
 		} else {
 			this.player.setStepsSinceLastShot(
 				this.player.getStepsSinceLastShot() + 1
 			);
 		}
+
 		for (let i = 0; i < this.enemies.getLength(); i++) {
 			this.enemies.getChildren()[i].move();
 			this.enemies.getChildren()[i].incrementSteps();
@@ -228,7 +270,5 @@ export default class Game extends Phaser.Scene {
 			this.bullets.getChildren()[i].incrementStepCount();
 			this.bullets.getChildren()[i].destroyIfOutOfBounds();
 		}
-		console.log("active enemies : " + this.enemies.getLength());
-		console.log(this.enemies.getChildren());
 	}
 }
