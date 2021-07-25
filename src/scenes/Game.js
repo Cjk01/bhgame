@@ -264,8 +264,16 @@ export default class Game extends Phaser.Scene {
 
 		//generating a new group of enemies once no enemies are on screen
 		if (this.enemies.getLength() == 0) {
-			let name = this.generateRandomEnemy(this.enemyList).constructor.name;
-			this.generateEnemyGroup(this, name, 3, 40, 10);
+			for (let i = 0; i < this.getRandomInt(1, 3); i++) {
+				let name = this.generateRandomEnemy(this.enemyList).constructor.name;
+				this.generateEnemyGroup(
+					this,
+					name,
+					this.getRandomInt(1, 3),
+					this.getRandomInt(40, 90),
+					this.getRandomInt(30, 100)
+				);
+			}
 		}
 		if (this.input.gamepad.gamepads.length > 0) {
 			console.log(this.input.gamepad.pad1.leftStick);
