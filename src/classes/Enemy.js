@@ -1,5 +1,6 @@
 import Bullet from "./Bullet.js";
-
+import SinewaveBullet from "../classes/Bullets/SinewaveBullet.js";
+import TrackingBullet from "../classes/Bullets/TrackingBullet.js";
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
@@ -13,7 +14,16 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.stepCounter = 0;
 		this.stepLimit = 1000;
 		this.curentDestination = [this.x, this.y];
-		this.bulletPatterns = [[0, 6, 50, "RedSwirl-L", 150, 0, 20]];
+		this.bulletPatterns = {
+			Bullet: [[0, 6, 50, "RedSwirl-L", 150, 0, 20]],
+			SinewaveBullet: [[this.x, this.y + 20, "RedBall", 30, 40, 0, 0]],
+			TrackingBullet: [[this.x, this.y + 20, "RedBall", this.scene.player]],
+		};
+
+		this.currentPatternType = "Bullet";
+		this.currentPatternIndex = 0;
+		this.isPatternIncrementing = true;
+
 		console.log("enemy object created");
 	}
 
@@ -51,11 +61,46 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	 * and executes the function for those arguments.
 	 */
 	shoot() {
-		let patternIndex = this.scene.getRandomInt(
-			0,
-			this.getBulletPatterns().length
-		);
-		this.shootAtAngle.apply(this, this.getBulletPatterns()[patternIndex]);
+		if (this.getPatternType() == "Bullet") {
+			this.shootAtAngle.apply(
+				this,
+				this.getBulletPatterns()[this.getPatternType()][this.getPatternIndex()]
+			);
+		} else if (this.getPatternType == "TrackingBullet") {
+			let args =
+				this.getBulletPatterns()[this.getPatternType()][this.getPatternIndex()];
+			this.scene.bullets.add(
+				new TrackingBullet(this, args[0], args[1], args[3], args[4]).play({
+					key: args[2],
+					repeat: -1,
+				})
+			);
+		} else {
+			let args =
+				this.getBulletPatterns()[this.getPatternType()][this.getPatternIndex()];
+			console.log("args: " + args);
+			this.scene.bullets.add(
+				new SinewaveBullet(
+					this.scene,
+					args[0],
+					args[1],
+					args[2],
+					args[3],
+					args[4],
+					args[5],
+					args[6]
+				).play({ key: args[2], repeat: -1 })
+			);
+		}
+		if (this.getPatternIncrementing()) {
+			this.setPatternIndex(this.getPatternIndex() + 1);
+		}
+		if (
+			this.getPatternIndex() >=
+			this.getBulletPatterns()[this.getPatternType()].length
+		) {
+			this.setPatternIndex(0);
+		}
 		this.setStepCounter(0);
 	}
 
@@ -140,13 +185,32 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	setCurrentDestination(x, y) {
 		this.currentDestination = [x, y];
 	}
+	getPatternType() {
+		return this.currentPatternType;
+	}
+	setPatternType(type) {
+		this.currentPatternType = type;
+	}
+	getPatternIndex() {
+		return this.currentPatternIndex;
+	}
+	setPatternIndex(index) {
+		this.currentPatternIndex = index;
+	}
+
 	setBulletPatterns(patterns) {
 		this.bulletPatterns = patterns;
 	}
 	getBulletPatterns() {
 		return this.bulletPatterns;
 	}
-	addBulletPattern(pattern) {
-		this.getBulletPatterns().push(pattern);
+	addBulletPattern(pattern, type) {
+		this.getBulletPatterns()[type].push(pattern);
+	}
+	setPatternIncrementing(bool) {
+		this.isPatternIncrementing = true;
+	}
+	getPatternIncrementing() {
+		return this.isPatternIncrementing;
 	}
 }

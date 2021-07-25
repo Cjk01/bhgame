@@ -26,6 +26,7 @@ export default class SinewaveBullet extends Bullet {
 			this.setStepCount(0);
 		}
 		this.x += this.currentSinValue();
+		this.setCircle(this.displayWidth / 2);
 	}
 	getAmplitude() {
 		return this.amplitude;

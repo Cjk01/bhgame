@@ -1,6 +1,7 @@
 import Enemy from "../Enemy.js";
 import Bullet from "../Bullet.js";
 import TrackingBullet from "../Bullets/TrackingBullet.js";
+import SinewaveBullet from "../Bullets/SinewaveBullet.js";
 
 export default class Charger extends Enemy {
 	constructor(scene, x, y, texture) {
@@ -18,15 +19,18 @@ export default class Charger extends Enemy {
 	}
 
 	shoot() {
-		for (let i = 0; i < 3; i++) {
+		for (let i = 0; i < 9; i++) {
 			this.scene.bullets.add(
-				new TrackingBullet(
+				new SinewaveBullet(
 					this.scene,
-					this.x + 90 * Math.pow(-1, i + 1),
-					this.y + this.displayHeight / 2,
+					this.x,
+					this.y + 20,
 					"",
-					this.scene.player
-				).play({ key: "BlueSpiral-L", repeat: -1 })
+					0,
+					0,
+					30,
+					0
+				).play({ key: "PurpleBall", repeat: -1 })
 			);
 		}
 		this.setStepCounter(0);

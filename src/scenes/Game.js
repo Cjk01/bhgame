@@ -261,6 +261,8 @@ export default class Game extends Phaser.Scene {
 			bomb: Phaser.Input.Keyboard.KeyCodes.B,
 			pause: Phaser.Input.Keyboard.KeyCodes.P,
 		});
+
+		//generating a new group of enemies once no enemies are on screen
 		if (this.enemies.getLength() == 0) {
 			let name = this.generateRandomEnemy(this.enemyList).constructor.name;
 			this.generateEnemyGroup(this, name, 3, 40, 10);

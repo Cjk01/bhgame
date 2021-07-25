@@ -6,17 +6,25 @@ export default class DroneSpread extends Enemy {
 		super(scene, x, y, texture);
 		this.setHp(5);
 		this.setValue(30);
-		this.setStepCounter(90);
-		this.setStepLimit(90);
+		this.setStepCounter(20);
+		this.setStepLimit(20);
 		this.setMovementSpeed(220);
 		this.play({ key: "DroneSpeadIdle", repeat: -1 });
 		this.on("animationcomplete", () => {
 			this.play({ key: "DroneSpeadIdle", repeat: -1 });
 		});
-		this.setBulletPatterns([
-			[20, 10, 10, "PurpleBall"],
-			[50, 10, 10, "PurpleBall"],
-			[80, 10, 10, "PurpleBall"],
-		]);
+
+		this.setBulletPatterns({
+			Bullet: [
+				[20, 5, 10, "PurpleBall", 150, 0, 20],
+				[50, 5, 10, "PurpleBall", 150, 0, 20],
+				[80, 5, 10, "PurpleBall", 150, 0, 20],
+				[110, 5, 10, "PurpleBall", 150, 0, 20],
+				[140, 5, 10, "PurpleBall", 150, 0, 20],
+				[170, 5, 10, "PurpleBall", 150, 0, 20],
+			],
+			SinewaveBullet: [[this.x, this.y + 20, "RedBall", 20, 20, 20, 2]],
+			TrackingBullet: [],
+		});
 	}
 }
