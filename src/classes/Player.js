@@ -12,7 +12,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.movementSpeed = 5;
 		this.stepsSinceLastShot = 15;
 		this.score = 0;
-		this.bombs = 10;
+		this.bombs = 1000;
 		this.on("animationcomplete", () => {
 			this.play({ key: "PlayerShipIdle", repeat: -1 });
 		});

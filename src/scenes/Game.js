@@ -156,6 +156,100 @@ export default class Game extends Phaser.Scene {
 			null,
 			this
 		);
+		this.generateEnemyGroup = (scene, enemyName, groupSize, shiftX, shiftY) => {
+			if (groupSize == 0) {
+				return false;
+			}
+			let enemy = scene.generateEnemyByName(enemyName);
+			let spriteWidth = enemy.width;
+			let spriteHeight = enemy.height;
+			let xi = scene.getRandomInt(-200, scene.sys.canvas.width);
+			let yi = scene.getRandomInt(-200, -100);
+			let xRange;
+			let yRange;
+			let xf;
+			let yf;
+
+			let movementFactorX;
+			let movementFactorY;
+
+			if (shiftX != 0) {
+				xRange = (Math.abs(shiftX) + spriteWidth) * groupSize;
+			} else {
+				xRange = spriteWidth * groupSize;
+			}
+			if (shiftY != 0) {
+				yRange = (Math.abs(shiftY) + spriteHeight) * groupSize;
+			} else {
+				yRange = spriteHeight * groupSize;
+			}
+			if (
+				xRange > scene.sys.canvas.width ||
+				yRange > scene.sys.canvas.height / 2
+			) {
+				return this.generateEnemyGroup(
+					scene,
+					enemyName,
+					groupSize - 1,
+					shiftX,
+					shiftY
+				);
+			}
+			if (shiftX >= 0) {
+				xf = scene.getRandomInt(0, scene.sys.canvas.width - xRange);
+				movementFactorX = spriteWidth + shiftX;
+			} else {
+				xf = scene.getRandomInt(xRange, scene.sys.canvas.width);
+				movementFactorX = spriteWidth + Math.abs(shiftX) * -1;
+			}
+			if (shiftY >= 0) {
+				yf = scene.getRandomInt(0, scene.sys.canvas.height / 2 - yRange);
+				movementFactorY = spriteHeight + shiftY;
+			} else {
+				yf = scene.getRandomInt(yRange, scene.sys.canvas.height / 2);
+				movementFactorY = spriteHeight + Math.abs(shiftY) * -1;
+			}
+
+			enemy.x = xi;
+			enemy.y = yi;
+			enemy.setCurrentDestination(xf, yf);
+			enemy.setActive(true);
+			scene.enemies.add(enemy);
+			scene.physics.moveTo(enemy, xf, yf, enemy.getMovementSpeed());
+			for (let i = 1; i <= groupSize; i++) {
+				let enemyCopy = this.generateEnemyByName(enemyName);
+				let xf2;
+				let yf2;
+				if (shiftX < 0) {
+					let shift = movementFactorX * i;
+					if (Math.sign(shift) == 1) {
+						shift *= -1;
+					}
+
+					enemyCopy.x = xi + shift;
+					xf2 = xf + shift;
+				} else {
+					enemyCopy.x = xi + movementFactorX * i;
+					xf2 = xf + movementFactorX * i;
+				}
+				if (shiftY < 0) {
+					let shift = movementFactorY * i;
+					if (Math.sign(shift) == 1) {
+						shift *= -1;
+					}
+					enemyCopy.y = yi + shift;
+					yf2 = yf + shift;
+				} else {
+					enemyCopy.y = movementFactorY * i;
+					yf2 = yf + movementFactorY * i;
+				}
+
+				enemyCopy.setCurrentDestination(xf2, yf2);
+				enemyCopy.setActive(true);
+				scene.enemies.add(enemyCopy);
+				this.physics.moveTo(enemyCopy, xf2, yf2, enemyCopy.getMovementSpeed());
+			}
+		};
 	}
 	update() {
 		let cursors = this.input.keyboard.addKeys({
@@ -168,69 +262,32 @@ export default class Game extends Phaser.Scene {
 			pause: Phaser.Input.Keyboard.KeyCodes.P,
 		});
 		if (this.enemies.getLength() == 0) {
-			for (let i = 0; i < this.enemyGroupAmount; i++) {
-				let enemy = this.generateRandomEnemy(this.enemyList);
-				let enemyType = enemy.constructor.name;
-				let xi = this.getRandomInt(-200, this.sys.canvas.width + 200);
-				let yi = this.getRandomInt(-200, -100);
-				let xf = this.getRandomInt(
-					40 * this.enemyGroupSize,
-					this.sys.canvas.width
-				);
-				let yf = this.getRandomInt(
-					40 * this.enemyGroupSize,
-					this.sys.canvas.height / 2
-				);
-				enemy.x = xi;
-				enemy.y = yi;
-				enemy.setCurrentDestination(xf, yf);
-				enemy.setActive(true);
-				this.enemies.add(enemy);
-				this.physics.moveTo(enemy, xf, yf, enemy.getMovementSpeed());
-
-				for (let i = 0; i < this.enemyGroupSize; i++) {
-					let enemyCopy = this.generateEnemyByName(enemyType);
-
-					enemyCopy.x = xi - enemy.displayWidth * i + 1;
-					enemyCopy.y = yi - enemy.displayWidth * i + 1;
-					enemyCopy.setCurrentDestination(
-						xf - enemy.displayWidth * i + 1,
-						yf - enemy.displayWidth * i + 1
-					);
-					enemyCopy.setActive(true);
-					this.enemies.add(enemyCopy);
-					this.physics.moveTo(
-						enemyCopy,
-						xf - enemy.displayWidth * i + 1,
-						yf - enemy.displayWidth * i + 1,
-						enemy.getMovementSpeed()
-					);
-				}
-			}
+			let name = this.generateRandomEnemy(this.enemyList).constructor.name;
+			this.generateEnemyGroup(this, name, 3, 40, 10);
 		}
 		if (this.input.gamepad.gamepads.length > 0) {
 			console.log(this.input.gamepad.pad1.leftStick);
 			if (
 				this.input.gamepad.pad1.left ||
-				this.input.gamepad.pad1.leftStick.x <= -0.1
+				this.input.gamepad.pad1.leftStick.x <= -0.3
 			) {
 				this.player.x -= this.player.getMovementSpeed();
 			}
 			if (
 				this.input.gamepad.pad1.right ||
-				this.input.gamepad.pad1.leftStick.x >= 0.1
+				this.input.gamepad.pad1.leftStick.x >= 0.3
 			) {
 				this.player.x += this.player.getMovementSpeed();
 			}
 			if (
 				this.input.gamepad.pad1.up ||
-				this.input.gamepad.pad1.leftStick.y <= -0.1
+				this.input.gamepad.pad1.leftStick.y <= -0.3
 			) {
 				this.player.y -= this.player.getMovementSpeed();
 			}
 			if (
 				this.input.gamepad.pad1.down ||
-				this.input.gamepad.pad1.leftStick.y >= 0.1
+				this.input.gamepad.pad1.leftStick.y >= 0.3
 			) {
 				this.player.y += this.player.getMovementSpeed();
 			}
