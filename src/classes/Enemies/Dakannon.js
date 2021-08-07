@@ -1,6 +1,5 @@
 import Enemy from "../Enemy.js";
 import Bullet from "../Bullet.js";
-import TrackingBullet from "../Bullets/TrackingBullet.js";
 
 export default class Dakannon extends Enemy {
 	constructor(scene, x, y, texture) {

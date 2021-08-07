@@ -15,17 +15,13 @@ export default class Eyeball extends Enemy {
 		});
 		this.play({ key: "EyeBallIdle", repeat: -1 });
 
-		this.setBulletPatterns({
-			Bullet: [
-				[-180, 12, 30, "RedBall", 50, 0, 0],
-				[-160, 12, 30, "RedBall", 50, 0, 0],
-				[-140, 12, 30, "RedBall", 50, 0, 0],
-				[-120, 12, 30, "RedBall", 50, 0, 0],
-				[-200, 12, 30, "RedBall", 50, 0, 0],
-				[-220, 12, 30, "RedBall", 50, 0, 0],
-			],
-			SinewaveBullet: [],
-			TrackingBullet: [],
-		});
+		this.setBulletPatterns([
+			[-180, 12, 30, "RedBall", 50, 0, 0],
+			[-160, 12, 30, "RedBall", 50, 0, 0],
+			[-140, 12, 30, "RedBall", 50, 0, 0],
+			[-120, 12, 30, "RedBall", 50, 0, 0],
+			[-200, 12, 30, "RedBall", 50, 0, 0],
+			[-220, 12, 30, "RedBall", 50, 0, 0],
+		]);
 	}
 }

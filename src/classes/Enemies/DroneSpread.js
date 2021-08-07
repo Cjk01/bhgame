@@ -1,6 +1,6 @@
 import Enemy from "../Enemy.js";
 import Bullet from "../Bullet.js";
-import SinewaveBullet from "../Bullets/SinewaveBullet.js";
+
 export default class DroneSpread extends Enemy {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
@@ -14,17 +14,13 @@ export default class DroneSpread extends Enemy {
 			this.play({ key: "DroneSpeadIdle", repeat: -1 });
 		});
 
-		this.setBulletPatterns({
-			Bullet: [
-				[20, 5, 10, "PurpleBall", 150, 0, 20],
-				[50, 5, 10, "PurpleBall", 150, 0, 20],
-				[80, 5, 10, "PurpleBall", 150, 0, 20],
-				[110, 5, 10, "PurpleBall", 150, 0, 20],
-				[140, 5, 10, "PurpleBall", 150, 0, 20],
-				[170, 5, 10, "PurpleBall", 150, 0, 20],
-			],
-			SinewaveBullet: [[this.x, this.y + 20, "RedBall", 20, 20, 20, 2]],
-			TrackingBullet: [],
-		});
+		this.setBulletPatterns([
+			[20, 5, 10, "PurpleBall", 150, 0, 20],
+			[50, 5, 10, "PurpleBall", 150, 0, 20],
+			[80, 5, 10, "PurpleBall", 150, 0, 20],
+			[110, 5, 10, "PurpleBall", 150, 0, 20],
+			[140, 5, 10, "PurpleBall", 150, 0, 20],
+			[170, 5, 10, "PurpleBall", 150, 0, 20],
+		]);
 	}
 }

@@ -6,7 +6,6 @@ import Dakannon from "../classes/Enemies/Dakannon.js";
 import DroneSpread from "../classes/Enemies/DroneSpread.js";
 import Charger from "../classes/Enemies/Charger.js";
 import Eyeball from "../classes/Enemies/Eyeball.js";
-import LinkedList from "../lib/LinkedList.js";
 
 export default class Game extends Phaser.Scene {
 	constructor() {
@@ -14,7 +13,6 @@ export default class Game extends Phaser.Scene {
 	}
 	preload() {
 		this.load.image("background", "../../assets/Background/BackgroundMoon.png");
-
 		this.load.path = "../../assets/SpriteSheets/";
 		this.load.aseprite(
 			"playerSprites",
