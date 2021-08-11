@@ -182,8 +182,8 @@ export default class Game extends Phaser.Scene {
 				yRange = spriteHeight * groupSize;
 			}
 			if (
-				xRange > scene.sys.canvas.width ||
-				yRange > scene.sys.canvas.height / 2
+				xRange > scene.sys.canvas.width + spriteWidth ||
+				yRange > scene.sys.canvas.height + spriteHeight / 2
 			) {
 				return this.generateEnemyGroup(
 					scene,
