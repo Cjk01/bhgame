@@ -13,22 +13,28 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.stepsSinceLastShot = 15;
 		this.score = 0;
 		this.bombs = 1000;
+		this.invulnerable = false;
 		this.on("animationcomplete", () => {
+			//resetting the player position when the player dies
+			this.setInvulnerable(true);
 			this.play({ key: "PlayerShipIdle", repeat: -1 });
 		});
 		this.play({ key: "PlayerShipIdle", repeat: -1 });
 		console.log("player object created");
 	}
 	gotHit() {
-		this.play({ key: "PlayerShipExplosion" });
+		if (!this.isInvulnerable()) {
+			this.body.enable = false;
+			this.setLives(this.getLives() - 1);
 
-		this.setLives(this.getLives() - 1);
-
-		if (this.getLives() <= 0) {
-			console.log("game over");
+			if (this.getLives() <= 0) {
+				console.log("game over");
+			}
+			this.play({ key: "PlayerShipExplosion" });
 		}
 	}
 	shoot() {
+		this.setInvulnerable(false);
 		let playerShotLeft = new Bullet(
 			this.scene,
 			this.x + 8,
@@ -91,5 +97,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	}
 	setStepsSinceLastShot(steps) {
 		this.stepsSinceLastShot = steps;
+	}
+	isInvulnerable() {
+		return this.invulnerable;
+	}
+	setInvulnerable(bool) {
+		this.invulnerable = bool;
+		if (this.invulnerable) {
+			this.body.enable = false;
+			this.alpha = 0.5;
+			this.x = this.scene.sys.canvas.width / 2;
+			this.y = this.scene.sys.canvas.height - 100;
+		} else {
+			this.body.enable = true;
+			this.alpha = 1.0;
+		}
 	}
 }
