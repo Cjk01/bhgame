@@ -8,7 +8,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.setImmovable(true);
 		this.setCollideWorldBounds(false);
 		this.movementSpeed = 1;
-		this.hp = 1;
+		this.hp = 10;
 		this.value = 1;
 		this.stepCounter = 0;
 		this.stepLimit = 1000;
@@ -23,12 +23,25 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	gotHit() {
 		console.log("enemy: " + this + "was hit");
 		// to be replaced with a tween
+		//this.tint = 0xff0000;
+		//this.scene.time.addEvent({ repeat: 10, callback: this.flashInvisible() });
+
 		this.tint = 0xff0000;
+		this.alpha = 0.8;
+		this.scene.time.addEvent({
+			delay: 250,
+			callback: () => {
+				this.tint = 0xffffff;
+				this.alpha = 1;
+			},
+			callbackScope: this,
+		});
 		this.setHp(this.getHp() - 1);
 		if (this.getHp() <= 0) {
 			this.scene.player.setScore(
 				this.scene.player.getScore() + this.getValue()
 			);
+
 			this.scene.score.setText("Score: " + this.scene.player.getScore());
 			this.destroy();
 		}
@@ -80,6 +93,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 			this.texture
 		);
 	}
+
 	/**
 	 * fires a specified bullet at an angle relative to the right hand side being 0 degrees.
 	 * speed: changes the speed of the fired bullet(s) in pixels / second

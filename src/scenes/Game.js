@@ -132,11 +132,17 @@ export default class Game extends Phaser.Scene {
 		this.bullets.defaults = {};
 
 		function handleEnemyHit(bullet, enemy) {
-			bullet.destroy();
+			bullet.setHp(bullet.getHp() - 1);
+			if (bullet.getHp() <= 0) {
+				bullet.destroy();
+			}
 			enemy.gotHit();
 		}
 		function handlePlayerHit(player, bullet) {
-			bullet.destroy();
+			bullet.setHp(bullet.getHp() - 1);
+			if (bullet.getHp() <= 0) {
+				bullet.destroy();
+			}
 			player.gotHit();
 		}
 		this.physics.add.collider(
@@ -154,6 +160,8 @@ export default class Game extends Phaser.Scene {
 			null,
 			this
 		);
+
+		//TODO refactor this at some point... there must be a simpler way to do this.
 		this.generateEnemyGroup = (scene, enemyName, groupSize, shiftX, shiftY) => {
 			if (groupSize == 0) {
 				return false;
@@ -262,7 +270,7 @@ export default class Game extends Phaser.Scene {
 
 		//generating a new group of enemies once no enemies are on screen
 		if (this.enemies.getLength() == 0) {
-			for (let i = 0; i < this.getRandomInt(1, 3); i++) {
+			for (let i = 0; i < this.getRandomInt(1, 2); i++) {
 				let name = this.generateRandomEnemy(this.enemyList).constructor.name;
 				this.generateEnemyGroup(
 					this,

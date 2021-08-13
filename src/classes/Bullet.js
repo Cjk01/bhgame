@@ -6,6 +6,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 		this.setImmovable(true);
 		this.setVelocityX(velX);
 		this.setVelocityY(velY);
+		this.hp = 1;
 		this.stepCounter = 0;
 		this.stepLimit = 0;
 	}
@@ -37,5 +38,11 @@ export default class Bullet extends Phaser.Physics.Arcade.Sprite {
 	}
 	incrementStepCount() {
 		this.setStepCount(this.getStepCount() + 1);
+	}
+	getHp() {
+		return this.hp;
+	}
+	setHp(hp) {
+		this.hp = hp;
 	}
 }

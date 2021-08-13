@@ -7,8 +7,8 @@ export default class Dakannon extends Enemy {
 
 		this.setHp(6);
 		this.setValue(20);
-		this.setStepCounter(30);
-		this.setStepLimit(30);
+		this.setStepCounter(80);
+		this.setStepLimit(80);
 		this.setBulletPatterns([
 			[90, 2, 40, "RedSwirl-L", 150, 0, 30],
 			[120, 3, 40, "RedSwirl-L", 150, 0, 30],
