@@ -21,6 +21,7 @@ export default new Phaser.Game({
 			debug: true,
 		},
 	},
+	lights: {},
 	input: {
 		gamepad: true,
 	},

@@ -32,6 +32,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.scene.scene.stop();
 			}
 			this.play({ key: "PlayerShipExplosion" });
+			this.scene.cameras.main.shake(250, 0.03, false);
 		}
 	}
 	shoot() {
@@ -80,11 +81,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		//clears all enemies on the screen and depletes the available bombs by 1
 		if (this.getBombs() > 0) {
 			console.log("bomb trigger");
-			//	this.scene.enemies.clear(true, true);
+
+			this.scene.cameras.main.flash(500, 255, 90, 0, false);
+			this.scene.cameras.main.shake(200, 0.08, false);
 
 			this.scene.bullets.clear(true, true);
 			this.scene.enemies.clear(true, true);
-
 			this.setBombs(this.getBombs() - 1);
 		}
 

@@ -28,6 +28,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 		this.tint = 0xff0000;
 		this.alpha = 0.8;
+
 		this.scene.time.addEvent({
 			delay: 250,
 			callback: () => {
@@ -43,9 +44,11 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 			);
 
 			this.scene.score.setText("Score: " + this.scene.player.getScore());
+
 			this.destroy();
 		}
 	}
+
 	move() {
 		if (
 			Phaser.Math.Distance.Between(
@@ -53,7 +56,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 				this.y,
 				this.getCurrentDestination()[0],
 				this.getCurrentDestination()[1]
-			) <= this.displayWidth
+			) <=
+			this.displayWidth / 4
 		) {
 			this.setVelocity(0, 0);
 			this.setAcceleration(0, 0);

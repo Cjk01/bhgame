@@ -64,6 +64,7 @@ export default class Game extends Phaser.Scene {
 		this.load.aseprite("PlayerLaser", "PlayerLaser.png", "PlayerLaser.json");
 	}
 	create() {
+		//creating all the preloaded assets
 		this.anims.createFromAseprite("playerSprites");
 		this.anims.createFromAseprite("BlastBullets");
 		this.anims.createFromAseprite("SpiralBullets");
@@ -79,6 +80,16 @@ export default class Game extends Phaser.Scene {
 		this.add.image(250, 350, "background");
 		this.player = new Player(this, 250, 600, "");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
+
+		//adding the main camera to the scene
+		this.cameras.add(
+			0,
+			0,
+			this.sys.canvas.width,
+			this.sys.canvas.height,
+			true,
+			"mainCamera"
+		);
 
 		this.enemyList = {
 			Dakannon: new Dakannon(this, -300, -300, "")
