@@ -91,6 +91,13 @@ export default class Game extends Phaser.Scene {
 			"mainCamera"
 		);
 
+		// used to control particles
+		this.particleEmitterManager =
+			new Phaser.GameObjects.Particles.ParticleEmitterManager(
+				this,
+				"background"
+			);
+
 		this.enemyList = {
 			Dakannon: new Dakannon(this, -300, -300, "")
 				.setActive(false)
@@ -142,32 +149,32 @@ export default class Game extends Phaser.Scene {
 		this.bullets = this.physics.add.group();
 		this.bullets.defaults = {};
 
-		function handleEnemyHit(bullet, enemy) {
+		this.handleEnemyHit = (bullet, enemy) => {
 			bullet.setHp(bullet.getHp() - 1);
 			if (bullet.getHp() <= 0) {
 				bullet.destroy();
 			}
 			enemy.gotHit();
-		}
-		function handlePlayerHit(player, bullet) {
+		};
+		this.handlePlayerHit = (player, bullet) => {
 			bullet.setHp(bullet.getHp() - 1);
 			if (bullet.getHp() <= 0) {
 				bullet.destroy();
 			}
 			player.gotHit();
-		}
-		this.physics.add.collider(
+		};
+		this.playerHitCollider = this.physics.add.collider(
 			this.player,
 			this.bullets,
-			handlePlayerHit,
+			this.handlePlayerHit,
 			null,
 			this
 		);
 
-		this.physics.add.collider(
+		this.enemyHitCollider = this.physics.add.collider(
 			this.playerBullets,
 			this.enemies,
-			handleEnemyHit,
+			this.handleEnemyHit,
 			null,
 			this
 		);
@@ -287,8 +294,8 @@ export default class Game extends Phaser.Scene {
 					this,
 					name,
 					this.getRandomInt(1, 3),
-					this.getRandomInt(40, 90),
-					this.getRandomInt(30, 100)
+					this.getRandomInt(-100, 100),
+					this.getRandomInt(-100, 100)
 				);
 			}
 		}

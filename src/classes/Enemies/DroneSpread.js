@@ -9,6 +9,7 @@ export default class DroneSpread extends Enemy {
 		this.setStepCounter(20);
 		this.setStepLimit(20);
 		this.setMovementSpeed(220);
+		this.setShootingAnimationKey("DroneSpreadShoot");
 		this.play({ key: "DroneSpeadIdle", repeat: -1 });
 		this.on("animationcomplete", () => {
 			this.play({ key: "DroneSpeadIdle", repeat: -1 });

@@ -9,17 +9,15 @@ export default class Dakannon extends Enemy {
 		this.setValue(20);
 		this.setStepCounter(80);
 		this.setStepLimit(80);
+		this.setShootingAnimationKey("DakanShoot");
 		this.setBulletPatterns([
-			[90, 2, 40, "RedSwirl-L", 150, 0, 30],
-			[120, 3, 40, "RedSwirl-L", 150, 0, 30],
-			[90, 2, 60, "BlueSwirl-L", 150, 0, 30],
-			[60, 4, 30, "BlueSwirl-L", 150, 0, 30],
-			[90, 3, 30, "RedSwirl-L", 150, 0, 30],
-			[60, 3, 30, "RedSwirl-L", 150, 0, 30],
+			[70, 10, 10, "BlueBall", 150, 0, 30],
+			[60, 10, 10, "RedBall", 500, 0, 30],
+			[80, 5, 5, "BlueBall", 400, 0, 30],
 		]);
 		this.on("animationcomplete", () => {
-			this.play({ key: "DakanIdle", repeat: -1 });
 			this.shoot();
+			this.play({ key: "DakanIdle", repeat: -1 });
 		});
 		this.play({
 			key: "DakanIdle",

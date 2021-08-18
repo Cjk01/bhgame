@@ -5,7 +5,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		scene.add.existing(this);
 		scene.physics.add.existing(this);
 		this.setCollideWorldBounds(true);
+		this.body.setBoundsRectangle(
+			new Phaser.Geom.Rectangle(
+				20,
+				20,
+				this.scene.sys.canvas.width - 40,
+				this.scene.sys.canvas.height - 40
+			)
+		);
 		this.setImmovable(true);
+
 		this.setSize(1, 1);
 		this.scene = scene;
 		this.lives = 3;
@@ -24,7 +33,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	}
 	gotHit() {
 		if (!this.isInvulnerable()) {
-			this.body.enable = false;
+			this.setStepsSinceLastShot(-45);
+			this.scene.playerHitCollider.active = false;
+
 			this.setLives(this.getLives() - 1);
 
 			if (this.getLives() <= 0) {
@@ -37,6 +48,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	}
 	shoot() {
 		this.setInvulnerable(false);
+
 		let playerShotLeft = new Bullet(
 			this.scene,
 			this.x + 8,
@@ -110,12 +122,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	setInvulnerable(bool) {
 		this.invulnerable = bool;
 		if (this.invulnerable) {
-			this.body.enable = false;
+			this.scene.playerHitCollider.active = false;
 			this.alpha = 0.5;
 			this.x = this.scene.sys.canvas.width / 2;
 			this.y = this.scene.sys.canvas.height - 100;
 		} else {
-			this.body.enable = true;
+			this.scene.playerHitCollider.active = true;
 			this.alpha = 1.0;
 		}
 	}

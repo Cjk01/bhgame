@@ -7,6 +7,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		scene.physics.add.existing(this);
 		this.setImmovable(true);
 		this.setCollideWorldBounds(false);
+		this.moving = true;
 		this.movementSpeed = 1;
 		this.hp = 10;
 		this.value = 1;
@@ -16,15 +17,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.bulletPatterns = [[0, 6, 50, "RedSwirl-L", 150, 0, 20]];
 		this.currentPatternIndex = 0;
 		this.isPatternIncrementing = true;
-
+		this.shootingAnimationKey = "";
 		console.log("enemy object created");
 	}
 
 	gotHit() {
 		console.log("enemy: " + this + "was hit");
-		// to be replaced with a tween
-		//this.tint = 0xff0000;
-		//this.scene.time.addEvent({ repeat: 10, callback: this.flashInvisible() });
 
 		this.tint = 0xff0000;
 		this.alpha = 0.8;
@@ -59,9 +57,13 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 			) <=
 			this.displayWidth / 4
 		) {
-			this.setVelocity(0, 0);
-			this.setAcceleration(0, 0);
+			if (this.isMoving()) {
+				this.setVelocity(0, 0);
+				this.setAcceleration(0, 0);
+				this.setMoving(false);
+			}
 		}
+
 		if (this.getStepCounter() >= this.getStepLimit()) {
 			this.shoot();
 		}
@@ -71,6 +73,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	 * and executes the function for those arguments.
 	 */
 	shoot() {
+		this.play({
+			key: this.getShootingAnimationKey(),
+			repeat: 1,
+		});
 		this.shootAtAngle.apply(
 			this,
 			this.getBulletPatterns()[this.getPatternIndex()]
@@ -189,5 +195,17 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 	getPatternIncrementing() {
 		return this.isPatternIncrementing;
+	}
+	isMoving() {
+		return this.moving;
+	}
+	setMoving(bool) {
+		this.moving = bool;
+	}
+	getShootingAnimationKey() {
+		return this.shootingAnimationKey;
+	}
+	setShootingAnimationKey(key) {
+		this.shootingAnimationKey = key;
 	}
 }
