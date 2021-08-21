@@ -12,6 +12,48 @@ export default class Game extends Phaser.Scene {
 		super("game");
 	}
 	preload() {
+		//loading all the cloud based theme backgrounds / scrollers
+		for (let i = 1; i <= 7; i++) {
+			let iStr = i.toString();
+			let score = i * 1000 - 1000;
+			let backName = "backClouds" + i;
+			let frontName = "frontClouds" + i;
+			let themeName = "themeBackground" + i;
+			let backCloudsPath =
+				"../../assets/Background/" +
+				"Scene" +
+				iStr +
+				"(score:" +
+				score +
+				")/BackCloudsAnimate(35)" +
+				iStr +
+				".png";
+
+			let frontCloudsPath =
+				"../../assets/Background/" +
+				"Scene" +
+				iStr +
+				"(score:" +
+				score +
+				")/FrontCloudsAnimate(70)" +
+				iStr +
+				".png";
+
+			let themePath =
+				"../../assets/Background/" +
+				"Scene" +
+				iStr +
+				"(score:" +
+				score +
+				")/ThemeBackground" +
+				iStr +
+				".png";
+
+			this.load.image(frontName, frontCloudsPath);
+			this.load.image(backName, backCloudsPath);
+			this.load.image(themeName, themePath);
+		}
+
 		this.load.image("background", "../../assets/Background/BackgroundMoon.png");
 		this.load.path = "../../assets/SpriteSheets/";
 		this.load.aseprite(
@@ -77,7 +119,10 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("Charger");
 		this.anims.createFromAseprite("PlayerLaser");
 
-		this.add.image(250, 350, "background");
+		//this.add.image(250, 350, "background");
+		this.add.image(250, 350, "themeBackground1");
+		this.add.tileSprite(250, 350, 0, 0, "backClouds1");
+		this.add.tileSprite(250, 350, 0, 0, "frontClouds1");
 		this.player = new Player(this, 250, 600, "");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
 
