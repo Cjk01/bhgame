@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/Cjk01/bhgame#readme",
   "dependencies": {
-    "phaser": "^3.54.0"
+    "phaser": "^3.55.2"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
