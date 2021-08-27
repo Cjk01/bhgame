@@ -5,7 +5,7 @@ export default class Charger extends Enemy {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
 		this.setHp(8);
-		this.setValue(30);
+		this.setValue(90);
 		this.setStepCounter(5);
 		this.setStepLimit(5);
 		this.setMovementSpeed(120);

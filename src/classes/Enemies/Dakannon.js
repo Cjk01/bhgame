@@ -6,7 +6,7 @@ export default class Dakannon extends Enemy {
 		super(scene, x, y, texture);
 
 		this.setHp(6);
-		this.setValue(20);
+		this.setValue(120);
 		this.setStepCounter(80);
 		this.setStepLimit(80);
 		this.setShootingAnimationKey("DakanShoot");

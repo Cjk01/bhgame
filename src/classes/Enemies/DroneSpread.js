@@ -5,7 +5,7 @@ export default class DroneSpread extends Enemy {
 	constructor(scene, x, y, texture) {
 		super(scene, x, y, texture);
 		this.setHp(5);
-		this.setValue(30);
+		this.setValue(100);
 		this.setStepCounter(20);
 		this.setStepLimit(20);
 		this.setMovementSpeed(220);

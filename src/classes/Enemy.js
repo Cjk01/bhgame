@@ -10,7 +10,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 		this.moving = true;
 		this.movementSpeed = 1;
 		this.hp = 10;
-		this.value = 1;
+		this.value = 80;
 		this.stepCounter = 0;
 		this.stepLimit = 1000;
 		this.curentDestination = [this.x, this.y];
@@ -40,7 +40,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 			this.scene.player.setScore(
 				this.scene.player.getScore() + this.getValue()
 			);
-
+			if (this.scene.player.getScore() >= this.scene.level * 1000) {
+				this.scene.level += 1;
+			}
+			console.log("level : " + this.scene.level);
 			this.scene.score.setText("Score: " + this.scene.player.getScore());
 
 			this.destroy();
@@ -105,6 +108,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	/**
+	 *
 	 * fires a specified bullet at an angle relative to the right hand side being 0 degrees.
 	 * speed: changes the speed of the fired bullet(s) in pixels / second
 	 * shiftX and shiftY: change the starting position of the bullet

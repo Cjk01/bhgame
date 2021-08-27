@@ -1,4 +1,4 @@
-import Phaser from "../lib/phaser.js";
+import Phaser from "phaser";
 import Player from "../classes/Player.js";
 import Enemy from "../classes/Enemy.js";
 import Bullet from "../classes/Bullet.js";
@@ -13,7 +13,7 @@ export default class Game extends Phaser.Scene {
 	}
 	preload() {
 		//loading all the cloud based theme backgrounds / scrollers
-		for (let i = 1; i <= 7; i++) {
+		for (let i = 1; i <= 6; i++) {
 			let iStr = i.toString();
 			let score = i * 1000 - 1000;
 			let backName = "backClouds" + i;
@@ -52,6 +52,22 @@ export default class Game extends Phaser.Scene {
 			this.load.image(frontName, frontCloudsPath);
 			this.load.image(backName, backCloudsPath);
 			this.load.image(themeName, themePath);
+		}
+		// loading all of the star based backgrounds and themes
+		for (let i = 8; i <= 12; i++) {
+			let iStr = i.toString();
+			let starNum = (i - 6).toString();
+			let score = i * 1000 - 1000;
+			let themeName = "themeBackground" + iStr;
+			let starName = "starsAnimate" + iStr;
+			let basePath =
+				"../../assets/Background/Scene" + iStr + "(score:" + score + ")";
+			let themePath = basePath + "/ThemeBackground" + iStr + ".png";
+			let starPath = basePath + "/StarsAnimate(42)" + starNum + ".png";
+			if (i != 10) {
+				this.load.image(themeName, themePath);
+			}
+			this.load.image(starName, starPath);
 		}
 
 		this.load.image("background", "../../assets/Background/BackgroundMoon.png");
@@ -120,12 +136,13 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("PlayerLaser");
 
 		//this.add.image(250, 350, "background");
-		this.add.image(250, 350, "themeBackground1");
-		this.add.tileSprite(250, 350, 0, 0, "backClouds1");
-		this.add.tileSprite(250, 350, 0, 0, "frontClouds1");
+		this.background = this.add.image(250, 350, "themeBackground1");
+		this.backClouds = this.add.image(250, 250, "backClouds1");
+		this.frontClouds = this.add.image(250, 250, "frontClouds1");
+
 		this.player = new Player(this, 250, 600, "");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
-
+		this.level = 1;
 		//adding the main camera to the scene
 		this.cameras.add(
 			0,
@@ -223,6 +240,26 @@ export default class Game extends Phaser.Scene {
 			null,
 			this
 		);
+		/**
+		 * spawns enemies from an array of instructions
+		 *  array format : [[e1Name , e1.x , e1.y] , [e2Name, e2.x , e2.y] , ....]
+		 */
+		this.spawnEnemies = (scene, enemyArr) => {
+			for (let i = 0; i < enemyArr.length; i++) {
+				let name = enemyArr[i][0];
+				let xf = enemyArr[i][1];
+				let yf = enemyArr[i][2];
+				let enemy = scene.generateEnemyByName(name);
+				let xi = scene.getRandomInt(-200, scene.sys.canvas.width);
+				let yi = scene.getRandomInt(-200, -100);
+				enemy.x = xi;
+				enemy.y = yi;
+				enemy.setCurrentDestination(xf, yf);
+				enemy.setActive(true);
+				scene.enemies.add(enemy);
+				scene.physics.moveTo(enemy, xf, yf, enemy.getMovementSpeed());
+			}
+		};
 
 		//TODO refactor this at some point... there must be a simpler way to do this.
 		this.generateEnemyGroup = (scene, enemyName, groupSize, shiftX, shiftY) => {
