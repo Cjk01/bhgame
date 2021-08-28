@@ -2,7 +2,7 @@
 
 bullet hell game made with phaser 3, still a work in progress .
 
-<img src="src/scenes/assets/videogamebh.gif" width="300" height="400" />
+<img src="/src/scenes/assets/videogamebh.gif" width="300" height="400" />
 
 <h1> Instructions to run the dev build</h1>
 
