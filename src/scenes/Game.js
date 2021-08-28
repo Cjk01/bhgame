@@ -6,120 +6,46 @@ import Dakannon from "../classes/Enemies/Dakannon.js";
 import DroneSpread from "../classes/Enemies/DroneSpread.js";
 import Charger from "../classes/Enemies/Charger.js";
 import Eyeball from "../classes/Enemies/Eyeball.js";
-
+import fBackground from "./assets/Background/BackgroundMoon.png";
+import fPlayerShipSheet from "./assets/SpriteSheets/PlayerShipSheet.png";
+import fPlayerShipSheetJson from "./assets/SpriteSheets/PlayerShipSheet.json";
+import fBlastBullets from "./assets/SpriteSheets/BlastBullet-M.png";
+import fBlastBulletsJson from "./assets/SpriteSheets/BlastBullet-M.json";
+import fSpiralBullets from "./assets/SpriteSheets/SpiralBullet-L.png";
+import fSpiralBulletsJson from "./assets/SpriteSheets/SpiralBullet-L.json";
+import fSwirlBullets from "./assets/SpriteSheets/SwirlBullet-L.png";
+import fSwirlBulletsJson from "./assets/SpriteSheets/SwirlBullet-L.json";
+import fBallBullets from "./assets/SpriteSheets/BallBullet-S.png";
+import fBallBulletsJson from "./assets/SpriteSheets/BallBullet-S.json";
+import fDakannon from "./assets/SpriteSheets/EnemiesSpriteSheet/Dakan.png";
+import fDakannonJson from "./assets/SpriteSheets/EnemiesSpriteSheet/Dakan.json";
+import fEyeball from "./assets/SpriteSheets/EnemiesSpriteSheet/Eyeball.png";
+import fEyeballJson from "./assets/SpriteSheets/EnemiesSpriteSheet/Eyeball.json";
+import fDroneSpread from "./assets/SpriteSheets/EnemiesSpriteSheet/DroneSpread.png";
+import fDroneSpreadJson from "./assets/SpriteSheets/EnemiesSpriteSheet/DroneSpread.json";
+import fCharger from "./assets/SpriteSheets/EnemiesSpriteSheet/Charger.png";
+import fChargerJson from "./assets/SpriteSheets/EnemiesSpriteSheet/Charger.json";
+import fPlayerLaser from "./assets/SpriteSheets/PlayerLaser.png";
+import fPlayerLaserJson from "./assets/SpriteSheets/PlayerLaser.json";
 export default class Game extends Phaser.Scene {
 	constructor() {
 		super("game");
 	}
 	preload() {
-		//loading all the cloud based theme backgrounds / scrollers
-		for (let i = 1; i <= 6; i++) {
-			let iStr = i.toString();
-			let score = i * 1000 - 1000;
-			let backName = "backClouds" + i;
-			let frontName = "frontClouds" + i;
-			let themeName = "themeBackground" + i;
-			let backCloudsPath =
-				"../../assets/Background/" +
-				"Scene" +
-				iStr +
-				"(score:" +
-				score +
-				")/BackCloudsAnimate(35)" +
-				iStr +
-				".png";
+		this.load.image("background", fBackground);
 
-			let frontCloudsPath =
-				"../../assets/Background/" +
-				"Scene" +
-				iStr +
-				"(score:" +
-				score +
-				")/FrontCloudsAnimate(70)" +
-				iStr +
-				".png";
+		this.load.aseprite("playerSprites", fPlayerShipSheet, fPlayerShipSheetJson);
 
-			let themePath =
-				"../../assets/Background/" +
-				"Scene" +
-				iStr +
-				"(score:" +
-				score +
-				")/ThemeBackground" +
-				iStr +
-				".png";
-
-			this.load.image(frontName, frontCloudsPath);
-			this.load.image(backName, backCloudsPath);
-			this.load.image(themeName, themePath);
-		}
-		// loading all of the star based backgrounds and themes
-		for (let i = 8; i <= 12; i++) {
-			let iStr = i.toString();
-			let starNum = (i - 6).toString();
-			let score = i * 1000 - 1000;
-			let themeName = "themeBackground" + iStr;
-			let starName = "starsAnimate" + iStr;
-			let basePath =
-				"../../assets/Background/Scene" + iStr + "(score:" + score + ")";
-			let themePath = basePath + "/ThemeBackground" + iStr + ".png";
-			let starPath = basePath + "/StarsAnimate(42)" + starNum + ".png";
-			if (i != 10) {
-				this.load.image(themeName, themePath);
-			}
-			this.load.image(starName, starPath);
-		}
-
-		this.load.image("background", "../../assets/Background/BackgroundMoon.png");
-		this.load.path = "../../assets/SpriteSheets/";
-		this.load.aseprite(
-			"playerSprites",
-			"PlayerShipSheet.png",
-			"PlayerShipSheet.json"
-		);
-
-		this.load.aseprite(
-			"BlastBullets",
-			"BlastBullet-M.png",
-			"BlastBullet-M.json "
-		);
-		this.load.aseprite(
-			"SpiralBullets",
-			"SpiralBullet-L.png",
-			"SpiralBullet-L.json "
-		);
-		this.load.aseprite(
-			"SwirlBullets",
-			"SwirlBullet-L.png",
-			"SwirlBullet-L.json "
-		);
-		this.load.aseprite("BallBullets", "BallBullet-S.png", "BallBullet-S.json ");
-		this.load.aseprite(
-			"Dakannon",
-			"EnemiesSpriteSheet/Dakan.png",
-			"EnemiesSpriteSheet/Dakan.json"
-		);
-		this.load.aseprite(
-			"Eyeball",
-			"EnemiesSpriteSheet/Eyeball.png",
-			"EnemiesSpriteSheet/Eyeball.json"
-		);
-		this.load.aseprite(
-			"DroneSpread",
-			"EnemiesSpriteSheet/DroneSpread.png",
-			"EnemiesSpriteSheet/DroneSpread.json"
-		);
-		this.load.aseprite(
-			"Turtle",
-			"EnemiesSpriteSheet/turtle.png",
-			"EnemiesSpriteSheet/turtle.json"
-		);
-		this.load.aseprite(
-			"Charger",
-			"EnemiesSpriteSheet/Charger.png",
-			"EnemiesSpriteSheet/Charger.json"
-		);
-		this.load.aseprite("PlayerLaser", "PlayerLaser.png", "PlayerLaser.json");
+		//this.load.path = "../../assets/SpriteSheets/";
+		this.load.aseprite("BlastBullets", fBlastBullets, fBlastBulletsJson);
+		this.load.aseprite("SpiralBullets", fSpiralBullets, fSpiralBulletsJson);
+		this.load.aseprite("SwirlBullets", fSwirlBullets, fSwirlBulletsJson);
+		this.load.aseprite("BallBullets", fBallBullets, fBallBulletsJson);
+		this.load.aseprite("Dakannon", fDakannon, fDakannonJson);
+		this.load.aseprite("Eyeball", fEyeball, fEyeballJson);
+		this.load.aseprite("DroneSpread", fDroneSpread, fDroneSpreadJson);
+		this.load.aseprite("Charger", fCharger, fChargerJson);
+		this.load.aseprite("PlayerLaser", fPlayerLaser, fPlayerLaserJson);
 	}
 	create() {
 		//creating all the preloaded assets
@@ -131,14 +57,10 @@ export default class Game extends Phaser.Scene {
 		this.anims.createFromAseprite("Dakannon");
 		this.anims.createFromAseprite("Eyeball");
 		this.anims.createFromAseprite("DroneSpread");
-		this.anims.createFromAseprite("Turtle");
 		this.anims.createFromAseprite("Charger");
 		this.anims.createFromAseprite("PlayerLaser");
 
-		//this.add.image(250, 350, "background");
-		this.background = this.add.image(250, 350, "themeBackground1");
-		this.backClouds = this.add.image(250, 250, "backClouds1");
-		this.frontClouds = this.add.image(250, 250, "frontClouds1");
+		this.add.image(250, 350, "background");
 
 		this.player = new Player(this, 250, 600, "");
 		this.score = this.add.text(0, 0, "Score: 0", { font: "Arial" });
@@ -196,6 +118,7 @@ export default class Game extends Phaser.Scene {
 			let index = this.getRandomInt(0, names.length);
 			let enemyName = names[index];
 			let enemyObj = list[enemyName];
+
 			let newEnemy = enemyObj.clone();
 			return newEnemy;
 		};
@@ -372,6 +295,7 @@ export default class Game extends Phaser.Scene {
 		if (this.enemies.getLength() == 0) {
 			for (let i = 0; i < this.getRandomInt(1, 2); i++) {
 				let name = this.generateRandomEnemy(this.enemyList).constructor.name;
+
 				this.generateEnemyGroup(
 					this,
 					name,

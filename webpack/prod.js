@@ -20,6 +20,8 @@ module.exports = merge(base, {
 					output: {
 						comments: false,
 					},
+					keep_classnames: true,
+					keep_fnames: true,
 				},
 			}),
 		],
