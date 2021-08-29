@@ -38,12 +38,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 			this.setLives(this.getLives() - 1);
 
-			if (this.getLives() <= 0) {
-				console.log("game over");
-				this.scene.scene.stop();
-			}
 			this.play({ key: "PlayerShipExplosion" });
 			this.scene.cameras.main.shake(250, 0.03, false);
+			if (this.getLives() <= 0) {
+				console.log("game over");
+				this.scene.scene.restart();
+			}
 		}
 	}
 	shoot() {

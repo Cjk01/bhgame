@@ -33,10 +33,7 @@ export default class Game extends Phaser.Scene {
 	}
 	preload() {
 		this.load.image("background", fBackground);
-
 		this.load.aseprite("playerSprites", fPlayerShipSheet, fPlayerShipSheetJson);
-
-		//this.load.path = "../../assets/SpriteSheets/";
 		this.load.aseprite("BlastBullets", fBlastBullets, fBlastBulletsJson);
 		this.load.aseprite("SpiralBullets", fSpiralBullets, fSpiralBulletsJson);
 		this.load.aseprite("SwirlBullets", fSwirlBullets, fSwirlBulletsJson);
@@ -163,32 +160,14 @@ export default class Game extends Phaser.Scene {
 			null,
 			this
 		);
-		/**
-		 * spawns enemies from an array of instructions
-		 *  array format : [[e1Name , e1.x , e1.y] , [e2Name, e2.x , e2.y] , ....]
-		 */
-		this.spawnEnemies = (scene, enemyArr) => {
-			for (let i = 0; i < enemyArr.length; i++) {
-				let name = enemyArr[i][0];
-				let xf = enemyArr[i][1];
-				let yf = enemyArr[i][2];
-				let enemy = scene.generateEnemyByName(name);
-				let xi = scene.getRandomInt(-200, scene.sys.canvas.width);
-				let yi = scene.getRandomInt(-200, -100);
-				enemy.x = xi;
-				enemy.y = yi;
-				enemy.setCurrentDestination(xf, yf);
-				enemy.setActive(true);
-				scene.enemies.add(enemy);
-				scene.physics.moveTo(enemy, xf, yf, enemy.getMovementSpeed());
-			}
-		};
 
 		//TODO refactor this at some point... there must be a simpler way to do this.
+
 		this.generateEnemyGroup = (scene, enemyName, groupSize, shiftX, shiftY) => {
 			if (groupSize == 0) {
 				return false;
 			}
+
 			let enemy = scene.generateEnemyByName(enemyName);
 			let spriteWidth = enemy.width;
 			let spriteHeight = enemy.height;
