@@ -1,6 +1,6 @@
 # bhgame
 
-bullet hell game made with phaser 3, still a work in progress .
+browser based tech demo made in phaser 3
 You can play the current version of the game here : https://cjk01.itch.io/bhgame
 
 <img src="/src/scenes/assets/videogamebh.gif" width="300" height="400" />
